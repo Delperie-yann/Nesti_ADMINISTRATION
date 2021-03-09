@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<?= BASE_URL ?>public/css/styleStats.css">
 <link rel="stylesheet" href="<?= BASE_URL ?>public/css/recipes.css">
 <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toastui-chart.min.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>public/css/importation.css">
 
 <script src="<?= BASE_URL ?>public/js/recipes.js"></script>
 
