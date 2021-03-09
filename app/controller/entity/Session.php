@@ -12,10 +12,10 @@ class Session
   return $isConnect;
  }
 
- public function connectUser()
- {
-  $_SESSION["idUser"] = $id;
- }
+//  public function connectUser()
+//  {
+//   $_SESSION["idUser"] = $id;
+//  }
  public function disconnectUser()
  {
   session_unset();
