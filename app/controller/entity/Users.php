@@ -50,6 +50,7 @@ class Users
 
   }
  }
+ 
  public function isPassword($plaintextPassword)
  {
   return password_verify($plaintextPassword, $this->getPasswordHash());
@@ -59,7 +60,7 @@ class Users
  {
   return $this->id;
  }
- public function setId($id): int
+ public function setId(int $id)
  {
   $this->id = $id;
 
@@ -69,7 +70,7 @@ class Users
  {
   return $this->lastname;
  }
- public function setLastname($lastname): string
+ public function setLastname(string $lastname)
  {
   $this->lastname = $lastname;
 
@@ -79,7 +80,7 @@ class Users
  {
   return $this->passwordHash;
  }
- public function setPasswordHash($passwordHash)
+ public function setPasswordHash(string $passwordHash)
  {
   $this->passwordHash = $passwordHash;
 
@@ -89,7 +90,7 @@ class Users
  {
   return $this->login;
  }
- public function setLogin(string $login): string
+ public function setLogin(string $login)
  {
   $this->login = $login;
 
@@ -118,7 +119,7 @@ class Users
   *
   * @return self
   */
- public function setFlag($flag): self
+ public function setFlag(string $flag): self
  {
   $this->flag = $flag;
 
@@ -188,7 +189,7 @@ class Users
  /**
   * Get the value of zipCode
   */
- public function getZipCode()
+ public function getZipCode(): int
  {
   return $this->zipCode;
  }
@@ -198,7 +199,7 @@ class Users
   *
   * @return self
   */
- public function setZipCode($zipCode): self
+ public function setZipCode(int $zipCode): self
  {
   $this->zipCode = $zipCode;
 
