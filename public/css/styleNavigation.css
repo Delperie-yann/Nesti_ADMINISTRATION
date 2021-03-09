@@ -1,0 +1,123 @@
+:root{
+    --primaryColor: #00838F;
+    --primaryLightColor: #4FB3BF;
+    --primaryDarkColor: #005662;
+
+    --secondaryColor: #FBC02D;
+    --secondaryLightColor: #FFF263;
+    --secondaryDarkColor: #C49000;
+
+    --classicColorDark: #414141;
+    --classicColorGrey: #606267;
+    --classicColorLight: #ECECEC;
+    --classicColorWhite: #FFFFFF;
+
+    --colorButtonDisabled:#ececec;
+    --colorButtonInformation:#4FB3BF;
+    --colorButtonDanger:#fb3939;
+    --colorButtonAlert:#fac02e;
+    --colorButtonValidate:#b0d41c;
+
+}
+
+h1,h2{
+    color: var(--primaryDarkColor)
+}
+
+h1{
+    font-weight: 700;
+}
+
+th{
+    background-color:var(--primaryColor) ;
+    color:var(--classicColorWhite);
+}
+#mainNav li>a{
+    color:white;
+}
+
+#mainNav li{
+    background-color: var(--primaryColor);
+}
+
+#mainNav .active{
+    background-color: var(--secondaryColor);
+}
+.active>a{
+    color:var(--classicColorGrey) !important;
+}
+
+.navnesti{
+    color:var(--classicColorWhite);
+    background-color:var(--primaryDarkColor);
+    width: 65%;
+}
+
+.logOut{
+    width : 35%;
+}
+
+#mainNav form>a{
+color: var(--classicColorGrey);
+}
+
+#recipePage thead{
+    background-color:var(--primaryColor) ;
+    color: var(--classicColorWhite);
+}
+
+#searchRecipe{
+    position: absolute;
+    width: 10%;
+    left : 2%;
+}
+
+#customSearch{
+    margin: 0;
+    padding-left: 50px;
+}
+
+#addRecipe{
+    position: absolute;
+    left: 2%;
+    width: 20%;
+    z-index: 2;
+}
+
+#btnAddRecipe{
+    position: relative;
+    margin: 0;
+    padding-left: 50px;
+}
+
+.underLink>a,.underLink>p{
+    color:var(--primaryLightColor);
+}
+
+#submitRecipe, #okRecipe{
+    background-color:var( --colorButtonValidate);
+}
+
+#cancelRecipe{
+    background-color:var( --colorButtonInformation);
+    color: var(--classicColorWhite);
+}
+
+#addParagraph>div{
+    color: var(--primaryLightColor);
+    font-size: 50px;
+}
+#addParagraph{
+    width: 100%;
+    background-color: var(--classicColorWhite) ;
+    border:1px dashed rgb(184, 183, 183);
+}
+
+textarea[readonly]{
+    background-color:red;
+    box-shadow: none;
+  }
+ 
+  textarea{
+      resize: none;
+  }

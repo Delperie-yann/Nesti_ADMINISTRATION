@@ -1,0 +1,28 @@
+<?php
+if (!empty($_POST)) {
+
+ if ($loc != "connection") {
+
+  header('Location:' . BASE_URL . 'connection');
+  die();
+
+ } else {
+  // echo ("else");
+
+  $login    = $_POST["loginUser"];
+  $password = $_POST["password"];
+  $model    = new ModelUsers();
+  $user     = $model->readOneBy("login", $login);
+  if (($user != null) && ($user->isPassword($password))) {
+   $_SESSION['Roles']     = $user->getRoles();
+   $_SESSION['idUser']    = $user->getId();
+   $_SESSION["login"]     = $login;
+   $_SESSION["firstname"] = $user->getFirstname();
+   $_SESSION["lastname"]  = $user->getLastname();
+   header('Location:' . BASE_URL . 'recipes');
+  } else {
+   header('Location:' . BASE_URL . 'connection');
+  }
+ }
+
+}
