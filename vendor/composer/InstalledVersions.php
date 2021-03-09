@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '012f40aa349c3a37353e49750c28f3aab6884a26',
+    'reference' => '401baa0f3075509e8d605adc764e1d3c1e8ebe45',
     'name' => '__root__',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '012f40aa349c3a37353e49750c28f3aab6884a26',
+      'reference' => '401baa0f3075509e8d605adc764e1d3c1e8ebe45',
     ),
     'phpstan/phpstan' => 
     array (
