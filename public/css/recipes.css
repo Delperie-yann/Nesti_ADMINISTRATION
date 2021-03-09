@@ -1,0 +1,55 @@
+:root{
+    --primaryColor: #00838F;
+    --primaryLightColor: #4FB3BF;
+    --primaryDarkColor: #005662;
+
+    --secondaryColor: #FBC02D;
+    --secondaryLightColor: #FFF263;
+    --secondaryDarkColor: #C49000;
+
+    --classicColorDark: #414141;
+    --classicColorGrey: #606267;
+    --classicColorLight: #ECECEC;
+    --classicColorWhite: #FFFFFF;
+
+    --colorButtonDisabled:#ececec;
+    --colorButtonInformation:#4FB3BF;
+    --colorButtonDanger:#fb3939;
+    --colorButtonAlert:#fac02e;
+    --colorButtonValidate:#b0d41c;
+
+}
+
+p {
+    margin-block-start: unset;
+    margin-block-end: unset;
+}
+
+.valid {
+    background-color: var(--colorButtonValidate);
+    color: var(--primaryColor);
+}
+
+.cancel {
+    background-color: var(--primaryLightColor);
+    color: var(--classicColorWhite);
+}
+
+.recipeCtn {
+    padding: 1%;
+    background-color: lightgray;
+    margin-bottom: 20px;
+}
+
+.upText, .downText {
+    background-color: var(--secondaryColor);
+}
+
+.deleteText {
+    background-color: var(--colorButtonDanger);
+}
+
+.ingredientsCtn {
+    background-color: var(--classicColorWhite);
+    height: 400px;
+}
