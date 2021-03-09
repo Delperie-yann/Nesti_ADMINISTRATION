@@ -7,7 +7,7 @@ $session=$_SESSION['Roles'];
 if((is_int(strpos($session,'Administateur'))||(is_int(strpos($session,'Chef'))))){
 ?>
 
-<h1 class="mb-2 mt-4 ml-5">commandes</h1>
+<h1 class="mb-2 mt-4 ml-5">Commandes</h1>
 
 
 <div class="container bg-white d-flex flex-column align-items-left" id="order">
@@ -24,15 +24,16 @@ if((is_int(strpos($session,'Administateur'))||(is_int(strpos($session,'Chef'))))
 
 
   <table class="table">
+
 <thead>
-  <tr class="bg-info text-white">
+ 
     <th scope="col">ID</th>
     <th scope="col">Utilisateurs</th>
     <th scope="col">Montant</th>
     <th scope="col">Date</th>
     <th scope="col">Etat</th>
    
-  </tr>
+ 
 </thead>
 
 <?php
@@ -41,7 +42,7 @@ if((is_int(strpos($session,'Administateur'))||(is_int(strpos($session,'Chef'))))
 foreach($arrayOrders as $value){
 ?>
   <tr>
-    <th scope="row"><?=$value->getId();?></th>
+    <td class="font-weight-bold"><?=$value->getId();?>
     <td><?=$value->getLastname();?> <?=$value->getFirstname();?></td>
     <td><?=$value->getQuant();?></td>
     <td><?=$value->getDateCreation();?></td>

@@ -1,0 +1,7 @@
+parameters:	
+	level: 3
+	paths:
+		- app
+	bootstrapFiles:
+		- app/config.php
+		- app/loader.php

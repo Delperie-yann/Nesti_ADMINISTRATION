@@ -16,7 +16,7 @@ class Users
  private $idCity;
  private $lastConnection;
 
- public function isChef()
+ public function isChef(): bool
  {
   $model = new ModelUsers();
   $chef  = $model->findChild("chef", $this->getId());
@@ -24,7 +24,7 @@ class Users
   return $chef != null;
 
  }
- public function isModerateur()
+ public function isModerateur(): bool
  {
   $model     = new ModelUsers();
   $moderator = $model->findChild("moderator", $this->getId());
@@ -32,7 +32,7 @@ class Users
   return $moderator != null;
 
  }
- public function isAdmin()
+ public function isAdmin(): bool
  {
   $model = new ModelUsers();
   $admin = $model->findChild("administrator", $this->getId());
@@ -50,26 +50,27 @@ class Users
 
   }
  }
+ 
  public function isPassword($plaintextPassword)
  {
   return password_verify($plaintextPassword, $this->getPasswordHash());
  }
 
- public function getId()
+ public function getId(): int
  {
   return $this->id;
  }
- public function setId($id)
+ public function setId(int $id)
  {
   $this->id = $id;
 
   return $this;
  }
- public function getLastname()
+ public function getLastname(): string
  {
   return $this->lastname;
  }
- public function setLastname($lastname)
+ public function setLastname(string $lastname)
  {
   $this->lastname = $lastname;
 
@@ -79,17 +80,17 @@ class Users
  {
   return $this->passwordHash;
  }
- public function setPasswordHash($passwordHash)
+ public function setPasswordHash(string $passwordHash)
  {
   $this->passwordHash = $passwordHash;
 
   return $this;
  }
- public function getLogin()
+ public function getLogin(): string
  {
   return $this->login;
  }
- public function setLogin($login)
+ public function setLogin(string $login)
  {
   $this->login = $login;
 
@@ -98,7 +99,7 @@ class Users
  /**
   * Get the value of flag
   */
- public function getFlag()
+ public function getFlag(): string
  {
      if($this->flag =="a"){
         $this->flag = "Actif";
@@ -118,7 +119,7 @@ class Users
   *
   * @return self
   */
- public function setFlag($flag): self
+ public function setFlag(string $flag): self
  {
   $this->flag = $flag;
 
@@ -148,7 +149,7 @@ class Users
  /**
   * Get the value of adress1
   */
- public function getAdress1()
+ public function getAdress1(): string
  {
   return $this->adress1;
  }
@@ -168,7 +169,7 @@ class Users
  /**
   * Get the value of adress2
   */
- public function getAdress2()
+ public function getAdress2(): string
  {
   return $this->adress2;
  }
@@ -188,7 +189,7 @@ class Users
  /**
   * Get the value of zipCode
   */
- public function getZipCode()
+ public function getZipCode(): int
  {
   return $this->zipCode;
  }
@@ -198,7 +199,7 @@ class Users
   *
   * @return self
   */
- public function setZipCode($zipCode): self
+ public function setZipCode(int $zipCode): self
  {
   $this->zipCode = $zipCode;
 
@@ -208,7 +209,7 @@ class Users
  /**
   * Get the value of idCity
   */
- public function getIdCity()
+ public function getIdCity(): string
  {
   return $this->idCity;
  }
@@ -228,7 +229,7 @@ class Users
  /**
   * Get the value of email
   */
- public function getEmail()
+ public function getEmail(): string
  {
   return $this->email;
  }
@@ -248,7 +249,7 @@ class Users
  /**
   * Get the value of firstname
   */
- public function getFirstname()
+ public function getFirstname(): string
  {
   return $this->firstname;
  }
@@ -265,7 +266,7 @@ class Users
   return $this;
  }
 
- public function getRoles()
+ public function getRoles(): string
  {
   $result = "";
   $format = ", ";
