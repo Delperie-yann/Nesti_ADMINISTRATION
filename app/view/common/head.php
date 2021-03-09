@@ -18,4 +18,4 @@
 
 <!-- <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" /> -->
 
-<title>Projet_Nesti_PHP</title>
+<title>PHP_Nesti_Site</title>
