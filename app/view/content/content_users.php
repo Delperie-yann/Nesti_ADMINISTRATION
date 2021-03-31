@@ -15,7 +15,7 @@ if((is_int(strpos($session,'Administateur'))||(is_int(strpos($session,'Moderateu
             </form>
         </nav>
         <div>
-            <a href="<?php BASE_URL ?>index.php?loc=users&action=creation" class="btn mb-1 border align-self-end"><img
+            <a href="<?php BASE_URL ?>users/creation" class="btn mb-1 border align-self-end"><img
                     id="add" src="<?php BASE_URL ?>public/images/add.png" alt="" width="20px" height="20px"> Ajouter</a>
         </div>
     </div>
@@ -42,9 +42,9 @@ foreach($arrayUsers as $value){
                 <th scope="row"><?=$value->getIdUser();?></th>
                 <td><?=$value->getFirstname();?> <?=$value->getLastname();?></td>
                 <td><?=$value->getRoles();?></td>
-                <td><?=$value->getLastConnection();?></td>
+                <td><?=$value->getLastConnectionLog();?></td>
                 <td><?=$value->getFlag();?></td>
-                <td><a href="<?=BASE_URL?>index.php?loc=users&action=editing">Modifier</a><br>
+                <td><a href="<?=BASE_URL?>users/editing">Modifier</a><br>
                    
                     <a data-toggle="modal" href="#myModal<?=$value->getIdUser();?>">Supprimer</a>
                     <div class="container">

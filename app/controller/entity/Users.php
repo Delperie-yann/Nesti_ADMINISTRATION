@@ -14,7 +14,24 @@ class Users
  private $address2;
  private $zipCode;
  private $idCity;
- private $lastConnection;
+ 
+ public function getConnectionLog(){
+   $model = new ModelConnectionLog();
+   $logs = $model->readAllBy("idUsers",$this->getIdUser());
+   // var_dump($logs);
+   return $logs;
+ }
+ public function getLastConnectionLog(){
+   $lateCoDate="-";
+if($this->getConnectionLog()){
+   $lateCoDate=$this->getConnectionLog()[0]->getDateConnection() ;
+}
+   // var_dump($this->getConnectionLog());
+   return $lateCoDate;
+}
+
+ 
+
 
  public function isChef(): bool
  {
@@ -284,25 +301,7 @@ class Users
   return $pos;
  }
 
- /**
-  * Get the value of lastConnection
-  */
- public function getLastConnection()
- {
-  return $this->lastConnection;
- }
 
- /**
-  * Set the value of lastConnection
-  *
-  * @return self
-  */
- public function setLastConnection($lastConnection): self
- {
-  $this->lastConnection = $lastConnection;
-
-  return $this;
- }
 
  /**
   * Get the value of idUser

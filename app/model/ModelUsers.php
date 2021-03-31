@@ -6,7 +6,7 @@ class ModelUsers {
         //requete
         $pdo= Connection::getPdo();
 
-        $sql="SELECT users.idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login AS loginUser, address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity, connectionlog.dateConnection as lastConnection FROM users inner JOIN connectionlog ON connectionlog.idUsers=users.idUsers ";
+        $sql="SELECT users.idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login AS loginUser, address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity FROM users";
         $result=$pdo->query($sql);
         if($result){
             $array = $result-> fetchAll(PDO::FETCH_CLASS,'Users');
@@ -53,13 +53,13 @@ class ModelUsers {
             $sql = "INSERT INTO users (lastName,firstName,email,flag ,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?)";
             
             $stmt = $pdo->prepare($sql);
-          // var_dump($stmt);
-           //var_dump($user);
+        //   var_dump($stmt);
+        //    var_dump($user);
             $values= [$user -> getLastName(),$user -> getFirstName(),$user -> getEmail(),$user -> getFlag(),$user -> getDateCreation(),$user -> getLogin(),$user -> getAddress1(),$user -> getAddress2(),$user -> getZipCode(),'1'];        
             // Execute the prepared statement
         
             $stmt->execute($values);
-           var_dump($values);
+        //    var_dump($values);
             // var_dump($pdo->lastInsertId());
             $newUser = $this->readOneBy("idUsers",$pdo->lastInsertId());
             echo "Records inserted successfully.";
