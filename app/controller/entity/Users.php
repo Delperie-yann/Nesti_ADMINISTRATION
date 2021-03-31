@@ -2,7 +2,7 @@
 
 class Users
 {
- private $id;
+ private $idUser;
  private $lastname;
  private $firstname;
  private $email;
@@ -10,8 +10,8 @@ class Users
  private $flag;
  private $dateCreation;
  private $login;
- private $adress1;
- private $adress2;
+ private $address1;
+ private $address2;
  private $zipCode;
  private $idCity;
  private $lastConnection;
@@ -19,7 +19,7 @@ class Users
  public function isChef(): bool
  {
   $model = new ModelUsers();
-  $chef  = $model->findChild("chef", $this->getId());
+  $chef  = $model->findChild("chef", $this->getIdUser());
   //var_dump($chef);
   return $chef != null;
 
@@ -27,7 +27,7 @@ class Users
  public function isModerateur(): bool
  {
   $model     = new ModelUsers();
-  $moderator = $model->findChild("moderator", $this->getId());
+  $moderator = $model->findChild("moderator", $this->getIdUser());
   //var_dump($chef);
   return $moderator != null;
 
@@ -35,7 +35,7 @@ class Users
  public function isAdmin(): bool
  {
   $model = new ModelUsers();
-  $admin = $model->findChild("administrator", $this->getId());
+  $admin = $model->findChild("administrator", $this->getIdUser());
   //var_dump($chef);
   return $admin != null;
 
@@ -43,7 +43,7 @@ class Users
 
  public function setUserFromArray($user)
  {
-  // var_dump($user);
+ //var_dump($user);
   foreach ($user as $key => $value) {
 
    $this->$key = $value;
@@ -56,16 +56,7 @@ class Users
   return password_verify($plaintextPassword, $this->getPasswordHash());
  }
 
- public function getId(): int
- {
-  return $this->id;
- }
- public function setId(int $id)
- {
-  $this->id = $id;
 
-  return $this;
- }
  public function getLastname(): string
  {
   return $this->lastname;
@@ -101,19 +92,25 @@ class Users
   */
  public function getFlag(): string
  {
-     if($this->flag =="a"){
-        $this->flag = "Actif";
-     }
-     if($this->flag =="w"){
-        $this->flag = "En attente";
-     }
-     if($this->flag =="b"){
-        $this->flag = "Bloqué";
-     }
-    
   return $this->flag;
  }
-
+ /**
+  * Get the value of flag
+  */
+  public function getDisplayFlag(): string
+  {
+      if($this->flag =="a"){
+         $flag = "Actif";
+      }
+      if($this->flag =="w"){
+         $flag = "En attente";
+      }
+      if($this->flag =="b"){
+         $flag = "Bloqué";
+      }
+     
+   return $flag;
+  }
  /**
   * Set the value of flag
   *
@@ -149,7 +146,7 @@ class Users
  /**
   * Get the value of adress1
   */
- public function getAdress1(): string
+ public function getAddress1(): string
  {
   return $this->adress1;
  }
@@ -159,7 +156,7 @@ class Users
   *
   * @return self
   */
- public function setAdress1($adress1): self
+ public function setAddress1($adress1): self
  {
   $this->adress1 = $adress1;
 
@@ -169,7 +166,7 @@ class Users
  /**
   * Get the value of adress2
   */
- public function getAdress2(): string
+ public function getAddress2(): string
  {
   return $this->adress2;
  }
@@ -179,7 +176,7 @@ class Users
   *
   * @return self
   */
- public function setAdress2($adress2): self
+ public function setAddress2($adress2): self
  {
   $this->adress2 = $adress2;
 
@@ -303,6 +300,26 @@ class Users
  public function setLastConnection($lastConnection): self
  {
   $this->lastConnection = $lastConnection;
+
+  return $this;
+ }
+
+ /**
+  * Get the value of idUser
+  */
+ public function getIdUser()
+ {
+  return $this->idUser;
+ }
+
+ /**
+  * Set the value of idUser
+  *
+  * @return self
+  */
+ public function setIdUser($idUser) : self
+ {
+  $this->idUser = $idUser;
 
   return $this;
  }
