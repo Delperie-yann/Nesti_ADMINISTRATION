@@ -46,7 +46,7 @@ switch ($loc) {
     $ctrl = new StatisticsController();
     break;
   case 'deconnection':
-    header('location:' . BASE_URL . "deconnection");
+    //header('location:' . BASE_URL . "deconnection");
     $a = new Session();
     $a->disconnectUser();
     break;
