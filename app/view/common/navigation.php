@@ -37,8 +37,8 @@
             <a class="nav-link text-dark" value="Deconnection" href="<?= BASE_URL ?>deconnection">
                 <i class="fas fa-sign-out-alt mr-2 text-dark" <?= ( $loc =='deco')?'active':''; ?>></i>
                 Déconnexion</a>
-
         </form>
     </div>
 
 </nav>
+
