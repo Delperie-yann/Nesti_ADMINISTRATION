@@ -76,7 +76,6 @@ class Recipes
         return $this;
     }
 
-   
     /**
      * Get the value of chief
      */ 
@@ -150,8 +149,6 @@ class Recipes
 
         return $this;
     }
-
-    
 
     /**
      * Get the value of preparationTime
