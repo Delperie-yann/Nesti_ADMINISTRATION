@@ -24,11 +24,15 @@
                 
                 
                 <p class="mt-5">Rôle</p><br>
-                <input type="text" class="w-75">
-                
+                <input type="checkbox" class="w-75" name="role['chef']"><label for="chef">Chef</label>
+                <input type="checkbox" class="w-75" name="role['moderator']"><label for="moderator">Moderateurr</label>
+                <input type="checkbox" class="w-75" name="role['Utilisateur']" checked><label for="Utilisateur">Utilisateur</label>
                 <p class="mt-5">Etat</p><br>
-                <input type="text" class="w-75">
-
+                <!--a passer en  select -->
+                <input type="checkbox" class="w-75" name="state['actif']"><label for="a">Actif</label>
+                <input type="checkbox" class="w-75" name="state['wait']"checked><label for="w">En attente</label>
+                <input type="checkbox" class="w-75" name="state['block']"><label for="b">Bloqué</label>
+                <!-- CA -->
                 <div class="row">
                     <div class="d-flex justify-content-center p-2">
                         <button type="submit" class="btn m-10 ml-2 valid w-50">Valider</button>

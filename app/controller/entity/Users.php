@@ -72,7 +72,7 @@ if($this->getConnectionLog()){
  {
   return password_verify($plaintextPassword, $this->getPasswordHash());
  }
-
+ 
 
  public function getLastname(): string
  {
@@ -84,16 +84,20 @@ if($this->getConnectionLog()){
 
   return $this;
  }
+ 
  public function getPasswordHash()
  {
   return $this->passwordHash;
  }
+
+
  public function setPasswordHash(string $passwordHash)
  {
+    $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
   $this->passwordHash = $passwordHash;
-
   return $this;
  }
+ 
  public function getLogin(): string
  {
   return $this->login;
@@ -300,9 +304,10 @@ if($this->getConnectionLog()){
 
   return $pos;
  }
+public function setRoles():string
+{
 
-
-
+}
  /**
   * Get the value of idUser
   */
