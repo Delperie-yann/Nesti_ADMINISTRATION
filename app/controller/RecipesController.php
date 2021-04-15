@@ -3,23 +3,26 @@
 class RecipesController extends BaseController
 {
   public function initialize()
-  { $model = new ModelRecipes();
+  {
+    $model = new ModelRecipes();
     $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
     $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
     $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
-   
+
     if ($action == '') {
-     
+
       $this->data['arrayRecipes'] = $model->readAll();
     }
     if ($action == "add") {
       $this->create();
     }
     if ($action == "editing") {
-    
+
       $recipe = $model->readOneBy("idRecipe", $id);
     }
-    
+    if ($action == "deleted") {
+      $this->delete($id);
+    }
   }
 
   public function create()
@@ -38,6 +41,12 @@ class RecipesController extends BaseController
     // $user = new Users();
     // $user->setName($_SESSION["idUsers"]);
   }
+
+  public function delete($id)
+  {
+    $model = new ModelRecipes();
+    $recipe = $model->readOneBy("idRecipe", $id);
+    $deletedRecipe = $model->deleteRecipe($recipe);
+    header('Location:' . BASE_URL . "recipes");
+  }
 }
-
-
