@@ -66,13 +66,7 @@ class Users
       }
    }
 
-   public function isPassword($plaintextPassword)
-   {
-      return password_verify($plaintextPassword, $this->getPasswordHash());
-   }
 
-  }
- }
  
  public function isPassword($plaintextPassword)
  {
@@ -289,20 +283,32 @@ class Users
 
       return $this;
    }
-
-  return $pos;
- }
-public function setRoles():string
+   public function getRoles(): string
+   {
+    $result = "";
+    $format = ", ";
+    if ($this->isChef()) {
+     $result .= "Chef" . $format;
+    }
+    if ($this->isModerateur()) {
+     $result .= "Moderateur" . $format;
+    }
+    if ($this->isAdmin()) {
+     $result .= "Administateur" . $format;
+    }
+    if ($result == "") {
+     $result = "Utilisateur" . $format;
+    }
+    $pos = substr($result, 0, -2);
+  
+    return $pos;
+   }
+ 
+public function setRoles()
 {
 
 }
- /**
-  * Get the value of idUser
-  */
- public function getIdUser()
- {
-  return $this->idUser;
- }
+
 
    /**
     * Get the value of idUser
