@@ -71,50 +71,62 @@ class Users
       return password_verify($plaintextPassword, $this->getPasswordHash());
    }
 
+  }
+ }
+ 
+ public function isPassword($plaintextPassword)
+ {
+  return password_verify($plaintextPassword, $this->getPasswordHash());
+ }
+ 
 
-   public function getLastname(): string
-   {
-      return $this->lastname;
-   }
-   public function setLastname(string $lastname)
-   {
-      $this->lastname = $lastname;
+ public function getLastname(): string
+ {
+  return $this->lastname;
+ }
+ public function setLastname(string $lastname)
+ {
+  $this->lastname = $lastname;
 
-      return $this;
-   }
-   public function getPasswordHash()
-   {
-      return $this->passwordHash;
-   }
-   public function setPasswordHash(string $passwordHash)
-   {
-      $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
-      $this->passwordHash = $passwordHash;
-      return $this;
-   }
-   public function getLogin(): string
-   {
-      return $this->login;
-   }
-   public function setLogin(string $login)
-   {
-      $this->login = $login;
+  return $this;
+ }
+ 
+ public function getPasswordHash()
+ {
+  return $this->passwordHash;
+ }
 
-      return $this;
-   }
-   /**
-    * Get the value of flag
-    */
-   public function getFlag(): string
-   {
-      return $this->flag;
-   }
-   /**
-    * Get the value of flag
-    */
-   public function getDisplayFlag(): string
-   {
-      if ($this->flag == "a") {
+
+ public function setPasswordHash(string $passwordHash)
+ {
+    $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
+  $this->passwordHash = $passwordHash;
+  return $this;
+ }
+ 
+ public function getLogin(): string
+ {
+  return $this->login;
+ }
+ public function setLogin(string $login)
+ {
+  $this->login = $login;
+
+  return $this;
+ }
+ /**
+  * Get the value of flag
+  */
+ public function getFlag(): string
+ {
+  return $this->flag;
+ }
+ /**
+  * Get the value of flag
+  */
+  public function getDisplayFlag(): string
+  {
+      if($this->flag =="a"){
          $flag = "Actif";
       }
       if ($this->flag == "w") {
@@ -278,28 +290,19 @@ class Users
       return $this;
    }
 
-   public function getRoles(): string
-   {
-      $result = "";
-      $format = ", ";
-      if ($this->isChef()) {
-         $result .= "Chef" . $format;
-      }
-      if ($this->isModerateur()) {
-         $result .= "Moderateur" . $format;
-      }
-      if ($this->isAdmin()) {
-         $result .= "Administateur" . $format;
-      }
-      if ($result == "") {
-         $result = "Utilisateur" . $format;
-      }
-      $pos = substr($result, 0, -2);
+  return $pos;
+ }
+public function setRoles():string
+{
 
-      return $pos;
-   }
-
-
+}
+ /**
+  * Get the value of idUser
+  */
+ public function getIdUser()
+ {
+  return $this->idUser;
+ }
 
    /**
     * Get the value of idUser

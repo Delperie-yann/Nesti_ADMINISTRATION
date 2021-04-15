@@ -33,11 +33,14 @@ class UsersController extends BaseController
             $newUser->setAddress1(filter_input(INPUT_POST, "userAdress1"));
             $newUser->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $newUser->setZipCode(filter_input(INPUT_POST, "userZipCode"));
+            // if (isset($_POST[role['chef']])){
+// a finir 
+            // }
             $newUser->setFlag("w");
             //verif IS valid?
             $insertedUser = $model->insertUser($newUser);
            var_dump($newUser);
-           header('Location:' . BASE_URL . "users");
+           //header('Location:' . BASE_URL . "users");
     }}
     public function editUser(){  
         if($action=="editing"){
