@@ -32,9 +32,6 @@ class Users
       return $lateCoDate;
    }
 
-
-
-
    public function isChef(): bool
    {
       $model = new ModelUsers();
@@ -73,54 +70,52 @@ class Users
   return password_verify($plaintextPassword, $this->getPasswordHash());
  }
  
+   public function getLastname(): string
+   {
+      return $this->lastname;
+   }
+   public function setLastname(string $lastname)
+   {
+      $this->lastname = $lastname;
 
- public function getLastname(): string
- {
-  return $this->lastname;
- }
- public function setLastname(string $lastname)
- {
-  $this->lastname = $lastname;
+      return $this;
+   }
 
-  return $this;
- }
- 
- public function getPasswordHash()
- {
-  return $this->passwordHash;
- }
+   public function getPasswordHash()
+   {
+      return $this->passwordHash;
+   }
 
+   public function setPasswordHash(string $passwordHash)
+   {
+      $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
+      $this->passwordHash = $passwordHash;
+      return $this;
+   }
 
- public function setPasswordHash(string $passwordHash)
- {
-    $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
-  $this->passwordHash = $passwordHash;
-  return $this;
- }
- 
- public function getLogin(): string
- {
-  return $this->login;
- }
- public function setLogin(string $login)
- {
-  $this->login = $login;
+   public function getLogin(): string
+   {
+      return $this->login;
+   }
+   public function setLogin(string $login)
+   {
+      $this->login = $login;
 
-  return $this;
- }
- /**
-  * Get the value of flag
-  */
- public function getFlag(): string
- {
-  return $this->flag;
- }
- /**
-  * Get the value of flag
-  */
-  public function getDisplayFlag(): string
-  {
-      if($this->flag =="a"){
+      return $this;
+   }
+   /**
+    * Get the value of flag
+    */
+   public function getFlag(): string
+   {
+      return $this->flag;
+   }
+   /**
+    * Get the value of flag
+    */
+   public function getDisplayFlag(): string
+   {
+      if ($this->flag == "a") {
          $flag = "Actif";
       }
       if ($this->flag == "w") {
