@@ -9,22 +9,22 @@
         <ul class="navbar-nav mr-auto navnesti justify-content-around">
             <li class="nav-item m-xl-3 <?= ($loc == 'recipes') ? 'active' : ''; ?>">
                 <a class="nav-link text-light" href="<?= BASE_URL ?>recipes">
-                    <i class="fas fa-clipboard-list mr-2"></i>
+                    <i class="fas fa-clipboard-list ml-2"></i>
                     Recettes</a>
             </li>
             <li class="nav-item m-xl-3 <?= ($loc == 'articles') ? 'active' : ''; ?>">
                 <a class="nav-link text-light" href="<?= BASE_URL ?>articles">
-                    <i class="fas fa-utensils mr-2"></i>
+                    <i class="fas fa-utensils ml-2"></i>
                     Articles</a>
             </li>
             <li class="nav-item m-xl-3 <?= ($loc == 'users') ? 'active' : ''; ?>">
                 <a class="nav-link text-light" href="<?= BASE_URL ?>users">
-                    <i class="fas fa-user mr-2"></i>
+                    <i class="fas fa-user ml-2"></i>
                     Utilisateurs</a>
             </li>
             <li class="nav-item m-xl-3 <?= ($loc == 'statistics') ? 'active' : ''; ?>">
                 <a class="nav-link text-light" href="<?= BASE_URL ?>statistics">
-                    <i class="fas fa-chart-bar mr-2"></i>
+                    <i class="fas fa-chart-bar ml-2"></i>
                     Statistiques
                 </a>
             </li>
