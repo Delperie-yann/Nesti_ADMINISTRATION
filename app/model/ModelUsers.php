@@ -50,12 +50,12 @@ class ModelUsers {
         $pdo= Connection::getPdo();
         try{
             // Create prepared statement
-            $sql = "INSERT INTO users (lastName,firstName,email,flag ,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (lastName,firstName,email,passwordHash,flag ,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             
             $stmt = $pdo->prepare($sql);
         //   var_dump($stmt);
         //    var_dump($user);
-            $values= [$user -> getLastName(),$user -> getFirstName(),$user -> getEmail(),$user -> getFlag(),$user -> getDateCreation(),$user -> getLogin(),$user -> getAddress1(),$user -> getAddress2(),$user -> getZipCode(),'1'];        
+            $values= [$user -> getLastName(),$user -> getFirstName(),$user -> getEmail(),$user->getPasswordHash(),$user -> getFlag(),$user -> getDateCreation(),$user -> getLogin(),$user -> getAddress1(),$user -> getAddress2(),$user -> getZipCode(),'1'];        
             // Execute the prepared statement
         
             $stmt->execute($values);
