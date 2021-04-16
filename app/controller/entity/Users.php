@@ -67,12 +67,12 @@ class Users
    }
 
 
- 
- public function isPassword($plaintextPassword)
- {
-  return password_verify($plaintextPassword, $this->getPasswordHash());
- }
- 
+
+   public function isPassword($plaintextPassword)
+   {
+      return password_verify($plaintextPassword, $this->getPasswordHash());
+   }
+
    public function getLastname(): string
    {
       return $this->lastname;
@@ -80,54 +80,44 @@ class Users
    public function setLastname(string $lastname)
    {
       $this->lastname = $lastname;
+   }
 
- public function getLastname(): string
- {
-  return $this->lastname;
- }
- public function setLastname(string $lastname)
- {
-  $this->lastname = $lastname;
-
-  return $this;
- }
- 
- public function getPasswordHash()
- {
-  return $this->passwordHash;
- }
+   public function getPasswordHash()
+   {
+      return $this->passwordHash;
+   }
 
 
- public function setPasswordHash(string $passwordHash)
- {
-    $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
-  $this->passwordHash = $passwordHash;
-  return $this;
- }
- 
- public function getLogin(): string
- {
-  return $this->login;
- }
- public function setLogin(string $login)
- {
-  $this->login = $login;
+   public function setPasswordHash(string $passwordHash)
+   {
+      $passwordHash = password_hash($passwordHash, PASSWORD_DEFAULT);
+      $this->passwordHash = $passwordHash;
+      return $this;
+   }
 
-  return $this;
- }
- /**
-  * Get the value of flag
-  */
- public function getFlag(): string
- {
-  return $this->flag;
- }
- /**
-  * Get the value of flag
-  */
-  public function getDisplayFlag(): string
-  {
-      if($this->flag =="a"){
+   public function getLogin(): string
+   {
+      return $this->login;
+   }
+   public function setLogin(string $login)
+   {
+      $this->login = $login;
+
+      return $this;
+   }
+   /**
+    * Get the value of flag
+    */
+   public function getFlag(): string
+   {
+      return $this->flag;
+   }
+   /**
+    * Get the value of flag
+    */
+   public function getDisplayFlag(): string
+   {
+      if ($this->flag == "a") {
          $flag = "Actif";
       }
       if ($this->flag == "w") {
@@ -292,47 +282,49 @@ class Users
    }
    public function getRoles(): string
    {
-    $result = "";
-    $format = ", ";
-    if ($this->isChef()) {
-     $result .= "Chef" . $format;
-    }
-    if ($this->isModerateur()) {
-     $result .= "Moderateur" . $format;
-    }
-    if ($this->isAdmin()) {
-     $result .= "Administateur" . $format;
-    }
-    if ($result == "") {
-     $result = "Utilisateur" . $format;
-    }
-    $pos = substr($result, 0, -2);
-  
-    return $pos;
-   }
- 
-public function setRoles()
-{
+      $result = "";
+      $format = ", ";
+      if ($this->isChef()) {
+         $result .= "Chef" . $format;
+      }
+      if ($this->isModerateur()) {
+         $result .= "Moderateur" . $format;
+      }
+      if ($this->isAdmin()) {
+         $result .= "Administateur" . $format;
+      }
+      if ($result == "") {
+         $result = "Utilisateur" . $format;
+      }
+      $pos = substr($result, 0, -2);
 
-}
-public function makeAdmin(){
-   $admin = new Admin();
-   $admin->setIdAdmin($this->idUser);
-   $model = new ModelAdmin();
-   $model->insertAdmin($admin);
-}
-public function makeModerator(){
-   $moderator = new Moderator();
-   $moderator->setIdModerator($this->idUser);
-   $model = new ModelModerator();
-   $model->insertModerator($moderator);
-}
-public function makeChef(){
-   $chef = new Chef();
-   $chef->setIdChef($this->idUser);
-   $model = new ModelChef();
-   $model->insertChef($chef);
-}
+      return $pos;
+   }
+
+   public function setRoles()
+   {
+   }
+   public function makeAdmin()
+   {
+      $admin = new Admin();
+      $admin->setIdAdmin($this->idUser);
+      $model = new ModelAdmin();
+      $model->insertAdmin($admin);
+   }
+   public function makeModerator()
+   {
+      $moderator = new Moderator();
+      $moderator->setIdModerator($this->idUser);
+      $model = new ModelModerator();
+      $model->insertModerator($moderator);
+   }
+   public function makeChef()
+   {
+      $chef = new Chef();
+      $chef->setIdChef($this->idUser);
+      $model = new ModelChef();
+      $model->insertChef($chef);
+   }
 
 
 
