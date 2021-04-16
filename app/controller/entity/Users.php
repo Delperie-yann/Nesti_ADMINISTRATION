@@ -73,6 +73,13 @@ class Users
   return password_verify($plaintextPassword, $this->getPasswordHash());
  }
  
+   public function getLastname(): string
+   {
+      return $this->lastname;
+   }
+   public function setLastname(string $lastname)
+   {
+      $this->lastname = $lastname;
 
  public function getLastname(): string
  {
