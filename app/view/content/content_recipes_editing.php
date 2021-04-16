@@ -9,8 +9,8 @@
             <p>Auteur de la recette</p>
             <div class="row">
                 <div class="col d-flex justify-content-between flex-column">
-                    <p class="mt-2 mb-2" >Difficulté (note sur 5)</p>
-                    <p class="mt-2 mb-2" >Nombre de personnes</p>
+                    <p class="mt-2 mb-2">Difficulté (note sur 5)</p>
+                    <p class="mt-2 mb-2">Nombre de personnes</p>
                     <p class="mt-2 mb-2">Temps de préparation en minutes</p>
                 </div>
                 <div class="col">
@@ -27,14 +27,19 @@
             </div>
         </div>
         <div class="col">
-            <div class="h-75" id="imgCtn" style="background-color: lightgray;">
 
-            </div>
-            <p>Télécharger une nouvelle image</p>
-            <div class="row">
-                <div class="col d-flex align-items-center"><input type="text" id="imgDl" class="w-100 h-100"></div>
-                <div class="col-sm-2"><button type="submit" class="btn valid w-100" onclick="dlImg()">Ok</button></div>
-            </div>
+            <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="post">
+                <div class="h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" style="background-color: lightgray;">
+                    <img src="" alt="" id="img">
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label"></label>
+                        <input class="form-control" type="file" id="formFile" name="pictures">
+                    </div>
+                    <div class="col-sm-2"><button type="submit" class="btn valid w-100" onclick="dlImg()">Ok</button></div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -56,7 +61,7 @@
                             <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center"><img src="<?php BASE_URL ?>public/images/delete.png" alt=""></button>
                         </div>
                         <div class="col" id="divTextArea">
-                            <textarea class="w-100 h-100 mt-2 mb-2" ></textarea>
+                            <textarea class="w-100 h-100 mt-2 mb-2"></textarea>
                         </div>
                     </div>
                 </div>
