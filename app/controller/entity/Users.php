@@ -66,13 +66,7 @@ class Users
       }
    }
 
-   public function isPassword($plaintextPassword)
-   {
-      return password_verify($plaintextPassword, $this->getPasswordHash());
-   }
 
-  }
- }
  
  public function isPassword($plaintextPassword)
  {
@@ -289,20 +283,51 @@ class Users
 
       return $this;
    }
-
-  return $pos;
- }
-public function setRoles():string
+   public function getRoles(): string
+   {
+    $result = "";
+    $format = ", ";
+    if ($this->isChef()) {
+     $result .= "Chef" . $format;
+    }
+    if ($this->isModerateur()) {
+     $result .= "Moderateur" . $format;
+    }
+    if ($this->isAdmin()) {
+     $result .= "Administateur" . $format;
+    }
+    if ($result == "") {
+     $result = "Utilisateur" . $format;
+    }
+    $pos = substr($result, 0, -2);
+  
+    return $pos;
+   }
+ 
+public function setRoles()
 {
 
 }
- /**
-  * Get the value of idUser
-  */
- public function getIdUser()
- {
-  return $this->idUser;
- }
+public function makeAdmin(){
+   $admin = new Admin();
+   $admin->setIdAdmin($this->idUser);
+   $model = new ModelAdmin();
+   $model->insertAdmin($admin);
+}
+public function makeModerator(){
+   $moderator = new Moderator();
+   $moderator->setIdModerator($this->idUser);
+   $model = new ModelModerator();
+   $model->insertModerator($moderator);
+}
+public function makeChef(){
+   $chef = new Chef();
+   $chef->setIdChef($this->idUser);
+   $model = new ModelChef();
+   $model->insertChef($chef);
+}
+
+
 
    /**
     * Get the value of idUser

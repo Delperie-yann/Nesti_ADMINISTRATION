@@ -6,7 +6,7 @@
 <script src="<?= BASE_URL ?>public/js/toast-chart.js"></script>
 <script src="<?= BASE_URL ?>public/js/statsCharts.js"></script>
 <script src="<?= BASE_URL ?>public/js/addUsers.js"></script>
-
+<script src="<?= BASE_URL ?>public/js/recipes.js"></script>
 </body>
 
 </html>
