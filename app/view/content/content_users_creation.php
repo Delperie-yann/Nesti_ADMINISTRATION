@@ -30,7 +30,7 @@
                 <p class="mt-5">Etat</p><br>
                 <!--a passer en  select -->
                 <input type="checkbox" class="w-75" name="state['actif']"><label for="a">Actif</label>
-                <input type="checkbox" class="w-75" name="state['wait']"checked><label for="w">En attente</label>
+                <input type="checkbox" class="w-75" name="state['wait']" checked><label for="w">En attente</label>
                 <input type="checkbox" class="w-75" name="state['block']"><label for="b">Bloqué</label>
                 <!-- CA -->
                 <div class="row">

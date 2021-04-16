@@ -33,6 +33,7 @@ class ModelRecipes
             $stmt->execute($values);
             $newRecipe = $this->readOneBy("idRecipe", $pdo->lastInsertId());
             echo "Records inserted successfully.";
+
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

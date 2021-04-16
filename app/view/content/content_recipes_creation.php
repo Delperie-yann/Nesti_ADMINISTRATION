@@ -4,7 +4,7 @@
             <div class="col">
                 <h1 class="mb-2 mt-4">Création d'une recette</h1>
                 <p>Nom de la recette</p>
-            <input type="text" class="w-100">
+            <input type="text" class="w-100" onkeypress="return onlyNumberKey(event)" name="recipeName" >
             <p>Auteur de la recette : <?= print_r($_SESSION["firstname"] . " " . $_SESSION["lastname"]) ?></p>
             <div class="row">
                 <div class="col d-flex justify-content-between flex-column">
