@@ -36,14 +36,29 @@ class UsersController extends BaseController
             $newUser->setAddress1(filter_input(INPUT_POST, "userAdress1"));
             $newUser->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $newUser->setZipCode(filter_input(INPUT_POST, "userZipCode"));
-            $newUser->setFlag("w");
+            if ($_POST["State"]=="actif"){
+                $newUser->setFlag("a");
+            }
+            if ($_POST["State"]=="wait"){
+                $newUser->setFlag("w");
+            }
+            if ($_POST["State"]=="block"){
+                $newUser->setFlag("b");
+            }
             //verif IS valid?
             $insertedUser = $model->insertUser($newUser);
-            var_dump( $insertedUser);
+            // var_dump( $insertedUser);
             if (isset($_POST["roleAdmin"])){
                 $insertedUser->makeAdmin();
            }
+           if (isset($_POST["roleChef"])){
+            $insertedUser->makeChef();
+           }
+            if (isset($_POST["roleModerator"])){
+             $insertedUser->makeModerator();
+           }
            
+            
              header('Location:' . BASE_URL . "users");
         }
     }

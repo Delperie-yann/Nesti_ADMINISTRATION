@@ -309,16 +309,22 @@ public function setRoles()
 
 }
 public function makeAdmin(){
-   $admin = new Admin() ;
+   $admin = new Admin();
    $admin->setIdAdmin($this->idUser);
    $model = new ModelAdmin();
    $model->insertAdmin($admin);
 }
 public function makeModerator(){
-   
+   $moderator = new Moderator();
+   $moderator->setIdModerator($this->idUser);
+   $model = new ModelModerator();
+   $model->insertModerator($moderator);
 }
-public function makeChief(){
-   
+public function makeChef(){
+   $chef = new Chef();
+   $chef->setIdChef($this->idUser);
+   $model = new ModelChef();
+   $model->insertChef($chef);
 }
 
 
