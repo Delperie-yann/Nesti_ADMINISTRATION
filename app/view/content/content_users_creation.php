@@ -26,7 +26,7 @@
                 <p class="mt-5">Rôle</p><br>
                 <input type="checkbox" class="w-75" name="role['chef']"><label for="chef">Chef</label>
                 <input type="checkbox" class="w-75" name="role['moderator']"><label for="moderator">Moderateurr</label>
-                <input type="checkbox" class="w-75" name="role['Utilisateur']" checked><label for="Utilisateur">Utilisateur</label>
+                <input type="checkbox" class="w-75" name="roleAdmin"><label for="Admin">Administateur</label>
                 <p class="mt-5">Etat</p><br>
                 <!--a passer en  select -->
                 <input type="checkbox" class="w-75" name="state['actif']"><label for="a">Actif</label>

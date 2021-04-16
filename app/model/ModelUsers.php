@@ -59,9 +59,9 @@ class ModelUsers {
             // Execute the prepared statement
         
             $stmt->execute($values);
-        //    var_dump($values);
-            // var_dump($pdo->lastInsertId());
+        
             $newUser = $this->readOneBy("idUsers",$pdo->lastInsertId());
+           
             echo "Records inserted successfully.";
         } catch(PDOException $e){
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());

@@ -308,6 +308,19 @@ public function setRoles()
 {
 
 }
+public function makeAdmin(){
+   $admin = new Admin() ;
+   $admin->setIdAdmin($this->idUser);
+   $model = new ModelAdmin();
+   $model->insertAdmin($admin);
+}
+public function makeModerator(){
+   
+}
+public function makeChief(){
+   
+}
+
 
 
    /**
