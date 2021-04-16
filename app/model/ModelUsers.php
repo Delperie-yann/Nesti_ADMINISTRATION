@@ -69,5 +69,24 @@ class ModelUsers {
         unset($pdo);
         return $newUser;
     }
-    
+    public function deleteUser(Users &$user)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            $sql = "UPDATE users SET flag = 'b' WHERE idUsers = ?";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$user->getIdUser()];
+          
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $deleteUser = $this->readOneBy("idUsers", $user->getIdUser());
+            echo "Records deleted successfully.";
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return  $deleteUser;
+    }
 }
