@@ -66,7 +66,9 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="btn-group">
+                                                <form action="<?php echo (BASE_URL) ?>users/deleted/<?= $value->getIdUser(); ?>" method="POST">
                                                     <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Confirmer</button>
+                                                </form>
                                                     <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
 
                                                 </div>

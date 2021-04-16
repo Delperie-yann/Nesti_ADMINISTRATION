@@ -28,11 +28,12 @@ class ModelRecipes
             $stmt = $pdo->prepare($sql);
 
 
-            $values = [$recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getPreparationTime(), "2"];
+            $values = [$recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getPreparationTime(),$recipe->getIdChef()];
             // Execute the prepared statement
             $stmt->execute($values);
             $newRecipe = $this->readOneBy("idRecipe", $pdo->lastInsertId());
             echo "Records inserted successfully.";
+
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
