@@ -35,10 +35,13 @@ var_dump("initialze");
     $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
     $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
     $recipe->setFlag("w");
+    // var_dump($_SESSION['idUser']);
+    $recipe->setIdChef($_SESSION['idUser']);
+    
     //verif IS valid?
     $insertedRecipe = $model->insertRecipe($recipe);
     header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
-    var_dump($recipe);
+    // var_dump($recipe);
     // $user = new Users();
     // $user->setName($_SESSION["idUsers"]);
   }
