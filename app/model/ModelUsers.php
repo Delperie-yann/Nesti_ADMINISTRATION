@@ -33,6 +33,7 @@ class ModelUsers {
         //var_dump($data);
         $user = new Users();
         $user -> setUserFromArray($data);
+        // var_dump($user);
         //$user -> setId($data);
         return $user;
     }
