@@ -1,48 +1,174 @@
-<a href="<?= BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Création</a>
+<a href="<?= BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Edition</a>
 
 <div class="container">
-<form action="<?php echo (BASE_URL) ?>users/add" method="POST">
+
     <div class="row mt-3">
-       
-            <div class="col">
-                <h1>Création d'un utilisateur</h1>
 
-                <p class="mt-5">Nom</p><br>
-                <input type="text" class="w-75" name="userLastname">
-                
-                <p class="mt-5">Prénom</p><br>
-                <input type="text" class="w-75" name="userFirstname">
-                
-                <p class="mt-5">Adress1</p><br>
-                <input type="text" class="w-75" name="userAdress1">
-                
-                <p class="mt-5">Adress2</p><br>
-                <input type="text" class="w-75" name="userAdress2">
-                
-                <p class="mt-5">Zipcode</p><br>
-                <input type="text" class="w-75" name="userZipCode">
-                
-                
-                <p class="mt-5">Rôle</p><br>
-                <input type="text" class="w-75">
-                
-                <p class="mt-5">Etat</p><br>
-                <input type="text" class="w-75">
+        <div class="col">
+            <h1>Edition des utilisateurs</h1>
 
-                <div class="row">
-                    <div class="d-flex justify-content-center p-2">
-                        <button type="submit" class="btn m-10 ml-2 valid w-50">Valider</button>
-                        <button type="submit" class="btn m-10 ml-5 cancel w-50">Annuler</button>
-                    </div>
-                </div>
+            <p class="mt-5">Nom</p><br>
+            <input type="text" class="w-75" name="userLastname" value="<?= $user->getFirstname()  ?>" >
+
+            <p class="mt-5">Prénom</p><br>
+            <input type="text" class="w-75" name="userFirstname" value="<?= $user->getLastname()  ?>">
+
+            <p class="mt-5">Adress1</p><br>
+            <input type="text" class="w-75" name="userAdress1" value="<?= $user->getAddress1() ?>"> 
+
+            <p class="mt-5">Adress2</p><br>
+            <input type="text" class="w-75" name="userAdress2" value="<?= $user->getAddress2()  ?>">
+
+            <p class="mt-5">Zipcode</p><br>
+            <input type="text" class="w-75" name="userZipCode" value="<?= $user->getZipCode()  ?>">
+
+            <p class="mt-5">Rôle</p><br>
+            <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef()=="chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>
+            <input type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur()=="moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
+            <input type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin()=="Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
+            
+            
+            
+            
+            <p class="mt-5">Etat</p><br>
+          
+            
+            
+            <div>
+                <input type="radio" id="actif" name="State" value="actif" <?= $user->getFlag()=="a" ? 'checked' : '' ?>>
+                <label for="actif">actif</label>
             </div>
 
-            <div class="col mt-5">
-                 <p class="mt-5">Login</p><br>
-                <input type="text" class="w-75" name="userLogin">
-                <p class="mt-5">Email</p><br>
-                <input type="text" class="w-75" name="userEmail">
-                <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd" required>
+            <div>
+                <input type="radio" id="wait" name="State" value="wait" <?= $user->getFlag()=="w" ? 'checked' : '' ?> >
+                <label for="wait">wait</label>
+            </div>
+
+            <div>
+                <input type="radio" id="block" name="State" value="block" <?= $user->getFlag()=="b" ? 'checked' : '' ?>>
+                <label for="block">block</label>
+            </div>
+         
+            <div class="row">
+                <div class="d-flex justify-content-center p-2">
+                    <button type="submit" class="btn m-10 ml-2 valid w-50">Valider</button>
+                    <button type="submit" class="btn btn-danger m-10 ml-2 w-50">Supprimer</button>
+                </div>
+            </div>
+        </div>
+        <div class="col mt-5">
+            <h2>Informations</h2>
+            <div class="card">
+                <div class="card-body-editing">
+                    Date de Création :  <br>
+                    Dernière Connexion : <br>
+                    <?= $user->isChef()=="chef" ? 'Chef patissier <br> Nombre de recette :' : ''?> <br>
+                </div>
+
+            </div>
+            <button type="button" class="btn btn-info editing">Réinitalistation du mot de passe</button>
+
+        </div>
+    </div>
+</div>
+<div class="container commande">
+
+    <div class="row mt-9">
+
+        <div class="col-9">
+
+            <h1 class="mb-2 mt-4 ml-5">Ses commandes</h1>
+            <p>Consultation des commandes</p>
+
+            <div class="container bg-grey d-flex flex-column align-items-left" id="recipes">
+                <div class="d-flex flex-row justify-content-between">
+                    <nav class="navbar navbar-white  pl-0">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder=""
+                                aria-label="Search">
+                            <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" width="20px"
+                                height="25px">
+                        </form>
+                    </nav>
+                   
+                </div>
+
+
+                <table class="table">
+
+                    <thead>
+
+                        <th scope="col">ID</th>
+                        <th scope="col">Utilisateur</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Nb d'articles</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Etat</th>
+
+                    </thead>
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col mt-3">
+            <h2>Détails </h2>
+            <div class="card">
+                <div class="card-body-detail">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi, iste architecto ullam optio non
+                    porro esse sint deserunt minus distinctio debitis natus, voluptatum eaque corrupti hic
+                    dignissimos fugit voluptas consequatur!
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container commantaire">
+
+    <div class="row mt-12">
+
+        <div class="col-12">
+
+            <h1 class="mb-2 mt-4 ml-5">Ses Commantaires</h1>
+            <p>Modération de ses commantaires</p>
+
+            <div class="container bg-white d-flex flex-column align-items-left" id="recipes">
+                <div class="d-flex flex-row justify-content-between">
+                    <nav class="navbar navbar-white bg-white pl-0">
+                       
+                    </nav>
+                    
+                       
+                    
+                </div>
+
+
+                <table class="table">
+
+                    <thead>
+
+                        <th scope="col">ID</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Recette</th>
+                        <th scope="col">Contenu</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Actions</th>
+                    </thead>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="col mt-5">
+              
+                <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd"
+                    required>
                 &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="3" high="5" min="0" max="5"
                     id="pwd_meter">0%</meter><br>
 
@@ -60,7 +186,4 @@
                     <li><span class="advice" id="pwd_warn5">Le mot de passe doit contenir au moins un caractère
                             non-alphanumérique.</span></li>
                 </ul>
-            </div>
-        </form>
-    </div>
-</form>
+            </div> -->

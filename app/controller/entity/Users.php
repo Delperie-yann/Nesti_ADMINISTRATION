@@ -164,9 +164,9 @@ class Users
    /**
     * Get the value of adress1
     */
-   public function getAddress1(): string
+   public function getAddress1()
    {
-      return $this->adress1;
+      return $this->address1;
    }
 
    /**
@@ -174,9 +174,9 @@ class Users
     *
     * @return self
     */
-   public function setAddress1($adress1): self
+   public function setAddress1($address1): self
    {
-      $this->adress1 = $adress1;
+      $this->address1 = $address1;
 
       return $this;
    }
@@ -184,9 +184,9 @@ class Users
    /**
     * Get the value of adress2
     */
-   public function getAddress2(): string
+   public function getAddress2()
    {
-      return $this->adress2;
+      return $this->address2;
    }
 
    /**
@@ -194,9 +194,9 @@ class Users
     *
     * @return self
     */
-   public function setAddress2($adress2): self
+   public function setAddress2($address2): self
    {
-      $this->adress2 = $adress2;
+      $this->address2 = $address2;
 
       return $this;
    }

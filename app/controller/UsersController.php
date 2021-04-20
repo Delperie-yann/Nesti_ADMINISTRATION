@@ -19,6 +19,9 @@ class UsersController extends BaseController
             $this->addUser();
 
         }
+        if ($action =="editing") {
+            $this->editUser($idUser);
+        }
         if ($action == "deleted") {
             $this->delete($idUser);
           }
@@ -65,12 +68,16 @@ class UsersController extends BaseController
              header('Location:' . BASE_URL . "users");
         }
     }
-    public function editUser()
-    {
-        if ($action == "editing") {
-            $user = $model->readOneBy("idUser", $idUser);
+    public function editUser($id)
+    {   
 
-        }
+        $model = new ModelUsers();
+        $user = $model->readOneBy("idUsers", $id);
+        
+        $this->data['user'] = $user;
+        
+
+        
   // $user = new Users();
    // $user->setName($_SESSION["idUsers"]);
     }
