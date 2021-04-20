@@ -1,5 +1,3 @@
-<h1>Recettes</h1>
-<h2>Edition</h2>
 <div class="container bg-white d-flex flex-column align-items-left" id="recettes">
     <div class="row mt-3">
         <div class="col">
@@ -29,15 +27,15 @@
         <div class="col">
 
             <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="post">
-                <div class="h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" style="background-color: lightgray;">
+                <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" style="background-color: lightgray;">
                     <img src="" alt="" id="img">
                 </div>
                 <div class="row">
                     <div class="mb-3">
                         <label for="formFile" class="form-label"></label>
-                        <input class="form-control" type="file" id="formFile" name="pictures">
+                        <input class="form-control ml-3" type="file" id="formFile" name="pictures">
                     </div>
-                    <div class="col-sm-2"><button type="submit" class="btn valid w-100" onclick="dlImg()">Ok</button></div>
+                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100" onclick="dlImg()">Ok</button></div>
                 </div>
             </form>
         </div>
