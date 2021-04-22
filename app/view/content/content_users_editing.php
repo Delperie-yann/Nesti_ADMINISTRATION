@@ -60,9 +60,15 @@
             <h2>Informations</h2>
             <div class="card">
                 <div class="card-body-editing">
-                    Date de Création :  <br>
-                    Dernière Connexion : <br>
-                    <?= $user->isChef()=="chef" ? 'Chef patissier <br> Nombre de recette :' : ''?> <br>
+                    Date de Création : <?= $user->getDateCreation()  ?> <br>
+                    Dernière Connexion : <?= $connect->getDateConnection() ?><br>
+                    <?= $user->isChef()=="chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :'. $user->getChef()->getCountRecipe().'  <br> Derniere Recette : '.$user->getChef()->getLastRecipe() : ''?> <br>
+                    <Strong>Utilisateur </Strong><br>
+                    Nombre de commande : <?= $user->getCountOrders() ?> <br>
+                    Montant total des commandes : <br>
+                    Derniere commande : <br>
+                    <?= $user->isAdmin()=="Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : ''?> <br>
+                    <?= $user->isModerateur()=="moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :' : ''?> <br>
                 </div>
 
             </div>
@@ -86,7 +92,7 @@
                         <form class="form-inline">
                             <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder=""
                                 aria-label="Search">
-                            <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" width="20px"
+                            <img id="searchRecipe" src="<?php BASE_URL ?>../../public/images/search.png" alt="" width="20px"
                                 height="25px">
                         </form>
                     </nav>
@@ -106,8 +112,22 @@
                         <th scope="col">Etat</th>
 
                     </thead>
-
-
+                    <?php
+            //var_dump($arrayRecipes);
+            foreach ($arrayOrders as $value) {
+            ?>
+                    <tr>
+                    <td ><?= $value->getIdOrders(); ?></td>
+                    <td><?= $user->getLastname(); ?> <?= $user->getFirstname(); ?></td>
+                    <td></td>
+                    <td></td>
+                    <td><?= $value->getDateCreation(); ?></td>
+                    <td><?= $value->getState($value); ?></td>
+                    <td></td>
+                    </tr>
+            <?php
+            }
+            ?>
                 </table>
             </div>
         </div>
@@ -131,8 +151,8 @@
 
         <div class="col-12">
 
-            <h1 class="mb-2 mt-4 ml-5">Ses Commantaires</h1>
-            <p>Modération de ses commantaires</p>
+            <h1 class="mb-2 mt-4 ml-5">Ses Commentaires</h1>
+            <p>Modération de ses commentaires</p>
 
             <div class="container bg-white d-flex flex-column align-items-left" id="recipes">
                 <div class="d-flex flex-row justify-content-between">
@@ -157,7 +177,25 @@
                         <th scope="col">Etat</th>
                         <th scope="col">Actions</th>
                     </thead>
-
+                    <?php
+            //var_dump($arrayRecipes);
+            foreach ($arrayCom as $com) {
+            ?>
+                    <tr>
+                    <td ></td>
+                    <td><?= $com->getCommentTitle(); ?></td>
+                    <td>a modifier : <?= $com->getNameRecipe(); ?></td>
+                    <td><?= $com->getCommentContent(); ?></td>
+                    <td><?= $value->getDateCreation(); ?></td>
+                    <td><?= $value->getState($value); ?></td>
+                    <td>
+                <a href="">Approuver</a><br>
+               
+                <a data-toggle="modal" href="">Bloquer</a>
+                </td> </tr>
+            <?php
+            }
+            ?>
 
                 </table>
             </div>

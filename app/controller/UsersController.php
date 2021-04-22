@@ -70,14 +70,20 @@ class UsersController extends BaseController
     }
     public function editUser($id)
     {   
-
+        $connect = new ModelConnectionLog();
+        $co = $connect->readOneBy("idUsers", $id);
+        
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $id);
-        
+       
+      
         $this->data['user'] = $user;
-        
-
-        
+        $this->data['connect'] = $co;
+        $model = new ModelOrders();
+        $this->data['arrayOrders'] = $model->readAll();
+    //    var_dump($this->data['arrayOrders']);
+          $com = new ModelComment();
+         $this->data['arrayCom'] = $com->readAll();
   // $user = new Users();
    // $user->setName($_SESSION["idUsers"]);
     }
