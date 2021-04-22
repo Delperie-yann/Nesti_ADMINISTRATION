@@ -24,4 +24,13 @@ class ModelChef {
         unset($pdo);
         // return $newUser;
     }
+    // public function findChild($type,$value){
+    //     $pdo= Connection::getPdo();
+    //     $sql="SELECT * FROM $type WHERE id".ucfirst($type)."= $value";
+    //    //var_dump($sql);
+    //     $result=$pdo->query($sql);
+    //     $data = $result-> fetch();
+    //     return $data;
+
+    // }
 }

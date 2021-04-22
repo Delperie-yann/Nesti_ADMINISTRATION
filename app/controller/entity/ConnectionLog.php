@@ -76,4 +76,12 @@ class ConnectionLog{
 
         return $this;
     }
+    public function setLogFromArray($log)
+    {
+       //var_dump($user);
+       foreach ($log as $key => $value) {
+ 
+          $this->$key = $value;
+       }
+    }
 }
