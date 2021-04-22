@@ -32,29 +32,43 @@ class Users
       return $lateCoDate;
    }
 
-
-
+   public function getChef()
+   {
+      $model = new ModelUsers();
+      $data  = $model->findChild("chef", $this->getIdUser());
+      $chef = new Chef();
+      $chef->setChefFromArray($data);
+      return $chef;
+   }
 
    public function isChef(): bool
    {
-      $model = new ModelUsers();
-      $chef  = $model->findChild("chef", $this->getIdUser());
-      //var_dump($chef);
-      return $chef != null;
+     
+      return $this->getChef() != null;
    }
-   public function isModerateur(): bool
-   {
+
+   public function getModerator(){
       $model     = new ModelUsers();
       $moderator = $model->findChild("moderator", $this->getIdUser());
-      //var_dump($chef);
-      return $moderator != null;
+      return $moderator;
    }
-   public function isAdmin(): bool
+
+
+   public function isModerateur(): bool
+   {
+      return $this->getModerator() != null;
+   }
+
+   public function getAdmin()
    {
       $model = new ModelUsers();
       $admin = $model->findChild("administrator", $this->getIdUser());
-      //var_dump($chef);
-      return $admin != null;
+      return $admin;
+   }
+
+   public function isAdmin(): bool
+   {
+      return $this->getAdmin() != null;
    }
 
    public function setUserFromArray($user)
@@ -346,5 +360,17 @@ class Users
       $this->idUser = $idUser;
 
       return $this;
+   }
+
+
+   public function getCountOrders()
+   {
+       return count($this->getOrders());
+   }
+
+   public function getOrders(){
+      $modelorder = new ModelOrders();
+      $orders = $modelorder->readAllBy("idUsers",$this->idUser);
+      return $orders;
    }
 }

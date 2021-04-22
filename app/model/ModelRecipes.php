@@ -73,10 +73,10 @@ class ModelRecipes
         } else {
             $data = [];
         }
-        //var_dump($data);
+        
         $recipe = new Recipes();
         $recipe->setUserFromArray($data);
-        //$user -> setId($data);
+       
         return $recipe;
     }
 
@@ -115,3 +115,4 @@ class ModelRecipes
         return $recipe;
     }
 }
+

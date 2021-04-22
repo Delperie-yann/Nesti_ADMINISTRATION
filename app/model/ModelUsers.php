@@ -90,4 +90,5 @@ class ModelUsers {
         unset($pdo);
         return  $deleteUser;
     }
+
 }

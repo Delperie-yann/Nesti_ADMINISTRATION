@@ -38,7 +38,28 @@ class ModelConnectionLog  {
         return $array;
     }
     
-    
+    public function readOneBy($parameter,$value) {
+        //requete
+        $pdo= Connection::getPdo();
+
+        $sql="SELECT idUsersLog,dateConnection,IdUsers From connectionlog Where $parameter=$value ORDER BY dateConnection DESC";
+      
+        $result=$pdo->query($sql);
+        //var_dump($result);
+        if($result){
+         
+            $data = $result-> fetch(PDO::FETCH_ASSOC) ;
+        } else{
+          
+            $data=[];
+        }
+        //var_dump($data);
+        $user = new ConnectionLog();
+        $user -> setLogFromArray($data);
+        // var_dump($user);
+        //$user -> setId($data);
+        return $user;
+    }
 
 
 
