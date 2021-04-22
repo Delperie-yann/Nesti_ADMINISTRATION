@@ -12,6 +12,27 @@ class Recipes
     private $idChef;
     private $image;
 
+
+/**
+     * Get the value of dateCreation
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set the value of dateCreation
+     *
+     * @return self
+     */
+    public function setDateCreation($dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
     /**
      * Get the value of idRecipe
      */

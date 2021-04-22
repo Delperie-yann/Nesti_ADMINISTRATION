@@ -71,16 +71,29 @@ class ModelRecipes
         $result = $pdo->query($sql);
 
         if ($result) {
-
             $data = $result->fetch();
         } else {
-
             $data = [];
         }
-        //var_dump($data);
+        
         $recipe = new Recipes();
         $recipe->setUserFromArray($data);
-        //$user -> setId($data);
+       
         return $recipe;
     }
+    public function readAllBy($parameter, $value)
+    {
+       
+        $pdo = Connection::getPdo();
+
+        $sql = "SELECT * FROM recipe where $parameter = '$value'";
+        $result = $pdo->query($sql);
+
+    if ($result) {
+        $array = $result->fetchAll(PDO::FETCH_CLASS, 'Recipes');
+    } else {
+        $array = [];
+    }
+    return $array;
+}
 }

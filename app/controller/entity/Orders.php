@@ -2,130 +2,107 @@
 
 class Orders
 {
- private $id;
- private $lastname;
- private $firstname;
+ private $idOrders;
  private $flag;
  private $dateCreation;
- private $quant;
+ private $idUsers;
 
- /**
-  * Get the value of id
-  */
- public function getId()
- {
-  return $this->id;
- }
 
- /**
-  * Set the value of id
-  *
-  * @return self
-  */
- public function setId($id): self
- {
-  $this->id = $id;
 
-  return $this;
- }
+   /**
+     * Get the value of idOrdes
+     */
+    public function getIdOrders()
+    {
+        return $this->idOrders;
+    }
 
- /**
-  * Get the value of dateCreation
-  */
- public function getDateCreation()
- {
-  return $this->dateCreation;
- }
+    /**
+     * Set the value of idOrdes
+     *
+     * @return  self
+     */
+    public function setIdOrders($idOrders)
+    {
+        $this->idOrders = $idOrders;
 
- /**
-  * Set the value of dateCreation
-  *
-  * @return self
-  */
- public function setDateCreation($dateCreation): self
- {
-  $this->dateCreation = $dateCreation;
+        return $this;
+    }
 
-  return $this;
- }
+/**
+     * Get the value of flag
+     */
+    public function getFlag()
+    {
+        return $this->flag;
+    }
+    /**
+     * Set the value of flag
+     *
+     * @return  self
+     */
+    public function setFlag($flag)
+    {
+        $this->flag = $flag;
 
- /**
-  * Get the value of flag
-  */
- public function getFlag()
- {
-  return $this->flag;
- }
+        return $this;
+    }
 
- /**
-  * Set the value of flag
-  *
-  * @return self
-  */
- public function setFlag($flag): self
- {
-  $this->flag = $flag;
+    public function getState($entity)
+    {
 
-  return $this;
- }
+        if ($entity->getFlag() == "a") {
+            $state = "Payé";
+        } else if ($entity->getFlag() == "w") {
+            $state = "En attente";
+        } else {
+            $state = "Annulé";
+        }
+        return $state;
+    }
 
- /**
-  * Get the value of firstname
-  */
- public function getFirstname()
- {
-  return $this->firstname;
- }
+    /**
+     * Get the value of dateCreation
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
 
- /**
-  * Set the value of firstname
-  *
-  * @return self
-  */
- public function setFirstname($firstname): self
- {
-  $this->firstname = $firstname;
+    public function getFormatedDate()
+    {
+        setlocale(LC_TIME,'fr_FR.utf8','fra');
+        return utf8_encode(ucwords(strftime(" %d %B %G %Hh%M", strtotime($this->getDateCreation()))));
+    }
+    
+    /**
+     * Set the value of dateCreation
+     *
+     * @return  self
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
 
-  return $this;
- }
+        return $this;
+    }
+    /**
+     * Get the value of idUsers
+     */
+    public function getIdUsers()
+    {
+        return $this->idUsers;
+    }
 
- /**
-  * Get the value of lastname
-  */
- public function getLastname()
- {
-  return $this->lastname;
- }
+    /**
+     * Set the value of idUsers
+     *
+     * @return  self
+     */
+    public function setIdUsers($idUsers)
+    {
+        $this->idUsers = $idUsers;
 
- /**
-  * Set the value of lastname
-  *
-  * @return self
-  */
- public function setLastname($lastname): self
- {
-  $this->lastname = $lastname;
-
-  return $this;
- }
-
- /**
-  * Get the value of quant
-  */
- public function getQuant()
- {
-  return $this->quant;
- }
-
- /**
-  * Set the value of quant
-  *
-  * @return self
-  */
- public function setQuant($quant): self
- {
-  $this->quant = $quant;
-
-  return $this;
- }
+        return $this;
+    }
 }
