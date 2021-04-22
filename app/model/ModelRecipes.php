@@ -27,13 +27,11 @@ class ModelRecipes
 
             $stmt = $pdo->prepare($sql);
 
-
-            $values = [$recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getPreparationTime(),$recipe->getIdChef()];
+            $values = [$recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getPreparationTime(), $recipe->getIdChef()];
             // Execute the prepared statement
             $stmt->execute($values);
             $newRecipe = $this->readOneBy("idRecipe", $pdo->lastInsertId());
             echo "Records inserted successfully.";
-
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
@@ -81,19 +79,40 @@ class ModelRecipes
        
         return $recipe;
     }
+
     public function readAllBy($parameter, $value)
     {
-       
         $pdo = Connection::getPdo();
 
         $sql = "SELECT * FROM recipe where $parameter = '$value'";
         $result = $pdo->query($sql);
 
-    if ($result) {
-        $array = $result->fetchAll(PDO::FETCH_CLASS, 'Recipes');
-    } else {
-        $array = [];
+        if ($result) {
+            $array = $result->fetchAll(PDO::FETCH_CLASS, 'Recipes');
+        } else {
+            $array = [];
+        }
+        return $array;
     }
-    return $array;
+
+    public function updateRecipes(Recipes &$recipe)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            $sql = "UPDATE recipe SET idImage = ?, name = ?, portions = ?, flag = ?, idChef = ? where idRecipe = ?";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$recipe->getIdImage(), $recipe->getName(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getIdChef(), $recipe->getIdRecipe()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $recipe = $this->readOneBy("idRecipe", $recipe->getIdRecipe());
+            echo "Records deleted successfully.";
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $recipe;
+    }
 }
 }

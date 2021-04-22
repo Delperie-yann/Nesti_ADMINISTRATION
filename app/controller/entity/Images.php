@@ -10,7 +10,7 @@ class Images
 
     /**
      * Get the value of idImage
-     */ 
+     */
     public function getIdImage()
     {
         return $this->idImage;
@@ -20,7 +20,7 @@ class Images
      * Set the value of idImage
      *
      * @return  self
-     */ 
+     */
     public function setIdImage($idImage)
     {
         $this->idImage = $idImage;
@@ -30,7 +30,7 @@ class Images
 
     /**
      * Get the value of dateCreation
-     */ 
+     */
     public function getDateCreation()
     {
         return $this->dateCreation;
@@ -40,7 +40,7 @@ class Images
      * Set the value of dateCreation
      *
      * @return  self
-     */ 
+     */
     public function setDateCreation($dateCreation)
     {
         $this->dateCreation = $dateCreation;
@@ -50,7 +50,7 @@ class Images
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -60,7 +60,7 @@ class Images
      * Set the value of name
      *
      * @return  self
-     */ 
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -70,7 +70,7 @@ class Images
 
     /**
      * Get the value of fileExtension
-     */ 
+     */
     public function getFileExtension()
     {
         return $this->fileExtension;
@@ -80,11 +80,19 @@ class Images
      * Set the value of fileExtension
      *
      * @return  self
-     */ 
+     */
     public function setFileExtension($fileExtension)
     {
         $this->fileExtension = $fileExtension;
 
         return $this;
+    }
+
+    public function setImagesFromArray($images)
+    {
+        foreach ($images as $key => $value) {
+
+            $this->$key = $value;
+        }
     }
 }

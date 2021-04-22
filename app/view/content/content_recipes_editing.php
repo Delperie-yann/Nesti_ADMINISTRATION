@@ -27,8 +27,8 @@
         <div class="col">
 
             <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="post">
-                <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" style="background-color: lightgray;">
-                    <img src="" alt="" id="img">
+                <div class="mt-5 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;">
+                    <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
                 </div>
                 <div class="row">
                     <div class="mb-3">

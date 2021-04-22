@@ -10,7 +10,7 @@ class Recipes
     private $flag;
     private $preparationTime;
     private $idChef;
-    private $image;
+    private $idImage;
 
 
 /**
@@ -192,6 +192,46 @@ class Recipes
         }
     }
 
+    /**
+     * Get the value of dateCreation
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set the value of dateCreation
+     *
+     * @return  self
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idImage
+     */
+    public function getIdImage()
+    {
+        return $this->idImage;
+    }
+
+    /**
+     * Set the value of idImage
+     *
+     * @return  self
+     */
+    public function setIdImage($idImage)
+    {
+        $this->idImage = $idImage;
+
+        return $this;
+    }
+
     /*---------------------------------------------------------------*/
     /*
     Titre : Convertie de secondes en heures, minutes et secondes                                                          
@@ -238,5 +278,19 @@ class Recipes
             $color = "bg-2";
         }
         return $color;
+    }
+
+    public function getImages()
+    {
+        $model = new ModelImages();
+        $images = $model->readOneBy("idImage", $this->getIdImage());
+        return $images;
+    }
+
+    public function displayImages()
+    {
+        $imageName = $this->getImages()->getName();
+        $imageExtension = $this->getImages()->getFileExtension();
+        return BASE_URL . "public/img/recipes/$imageName.$imageExtension";
     }
 }

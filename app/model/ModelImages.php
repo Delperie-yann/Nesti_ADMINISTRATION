@@ -21,7 +21,7 @@ class ModelImages
         }
         //var_dump($data);
         $images = new Images();
-        // $images -> setImagesFromArray($data); erreur à corriger
+        $images->setImagesFromArray($data);
         //$user -> setId($data);
         return $images;
     }
@@ -31,12 +31,13 @@ class ModelImages
         $pdo = Connection::getPdo();
         try {
             // Create prepared statement
-            $sql = "INSERT INTO image (idImage,dateCreation,name,fileExtension) VALUES (?,?,?,?)";
+            $sql = "INSERT INTO image (name,fileExtension) VALUES (?,?)";
 
             $stmt = $pdo->prepare($sql);
 
-
-            $values = [$images->getIdImage(), $images->getDateCreation(), $images->getName(), $images->getFileExtension()];
+            echo ("c'est de la merde php");
+            $values = [$images->getName(), $images->getFileExtension()];
+            var_dump($values);
             // Execute the prepared statement
             $stmt->execute($values);
             $newImages = $this->readOneBy("idImage", $pdo->lastInsertId());
