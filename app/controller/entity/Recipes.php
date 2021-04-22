@@ -192,25 +192,7 @@ class Recipes
         }
     }
 
-    /**
-     * Get the value of dateCreation
-     */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
-    }
-
-    /**
-     * Set the value of dateCreation
-     *
-     * @return  self
-     */
-    public function setDateCreation($dateCreation)
-    {
-        $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
+   
 
     /**
      * Get the value of idImage
