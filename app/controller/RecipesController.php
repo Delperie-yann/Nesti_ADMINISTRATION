@@ -8,13 +8,13 @@ class RecipesController extends BaseController
     $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
     $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
     $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
-var_dump("initialze");
+    var_dump("initialze");
     if ($action == '') {
       $this->data['arrayRecipes'] = $model->readAll();
     }
     var_dump($action);
     if ($action == "add") {
-     
+
       $this->create();
     }
     if ($action == "editing") {
@@ -41,7 +41,7 @@ var_dump("initialze");
     $recipe->setFlag("w");
     // var_dump($_SESSION['idUser']);
     $recipe->setIdChef($_SESSION['idUser']);
-    
+
     //verif IS valid?
     $insertedRecipe = $model->insertRecipe($recipe);
     header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
@@ -60,16 +60,8 @@ var_dump("initialze");
 
   public function addImage($id)
   {
-    // echo  $id;
-    // $model = new ModelRecipes();
-    // $recipe = $model->readOneBy("idRecipe", $id);
-    // var_dump($recipe);
-
-    // var_dump($_FILES["pictures"]["name"]);
-    // $name = explode(".", $_FILES["pictures"]["name"]);
-    // echo  "<br>" . $name[0] . "<br>"; 
-    // echo $name[1]; 
-    // die();
+    $modelRecipe = new ModelRecipes();
+    $recipe = $modelRecipe->readOneBy("idRecipe", $id);
 
     $target_dir = "public/img/recipes/";
     $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
@@ -118,20 +110,20 @@ var_dump("initialze");
 
         $model = new ModelImages();
         $images = new Images();
-        $images->setIdImage(filter_input(INPUT_POST, "idImage"));
-        $images->setDateCreation(filter_input(INPUT_POST, "dateCreation"));
-        $images->setName(filter_input(INPUT_POST, "name"));
-        $images->setFileExtension(filter_input(INPUT_POST, "FileExtension"));
-      
+
+        $name = explode(".", $_FILES["pictures"]["name"]);
+        $images->setName($name[0]);
+        $images->setFileExtension($name[1]);
+
         //verif IS valid?
         $insertedImages = $model->insertImages($images);
-        header('Location:' . BASE_URL . "recipes/editing/" . $insertedImages->getIdImage());
-
+        $recipe->setIdImage($insertedImages->getIdImage());
+        $modelRecipe->updateRecipes($recipe);
+        // die();
+        header('Location:' . BASE_URL . "recipes/editing/" . $id);
       } else {
         echo "Sorry, there was an error uploading your file.";
       }
     }
-
-    // die();
   }
 }
