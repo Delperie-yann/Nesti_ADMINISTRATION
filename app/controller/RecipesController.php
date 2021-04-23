@@ -14,13 +14,10 @@ class RecipesController extends BaseController
     }
     var_dump($action);
     if ($action == "add") {
-
       $this->create();
     }
     if ($action == "editing") {
-
-      $recipe = $model->readOneBy("idRecipe", $id);
-      $this->data['recipe'] = $recipe;
+      $this->editRecipe($id);
     }
     if ($action == "deleted") {
       $this->delete($id);
@@ -28,6 +25,9 @@ class RecipesController extends BaseController
     if ($action == "addimage") {
       $this->addImage($id);
     }
+    // if ($action == "addpreparation") {
+    //   $this->addPreparation($id);
+    // }
   }
 
   public function create()
@@ -45,6 +45,7 @@ class RecipesController extends BaseController
     //verif IS valid?
     $insertedRecipe = $model->insertRecipe($recipe);
     header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
+
     // var_dump($recipe);
     // $user = new Users();
     // $user->setName($_SESSION["idUsers"]);
@@ -119,11 +120,31 @@ class RecipesController extends BaseController
         $insertedImages = $model->insertImages($images);
         $recipe->setIdImage($insertedImages->getIdImage());
         $modelRecipe->updateRecipes($recipe);
+        // var_dump( $recipe,$insertedImages);
         // die();
         header('Location:' . BASE_URL . "recipes/editing/" . $id);
       } else {
         echo "Sorry, there was an error uploading your file.";
       }
     }
+  }
+
+  public function addPreparation($id)
+  {
+    $model = new ModelParagraph();
+    $recipe = $model->readOneBy("idRecipe", $id);
+    $addPreparation = $model->addPreparation($recipe);
+    // header('Location:' . BASE_URL . "recipes/creation/");
+  }
+
+  public function editRecipe($idRecipe)
+  {
+    $model = new ModelRecipes();
+    $recipe = $model->readOneBy("idRecipe", $idRecipe);
+    $this->data['recipe'] = $recipe;
+
+    // $model1 = new ModelParagraph();
+    // $paragraph = new Paragraph();
+    // $paragraph->setContent(filter_input(INPUT_POST, "addPreparation"));
   }
 }
