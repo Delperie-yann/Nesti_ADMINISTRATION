@@ -2,7 +2,7 @@
 
 
     class Articles{
-        private $id;
+        private $idArticle;
         private $unitQuantity;
         private $flag;
         private $dateCreation;
@@ -10,138 +10,220 @@
         private $idImage;
         private $unit;
         private $idProduct;
-        private $price;
-        private $importationDate;
-        private $name;
-        private $quantStock;
 
-        public function getId()
-        {
-            return $this->id;
-        }
+      
+  
+
     
+       
+    
+    
+
         /**
-         * Set the value of id
-         *
-         * @return  self
-         */ 
-        public function setId($id)
+         * Get the value of idArticle
+         */
+        public function getIdArticle()
         {
-            $this->id = $id;
-    
-            return $this;
+                return $this->idArticle;
         }
 
+        /**
+         * Set the value of idArticle
+         */
+        public function setIdArticle($idArticle) : self
+        {
+                $this->idArticle = $idArticle;
 
+                return $this;
+        }
+
+        /**
+         * Get the value of unitQuantity
+         */
+        public function getUnitQuantity()
+        {
+                return $this->unitQuantity;
+        }
+
+        /**
+         * Set the value of unitQuantity
+         */
+        public function setUnitQuantity($unitQuantity) : self
+        {
+                $this->unitQuantity = $unitQuantity;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of flag
+         */
+        public function getFlag()
+        {
+                return $this->flag;
+        }
+
+        /**
+         * Set the value of flag
+         */
+        public function setFlag($flag) : self
+        {
+                $this->flag = $flag;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of dateCreation
+         */
+        public function getDateCreation()
+        {
+                return $this->dateCreation;
+        }
+
+        /**
+         * Set the value of dateCreation
+         */
+        public function setDateCreation($dateCreation) : self
+        {
+                $this->dateCreation = $dateCreation;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of dateModification
+         */
+        public function getDateModification()
+        {
+                return $this->dateModification;
+        }
+
+        /**
+         * Set the value of dateModification
+         */
+        public function setDateModification($dateModification) : self
+        {
+                $this->dateModification = $dateModification;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of idImage
+         */
+        public function getIdImage()
+        {
+                return $this->idImage;
+        }
+
+        /**
+         * Set the value of idImage
+         */
+        public function setIdImage($idImage) : self
+        {
+                $this->idImage = $idImage;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of unit
+         */
         
-        public function getQuantStock()
-        {
-            return $this->quantStock;
-        }
-    
-        /**
-         * Set the value of id
-         *
-         * @return  self
-         */ 
-        public function setQuantStock($quantStock)
-        {
-            $this->quantStock = $quantStock;
-    
-            return $this;
-        }
-
-
         public function getUnit()
-        {   if($unit="UNITE"){
+        {   
+            if($unit="UNITE"){
             $this->unit="";
         }
 
             return $this->unit;
         }
-    
+
         /**
-         * Set the value of id
-         *
-         * @return  self
-         */ 
-        public function setUnit($unit)
+         * Set the value of unit
+         */
+        public function setUnit($unit) : self
         {
-            $this->unit = $unit;
-    
-            return $this;
+                $this->unit = $unit;
+
+                return $this;
         }
 
-        public function getName()
-        {
-            return $this->name;
-        }
-    
         /**
-         * Set the value of id
-         *
-         * @return  self
-         */ 
-        public function setName($name)
+         * Get the value of idProduct
+         */
+        public function getIdProduct()
         {
-            $this->name = $name;
-    
-            return $this;
+                return $this->idProduct;
         }
-        public function getImportationDate()
-        {
-            return $this->importationDate;
-        }
-    
+
         /**
-         * Set the value of id
-         *
-         * @return  self
-         */ 
-        public function setImportationDate($importationDate)
+         * Set the value of idProduct
+         */
+        public function setIdProduct($idProduct) : self
         {
-            $this->importationDate = $importationDate;
-    
-            return $this;
+                $this->idProduct = $idProduct;
+
+                return $this;
+        }
+
+        public function getName(){
+            $name = new ModelProduct();
+            // var_dump($this->idProduct);
+         $name1= $name->readOneBy("idProduct",$this->idProduct);
+          
+            // var_dump($name1);
+            return  $name1->getName();
+        }
+
+        public function getPrice(){
+            $name = new ModelArticleprice();
+            // var_dump($this->idProduct);
+         $name2= $name->readOneBy("idArticle",$this->idArticle);
+          ///----------->>>>prendre la dateStrat max
+            // var_dump($name2);
+            return  $name2->getPrice();
         }
         
-        public function getPrice()
+        public function setArticleFromArray($recipe)
         {
-            return $this->price;
+    
+            foreach ($recipe as $key => $value) {
+    
+                $this->$key = $value;
+            }
         }
-    
-        /**
-         * Set the value of id
-         *
-         * @return  self
-         */ 
-        public function setPrice($price)
-        {
-            $this->price = $price;
-    
-            return $this;
+
+        public function getLastimport(){
+            $name = new ModelImportation();
+            // var_dump($this->idProduct);
+         $name3= $name->readOneBy("idArticle",$this->idArticle);
+          
+            // var_dump($name3->getImportationDate());
+            return  $name3->getImportationDate();
         }
-    
-        /**
-         * Get the value of name
-         */ 
-        public function getUnitQuantity()
-        {
-            return $this->unitQuantity;
+
+        public function getStock(){
+            $name = new ModelLot();
+            // var_dump($this->idProduct);
+         $name4= $name->readOneBy("idArticle",$this->idArticle);
+          
+            // var_dump($name4->getquantity());
+            return  $name4->getQuantity();
         }
-    
-        /**
-         * Set the value of name
-         *
-         * @return  self
-         */ 
-        public function setUnitQuantity($unitQuantity)
-        {
-            $this->unitQuantity = $unitQuantity;
-    
-            return $this;
-    
-    }
-    
-    
-}
+        public function getUnitName(){
+            $unit = new ModelUnit();
+            // var_dump($this->idProduct);
+         $unit1= $unit->readOneBy("idUnit",$this->idUnit);
+         $unity=$unit1->getName();
+        //  var_dump($unity);
+         
+        
+            // var_dump($unit1->getName());
+            return  $unity;
+        }
+        }
+
+
+
