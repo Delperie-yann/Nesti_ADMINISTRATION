@@ -1,15 +1,15 @@
 <?php
 include_once(PATH_MODEL.'Connection.php');
-class ModelOrders {
+class ModelOrdeline {
    
     public function readAll() {
         //requete
         $pdo= Connection::getPdo();
 
-        $sql="SELECT * FROM orders ";
+        $sql="SELECT * FROM orderline ";
         $result=$pdo->query($sql);
         if($result){
-            $array = $result-> fetchAll(PDO::FETCH_CLASS,'Orders');
+            $array = $result-> fetchAll(PDO::FETCH_CLASS,'Orderline');
         } else{
             $array=[];
             
@@ -22,15 +22,14 @@ class ModelOrders {
        
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT * FROM orders where $parameter = '$value'";
+        $sql = "SELECT * FROM orderline where $parameter = '$value'";
         $result = $pdo->query($sql);
 
     if ($result) {
-        $array = $result->fetchAll(PDO::FETCH_CLASS, 'Orders');
+        $array = $result->fetchAll(PDO::FETCH_CLASS, 'Orderline');
     } else {
         $array = [];
     }
     return $array;
 }
-
 }
