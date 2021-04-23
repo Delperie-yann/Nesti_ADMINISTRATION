@@ -13,7 +13,7 @@ class Recipes
     private $idImage;
 
 
-/**
+    /**
      * Get the value of dateCreation
      */
     public function getDateCreation()
@@ -183,16 +183,16 @@ class Recipes
         return $chef->getLastname();
     }
 
-    public function setUserFromArray($recipe)
+    public function setRecipeFromArray($recipe)
     {
-
+        // var_dump($recipe);
         foreach ($recipe as $key => $value) {
 
             $this->$key = $value;
         }
     }
 
-   
+
 
     /**
      * Get the value of idImage

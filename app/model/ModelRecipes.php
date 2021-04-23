@@ -75,7 +75,7 @@ class ModelRecipes
         }
         
         $recipe = new Recipes();
-        $recipe->setUserFromArray($data);
+        $recipe->setRecipeFromArray($data);
        
         return $recipe;
     }
