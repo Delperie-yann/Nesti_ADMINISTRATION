@@ -29,6 +29,14 @@ class ArticlesController extends BaseController
         if ($action == '') {
             $model = new ModelArticles();
             $this->data['arrayArticles'] = $model->readAll();
+            $model1 = new ModelOrders();
+         
+            $unit = new ModelUnit();
+            
+            $import = new ModelImportation();
+             // var_dump($import);
+            
+           
         }
     }
 }

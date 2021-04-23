@@ -39,26 +39,26 @@
     ?>
 
       <tr>
-        <td class="font-weight-bold text-dark d-flex align-items-center justify-content-center"><?= $value->getId(); ?>
-        <td><?= $value->getUnitQuantity(); ?> <?= $value->getUnit(); ?> <?= $value->getName(); ?></td>
-        <td><?= $value->getPrice(); ?></td>
+        <td class="font-weight-bold text-dark d-flex align-items-center justify-content-center"><?= $value->getIdArticle(); ?>
+        <td><?= $value->getUnitQuantity(); ?> <?= $value->getUnitName()=='UNITE'?'': $value->getUnitName() ; ?> <?= $value->getName(); ?></td>
+        <td>prendre la dateStrat max :<?= $value->getPrice(); ?></td>
         <td>Ingredients</td>
-        <td><?= $value->getImportationDate(); ?></td>
-        <td><?= $value->getQuantStock(); ?></td>
+        <td><?= $value->getLastimport(); ?></td>
+        <td><?= $value->getStock(); ?></td>
         <td>
-          <a href="<?= BASE_URL . "articles/editing/" . $value->getId(); ?>">Modifier</a><br>
-          <a data-toggle="modal" href="#myModal<?= $value->getId(); ?>">Supprimer</a>
+          <a href="<?= BASE_URL . "articles/editing/" .$value->getIdArticle()  ?>">Modifier</a><br>
+          <a data-toggle="modal" href="#myModal<?= $value->getIdArticle(); ?>">Supprimer</a>
 
           <div class="container">
 
             <div class="row">
-              <div id="myModal<?= $value->getId(); ?>" class="modal fade in">
+              <div id="myModal<?= $value->getIdArticle(); ?>" class="modal fade in">
                 <div class="modal-dialog">
                   <div class="modal-content">
 
                     <div class="modal-header">
                       <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
-                      <p class="modal-body"> <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>Voulez vous vraiment supprimer <?= $value->getId(); ?> ?</p>
+                      <p class="modal-body"> <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>Voulez vous vraiment supprimer <?= $value->getIdArticle(); ?> ?</p>
                     </div>
                     <div class="modal-body">
 
@@ -75,12 +75,11 @@
                 </div><!-- /.modal-dalog -->
               </div><!-- /.modal -->
             </div>
-
           </div>
         </td>
       </tr>
-  </table>
-</div>
-<?php
+      <?php
     }
 ?>
+  </table>
+</div>
