@@ -16,7 +16,7 @@
                         <div class="col d-flex justify-content-between flex-column p-0">
                             <div class="d-flex justify-content-end"><input type="number" onkeypress="return onlyNumberKey(event)" name="recipedifficult" class="w-50 mt-4 mb-2"></div>
                             <div class="d-flex justify-content-end"><input type="number" onkeypress="return onlyNumberKey(event)" name="recipePortion" class="w-50 mt-4 mb-2"></div>
-                            <div class="d-flex justify-content-end"><input type="text" onkeypress="return onlyNumberKey(event)" name="recipeTimePrepare" class="w-50 mt-4 mb-2"></div>
+                            <div class="d-flex justify-content-end"><input type="text"   onkeypress="return onlyNumberKey(event)" name="recipeTimePrepare" class="w-50 mt-4 mb-2"></div>
                         </div>
                     </div>
                 </div>

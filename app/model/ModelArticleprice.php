@@ -46,6 +46,21 @@ class ModelArticleprice {
         $data = $result-> fetch();
         return $data;
 
+    } 
+    public function readAllBy($parameter, $value)
+    {
+        $pdo = Connection::getPdo();
+
+        $sql = "SELECT * FROM Articleprice where $parameter = '$value'";
+        $result = $pdo->query($sql);
+
+        if ($result) {
+            $array = $result->fetchAll(PDO::FETCH_CLASS, 'Articleprice');
+        } else {
+            $array = [];
+        }
+        return $array;
     }
+
 
 }

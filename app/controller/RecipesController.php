@@ -38,7 +38,7 @@ class RecipesController extends BaseController
     $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
     $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
     $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
-    $recipe->setFlag("w");
+    $recipe->setFlag("a");
     // var_dump($_SESSION['idUser']);
     $recipe->setIdChef($_SESSION['idUser']);
 

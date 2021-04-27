@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/recipes.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toastui-chart.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/importation.css">
-
+    <!-- <?php var_dump($arrayVars); ?> -->
+    <script>
+        let vars = <?= json_encode($arrayVars ?? []) ?>;
+    </script>
     <title>PHP_Nesti_Site</title>
 </head>
 
@@ -24,3 +27,4 @@
         include 'navigation.php';
     }
     ?>
+  
