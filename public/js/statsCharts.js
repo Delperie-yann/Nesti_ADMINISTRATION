@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
      ***************************************************************************************************************************************/
     const el = document.getElementById('chartOrders');
     // console.log(el);
-    // console.log("JsVars for Statisctic :", vars);
+    console.log("JsVars for Statisctic :", vars.connexionByHour);
     const data = {
 
         categories: [
@@ -46,50 +46,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
    * Consultations chart.
    *****************************************************************************************************************************************/
     const el1 = document.getElementById('chartConsultations');
+    console.log(vars.connexionByHour);
     const data1 = {
         categories: ['Browser'],
-        series: [
-            {
-                name: '0h/6h',
-                data: vars.connexionByHour,
-            },
-            {
-                name: '6h/8h',
-                data: 20.47,
-            },
-            {
-                name: '8h/10h',
-                data: 20.47,
-            },
-            {
-                name: '10h/12h',
-                data: 17.71,
-            },
-            {
-                name: '12h/14h',
-                data: 5.45,
-            },
-            {
-                name: '14h/16h',
-                data: 3.1,
-            },
-            {
-                name: '16h/18h',
-                data: 7.25,
-            },
-            {
-                name: '18h/20h',
-                data: 3.1,
-            },
-            {
-                name: '20h/22h',
-                data: 7.25,
-            },
-            {
-                name: '22h/0h',
-                data: 7.25,
-            },
-        ],
+        series: vars.connexionByHour
+            
+        
     };
     const theme = {
         series: {
@@ -148,11 +110,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
         series: [
             {
                 name: 'Ventes',
-                data: [10, 20, 30, 20, 60, 100, 150],
+                data: vars.articleVente,
             },
             {
                 name: 'Coûts par articles',
-                data: [50, 10, 20, 10, 40, 150, 100],
+                data: vars.costByArticle,
             },
         ],
     };

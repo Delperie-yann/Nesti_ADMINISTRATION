@@ -2,7 +2,7 @@
 include_once(PATH_MODEL.'Connection.php');
 class ModelUsers {
 
-    public function readAll() {
+    public static function readAll() {
         //requete
         $pdo= Connection::getPdo();
 

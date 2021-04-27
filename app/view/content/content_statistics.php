@@ -26,16 +26,20 @@ if(is_int(strpos($session,'Administateur'))){
 
         <div class="consult row w-75 h-75">
             <div class="col">
-                <p class="ml-2">Jean Robert</p><br>
-                <p class="ml-2">Marc Lavoine</p><br>
-                <p class="ml-2">Régis Pierre</p><br>
+            
+            <?php 
+            // var_dump($arrayVars['TopTenUsers']);
+             foreach ($arrayVars['TopTenUsers'] as $user) { ?>
+                    <li class="flex justify-between">
+                        <?= $user->getFirstName() . ' ' . $user->getLastName() ?>
+                        <a href="<?=BASE_URL?>users/editing/<?= $user->getIdUser() ?>"  >Voir</a>
+                    </li>
+
+
+                <?php } ?>
             </div>
 
-            <div>
-                <a class="col" href="">voir</a><br><br>
-                <a class="col" href="">voir</a><br><br>
-                <a class="col" href="">voir</a><br>
-            </div>
+           
 
         </div>
 
@@ -81,15 +85,17 @@ if(is_int(strpos($session,'Administateur'))){
         <div class="row recipesChiefsList w-100 h-75 ml-5">
 
             <div class="col">
-                <p>Jean Robert</p><br>
-                <p>Marc Lavoine</p><br>
-                <p>Régis Pierre</p><br>
-            </div>
+               
+            <?php 
+            // var_dump($arrayVars['TopTenUsers']);
+             foreach ($arrayVars['TopTenChef'] as $chef) { ?>
+                    <li class="flex justify-between">
+                        <?= $chef->getUser()->getFirstName() . ' ' . $chef->getUser()->getLastName() ?>
+                        <a href="<?=BASE_URL?>users/editing/<?= $chef->getIdChef() ?>"  >Voir</a>
+                    </li>
 
-            <div class="col">
-                <a class="d-flex justify-content-end" href="">voir</a><br>
-                <a class="d-flex justify-content-end" href="">voir</a><br>
-                <a class="d-flex justify-content-end" href="">voir</a><br>
+
+                <?php } ?>
 
             </div>
 
@@ -104,15 +110,20 @@ if(is_int(strpos($session,'Administateur'))){
         <div class="row recipesChiefsList w-75 h-75 ml-4">
 
             <div class="col">
-                <a href="">Gâteau au chocolat</a><br><br>
-                <a href="">Gâteau au chocolat</a><br><br>
-                <a href="">Gâteau au chocolat</a><br><br>
+            <?php 
+            // var_dump($arrayVars['TopTenUsers']);
+             foreach ($arrayVars['TopTenRecipe'] as $recipe) { ?>
+                    <li class="flex justify-between">
+                        <?= $recipe->getname()  ?>
+                        <a href="<?=BASE_URL?>recipes/editing/<?= $recipe->getIdRecipe() ?>"  >Voir</a>
+                    </li>
+
+
+                <?php } ?>
             </div>
 
             <div class="col">
-                <p class="d-flex justify-content-end">Par Jean Robert</p><br>
-                <p class="d-flex justify-content-end">Par Jean Robert</p><br>
-                <p class="d-flex justify-content-end">Par Jean Robert</p><br>
+            
             </div>
 
         </div>

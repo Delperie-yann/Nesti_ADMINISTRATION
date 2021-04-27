@@ -15,7 +15,7 @@ class Users
    private $zipCode;
    private $idCity;
 
-   public function getConnectionLog()
+   public function getConnectionLogs()
    {
       $model = new ModelConnectionLog();
       $logs = $model->readAllBy("idUsers", $this->getIdUser());
@@ -25,8 +25,8 @@ class Users
    public function getLastConnectionLog()
    {
       $lateCoDate = "-";
-      if ($this->getConnectionLog()) {
-         $lateCoDate = $this->getConnectionLog()[0]->getDateConnection();
+      if ($this->getConnectionLogs()) {
+         $lateCoDate = $this->getConnectionLogs()[0]->getDateConnection();
       }
       // var_dump($this->getConnectionLog());
       return $lateCoDate;
@@ -87,7 +87,7 @@ class Users
       return password_verify($plaintextPassword, $this->getPasswordHash());
    }
 
-   public function getLastname(): string
+   public function getLastname()
    {
       return $this->lastname;
    }

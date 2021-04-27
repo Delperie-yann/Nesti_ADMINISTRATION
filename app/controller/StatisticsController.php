@@ -25,33 +25,55 @@ class StatisticsController extends BaseController
     }
     public  function dashboard()
     {
-        // $connexionByHour = [];
-        // $categories = [];
-        // $allLogs = ModelConnectionLog::findAll();
-        // foreach ($allLogs as $book) {
-        //     $format = 'Y-m-d H:i:s';
-        //     $logDate = DateTime::createFromFormat($format, $book->getDateConnection());
-        //     // echo $lotDate;
-        //     $categories[$logDate->format('H')][] = $book;
-        // }
-        // foreach ($categories as $key => $logs) {
-        //     $connexionByHour[] = (object) array("name" => $key, "data" => count($logs));
-        // }
+        $connexionByHour = [];
+        $categories = [];
+        $allLogs = ModelConnectionLog::readAll();
+        foreach ($allLogs as $book) {
+            $format = 'Y-m-d H:i:s';
+            $logDate = DateTime::createFromFormat($format, $book->getDateConnection());
+            // echo $lotDate;
+            $categories[$logDate->format('H')][] = $book;
+        }
+        foreach ($categories as $key => $logs) {
+            $connexionByHour[] = (object) array("name" => $key, "data" => count($logs));
+        }
        
-        // $allUsers = ModelUsers::findAll();
-        // usort($allUsers, function ($v1, $v2) {
-        //     return count($v2->getConnectionLogs()) <=> count($v1->getConnectionLogs());
-        // });
-        // $allUsers = array_slice($allUsers, 0, 10);
+        $TopTenUsers = ModelUsers::readAll();
+        usort($TopTenUsers, function ($v1, $v2) {
+            return count($v2->getConnectionLogs()) <=> count($v1->getConnectionLogs());
+        });
+        $TopTenUsers = array_slice($TopTenUsers, 0, 10);
+
+        
+        $TopTenChef = ModelChef::readAll();
+        usort($TopTenChef, function ($v1, $v2) {
+            return count($v2->getAllRecipeFromChef()) <=> count($v1->getAllRecipeFromChef());
+           
+        });
+        $TopTenChef = array_slice($TopTenChef, 0, 10);
+
+        
+        $TopTenRecipe = ModelRecipes::readAll();
+        usort($TopTenRecipe, function ($v1, $v2) {
+            return count($v2->getRatting()) <=> count($v1->getRatting());
+           //Bugger!!!!
+        });
+        $TopTenRecipe = array_slice($TopTenRecipe, 0, 10);
+
         $cost = [444, 457, 477, 479, 446, 476, 457, 472, 467, 455, 458, 458, 451];
         $vente= [466, 507, 472, 475, 485, 470, 500, 496, 487, 491, 490, 476, 489];
-        $connexionByHour=[46];
-
+        // $connexionByHour[] = (object) array("name" => "0h", "data" => 46);
+        $articleVente=[10, 20, 30, 20, 60, 100, 150];
+        $costByArticle=[50, 10, 20, 10, 40, 150, 100];
         $this->data['arrayVars'] = [
             "cost" => $cost,
             "vente" => $vente,
             "connexionByHour"=>$connexionByHour,
-            
+            "costByArticle"=>$costByArticle,
+            "articleVente"=>$articleVente,
+            "TopTenUsers"=> $TopTenUsers,
+            "TopTenChef"=>$TopTenChef,
+            "TopTenRecipe"=>$TopTenRecipe,
         ];
 }
 

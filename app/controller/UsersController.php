@@ -88,6 +88,7 @@ class UsersController extends BaseController
          $this->data['arrayCom'] = $com->readAll();
   // $user = new Users();
    // $user->setName($_SESSION["idUsers"]);
+
     }
     public function delete($id)
     {
@@ -97,21 +98,9 @@ class UsersController extends BaseController
       $deletedUsers = $model->deleteUser($user);
       header('Location:' . BASE_URL . "users");
     }
+
+
+
+    
   }
 
-
-// switch ($action) {
-//     case 'creation':
-//         var_dump($_POST);
-//         if (isset($_POST['email'])) {
-//             $error['email'] = Utils::checkEmail($_POST['email']);
-//         }
-
-//         break;
-//     case 'editing':
-//         include(PATH_CONTENT . "/content_users_editing.php");
-//         break;
-//     default:
-//         include(PATH_CONTENT . "/content_users.php");
-//         break;
-// }
