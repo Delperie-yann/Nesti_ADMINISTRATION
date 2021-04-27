@@ -180,10 +180,13 @@
         public function getPrice(){
             $name = new ModelArticleprice();
             // var_dump($this->idProduct);
-         $name2= $name->readOneBy("idArticle",$this->idArticle);
-          ///----------->>>>prendre la dateStrat max
-            // var_dump($name2);
-            return  $name2->getPrice();
+         $name2= $name->readAllBy("idArticle",$this->idArticle);
+                   // prendre le dernier prix de vente
+                     foreach($name2 as $price) {   
+                       $val= $price->getPrice();
+                    }
+                        
+            return $val;
         }
         
         public function setArticleFromArray($recipe)
@@ -222,6 +225,24 @@
         
             // var_dump($unit1->getName());
             return  $unity;
+        }
+        public function getType(){
+            $model = new ModelProduct();
+            $data  = $model->findChildType("ingredient", "product", $this->getIdProduct());
+            // var_dump($data);
+            if($data!=Null){
+                $type="ingredient";
+            } else{
+                $type="";
+            }
+           
+                
+            return $type;
+        }
+        public function isIngredient(): bool
+        {
+          
+           return $this->getType() != null;
         }
         }
 

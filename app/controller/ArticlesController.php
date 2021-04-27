@@ -30,7 +30,7 @@ class ArticlesController extends BaseController
             $model = new ModelArticles();
             $this->data['arrayArticles'] = $model->readAll();
             $model1 = new ModelOrders();
-         
+            $ingredient = new ModelIngredient();
             $unit = new ModelUnit();
             
             $import = new ModelImportation();

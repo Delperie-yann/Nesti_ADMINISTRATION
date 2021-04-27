@@ -39,11 +39,12 @@ class ModelProduct {
         //$user -> setId($data);
         return $user;
     }
-    public function findChild($type,$value){
+    public function findChildType($table,$type,$value){
         $pdo= Connection::getPdo();
-        $sql="SELECT * FROM $type WHERE id".ucfirst($type)."= $value";
-       //var_dump($sql);
+        $sql="SELECT * FROM $table WHERE id".ucfirst($type)."= $value";
+    //    var_dump($sql);
         $result=$pdo->query($sql);
+        // var_dump($result);
         $data = $result-> fetch();
         return $data;
 

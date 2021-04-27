@@ -12,6 +12,7 @@ if(is_int(strpos($session,'Administateur'))){
     <div class="col">
         <h2 class="mb-2 mt-4 ml-5">Commandes</h2>
         <div class=" ml-5" id="chartOrders"></div>
+        
     </div>
 
     <div class="col">

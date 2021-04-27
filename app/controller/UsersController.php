@@ -14,6 +14,8 @@ class UsersController extends BaseController
         if ($action == '') {
             $model                    = new ModelUsers();
             $this->data['arrayUsers'] = $model->readAll();
+           
+            
         }
         if ($action == "add") {
             $this->addUser();
