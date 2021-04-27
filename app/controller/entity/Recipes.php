@@ -12,7 +12,6 @@ class Recipes
     private $idChef;
     private $idImage;
 
-
     /**
      * Get the value of dateCreation
      */
@@ -192,8 +191,6 @@ class Recipes
         }
     }
 
-
-
     /**
      * Get the value of idImage
      */
@@ -274,5 +271,12 @@ class Recipes
         $imageName = $this->getImages()->getName();
         $imageExtension = $this->getImages()->getFileExtension();
         return BASE_URL . "public/img/recipes/$imageName.$imageExtension";
+    }
+
+    public function getParagraphs()
+    {
+        $model = new ModelParagraph();
+        $paragraphs = $model->readAllBy("idRecipe", $this->getIdRecipe());
+        return $paragraphs;
     }
 }

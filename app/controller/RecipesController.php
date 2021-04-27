@@ -25,9 +25,6 @@ class RecipesController extends BaseController
     if ($action == "addimage") {
       $this->addImage($id);
     }
-    // if ($action == "addpreparation") {
-    //   $this->addPreparation($id);
-    // }
   }
 
   public function create()
@@ -38,17 +35,12 @@ class RecipesController extends BaseController
     $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
     $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
     $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
-    $recipe->setFlag("w");
-    // var_dump($_SESSION['idUser']);
+    $recipe->setFlag("a");
     $recipe->setIdChef($_SESSION['idUser']);
 
     //verif IS valid?
     $insertedRecipe = $model->insertRecipe($recipe);
     header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
-
-    // var_dump($recipe);
-    // $user = new Users();
-    // $user->setName($_SESSION["idUsers"]);
   }
 
   public function delete($id)
@@ -120,8 +112,6 @@ class RecipesController extends BaseController
         $insertedImages = $model->insertImages($images);
         $recipe->setIdImage($insertedImages->getIdImage());
         $modelRecipe->updateRecipes($recipe);
-        // var_dump( $recipe,$insertedImages);
-        // die();
         header('Location:' . BASE_URL . "recipes/editing/" . $id);
       } else {
         echo "Sorry, there was an error uploading your file.";
@@ -134,7 +124,6 @@ class RecipesController extends BaseController
     $model = new ModelParagraph();
     $recipe = $model->readOneBy("idRecipe", $id);
     $addPreparation = $model->addPreparation($recipe);
-    // header('Location:' . BASE_URL . "recipes/creation/");
   }
 
   public function editRecipe($idRecipe)
@@ -143,8 +132,14 @@ class RecipesController extends BaseController
     $recipe = $model->readOneBy("idRecipe", $idRecipe);
     $this->data['recipe'] = $recipe;
 
-    // $model1 = new ModelParagraph();
-    // $paragraph = new Paragraph();
-    // $paragraph->setContent(filter_input(INPUT_POST, "addPreparation"));
+    if (isset($_POST["recipeName"])) {
+      $recipe->setName(filter_input(INPUT_POST, "recipeName"));
+      $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
+      $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
+      $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
+
+      $model->updateRecipes($recipe);
+      header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
+    }
   }
 }
