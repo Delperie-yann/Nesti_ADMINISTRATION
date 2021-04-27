@@ -33,18 +33,33 @@ class ModelParagraph
         } else {
             $data = [];
         }
-        
+
         $recipe = new Paragraph();
         $recipe->setParagraphFromArray($data);
-       
+
         return $recipe;
+    }
+
+    public function readAllBy($parameter, $value)
+    {
+        $pdo = Connection::getPdo();
+
+        $sql = "SELECT * FROM paragraph where $parameter = '$value'";
+        $result = $pdo->query($sql);
+
+        if ($result) {
+            $array = $result->fetchAll(PDO::FETCH_CLASS, 'Paragraph');
+        } else {
+            $array = [];
+        }
+        return $array;
     }
 
     public function addPreparation(Paragraph &$recipe)
     {
         $pdo = Connection::getPdo();
         try {
-           
+
             $sql = "INSERT INTO paragraph (content,paragraphPosition,dateCreation,idRecipe) VALUES (?,?,?,?,?)";
 
             $stmt = $pdo->prepare($sql);
@@ -60,25 +75,4 @@ class ModelParagraph
         unset($pdo);
         return $recipe;
     }
-
-    // public function insertPreparation(Paragraph &$recipe)
-    // {
-    //     $pdo = Connection::getPdo();
-    //     try {
-    //         // Create prepared statement
-    //         $sql = "INSERT INTO paragraph (content,paragraphPosition,dateCreation,idRecipe) VALUES (?,?,?,?)";
-
-    //         $stmt = $pdo->prepare($sql);
-
-    //         $values = [$recipe->getContent(), $recipe-> getParagraphPosition(), $recipe->getDateCreation(), $recipe->getIdRecipe()];
-    //         // Execute the prepared statement
-    //         $stmt->execute($values);
-    //         $newParagraph = $this->readOneBy("idRecipe", $pdo->lastInsertId());
-    //         echo "Records inserted successfully.";
-    //     } catch (PDOException $e) {
-    //         die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-    //     }
-    //     unset($pdo);
-    //     return $newParagraph;
-    // }
 }
