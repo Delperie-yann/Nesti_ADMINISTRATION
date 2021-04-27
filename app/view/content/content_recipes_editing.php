@@ -1,9 +1,9 @@
 <div class="container bg-white d-flex flex-column align-items-left" id="recettes">
     <div class="row mt-3">
-        <div class="col">
+        <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
             <h1 class="mb-2 mt-4">Edition d'une recette</h1>
             <p class="mt-4">Nom de la recette</p>
-            <input type="text" class="w-100" value="<?= $recipe->getName()?>">
+            <input type="text" class="w-100" value="<?= $recipe->getName() ?>" name="recipeName">
             <p class="mt-4">Auteur de la recette</p>
             <div class="row">
                 <div class="col d-flex justify-content-between flex-column">
@@ -13,17 +13,17 @@
                 </div>
                 <div class="col">
                     <div class="col d-flex justify-content-between flex-column p-0">
-                        <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>"></div>
-                        <div class="d-flex justify-content-end"><input type="number" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>"></div>
-                        <div class="d-flex justify-content-end"><input type="text" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()  ?>"></div>
+                        <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" name="recipedifficult"></div>
+                        <div class="d-flex justify-content-end"><input type="number" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" name="recipePortion"></div>
+                        <div class="d-flex justify-content-end"><input type="text" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()  ?>" name="recipeTimePrepare"></div>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center p-2">
                 <button type="submit" class="btn m-5 valid w-25">Valider</button>
-                <button type="submit" class="btn m-5 cancel w-25">Annuler</button>
+                <button type="reset" class="btn m-5 cancel w-25">Annuler</button>
             </div>
-        </div>
+        </form>
         <div class="col">
             <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="post">
                 <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;">
@@ -41,7 +41,7 @@
     </div>
     <div class="recipeCtn h-100">
         <div class="row">
-            <div class="col">
+            <form class="col">
                 <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div id="prepCtn">
-                    <div class="row prepItem mb-5" id="baseItem" data-order="1" >
+                    <div class="row prepItem mb-5" id="baseItem" data-order="1">
                         <div class="col-sm-1">
                             <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
                                 <img src="<?php BASE_URL ?>../../public/images/up-arrow.png" alt="">
@@ -62,7 +62,11 @@
                             </button>
                         </div>
                         <div class="col">
-                            <textarea class="prepText w-100 h-100"></textarea>
+                            <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
+                                <textarea class="prepText w-100 h-100"><?= $paragraph->getContent() ?></textarea>
+                                <!-- <input type="text" class="w-100" value="<?= $paragraph->getContent() ?>"> -->
+                            <?php }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -74,7 +78,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="col-sm-4">
                 <h2>Liste des ingrédients</h2>
                 <div class="ingredientsCtn" id="ingCtn">
