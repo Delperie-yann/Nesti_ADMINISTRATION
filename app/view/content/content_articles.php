@@ -41,8 +41,8 @@
       <tr>
         <td class="font-weight-bold text-dark d-flex align-items-center justify-content-center"><?= $value->getIdArticle(); ?>
         <td><?= $value->getUnitQuantity(); ?> <?= $value->getUnitName()=='UNITE'?'': $value->getUnitName() ; ?> <?= $value->getName(); ?></td>
-        <td>prendre la dateStrat max :<?= $value->getPrice(); ?></td>
-        <td>Ingredients</td>
+        <td><?= $value->getPrice(); ?></td>
+        <td><?= $value->getType(); ?></td>
         <td><?= $value->getLastimport(); ?></td>
         <td><?= $value->getStock(); ?></td>
         <td>

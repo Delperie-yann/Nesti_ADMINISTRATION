@@ -47,5 +47,5 @@ class ModelArticles {
         return $data;
 
     }
-
+   
 }

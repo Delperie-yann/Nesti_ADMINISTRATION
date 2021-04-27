@@ -60,6 +60,32 @@ class ModelConnectionLog  {
         //$user -> setId($data);
         return $user;
     }
+    public static function findAll($flag=null): array
+    {
+        $pdo= Connection::getPdo();
+
+        //FormatUtil::dump($pdo);
+        $sql = "SELECT * FROM " . self::getTableName() . " ORDER BY " . self::getPkColumnName() . " DESC";
+        
+        $values = [];
+
+        if ( $flag != null && in_array('flag', self::getColumnNames()) ){
+            $sql .= " AND flag = ?";
+            $values[] = $flag;
+        }
+
+        $req = $pdo->prepare($sql);
+ 
+        $req->execute($values);
+
+        $entities = [];
+        while ($entity = self::fetchEntity($req, $flag)) { // set entity properties using fetched values
+            if ($entity != null){ // entity might have a parent with a blocked flag
+                $entities[] = $entity;
+            }
+        };
+        return $entities;
+    }
 
 
 

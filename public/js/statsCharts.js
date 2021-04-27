@@ -1,11 +1,12 @@
 window.addEventListener("DOMContentLoaded", (event) => {
     console.log("DOM entièrement chargé et analysé");
-
+    
     /****************************************************************************************************************************************
      * Orders chart.
      ***************************************************************************************************************************************/
     const el = document.getElementById('chartOrders');
-    console.log(el);
+    // console.log(el);
+    // console.log("JsVars for Statisctic :", vars);
     const data = {
 
         categories: [
@@ -24,11 +25,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
         series: [
             {
                 name: 'Coûts',
-                data: [444, 457, 477, 479, 446, 476, 457, 472, 467, 455, 458, 458, 451],
+                data: vars.cost,
             },
             {
                 name: 'Ventes',
-                data: [466, 507, 472, 475, 485, 470, 500, 496, 487, 491, 490, 476, 489],
+                data: vars.vente,
             },
         ],
     };
@@ -50,7 +51,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         series: [
             {
                 name: '0h/6h',
-                data: 46.02,
+                data: vars.connexionByHour,
             },
             {
                 name: '6h/8h',
@@ -164,14 +165,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     const chart2 = toastui.Chart.columnChart({ el: el2, data: data2, options: options2 });
 
-    let idx = 8;
-    const intervalId = setInterval(() => {
-        const randomData = [0, 1].map(() => Math.round(Math.random() * 200));
-        chart.addData(randomData, idx.toString());
-        if (idx === 20) {
-            clearInterval(intervalId);
-        }
-        idx += 1;
-    }, 2500);
+    
 });
 
