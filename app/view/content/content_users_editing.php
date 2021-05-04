@@ -3,72 +3,69 @@
 <div class="container">
 
     <div class="row mt-3">
+        <form action="<?= BASE_URL ?>users/editing/<?= $user->getIdUser() ?>" class="col" method="POST">
 
-        <div class="col">
             <h1>Edition des utilisateurs</h1>
 
             <p class="mt-5">Nom</p><br>
-            <input type="text" class="w-75" name="userLastname" value="<?= $user->getFirstname()  ?>" >
+            <input type="text" class="w-75" name="userLastname" value="<?= $user->getLastname() ?>">
 
             <p class="mt-5">Prénom</p><br>
-            <input type="text" class="w-75" name="userFirstname" value="<?= $user->getLastname()  ?>">
+            <input type="text" class="w-75" name="userFirstname" value="<?= $user->getFirstname() ?>">
 
             <p class="mt-5">Adress1</p><br>
-            <input type="text" class="w-75" name="userAdress1" value="<?= $user->getAddress1() ?>"> 
+            <input type="text" class="w-75" name="userAdress1" value="<?= $user->getAddress1() ?>">
 
             <p class="mt-5">Adress2</p><br>
-            <input type="text" class="w-75" name="userAdress2" value="<?= $user->getAddress2()  ?>">
+            <input type="text" class="w-75" name="userAdress2" value="<?= $user->getAddress2() ?>">
 
             <p class="mt-5">Zipcode</p><br>
-            <input type="text" class="w-75" name="userZipCode" value="<?= $user->getZipCode()  ?>">
+            <input type="text" class="w-75" name="userZipCode" value="<?= $user->getZipCode() ?>">
 
             <p class="mt-5">Rôle</p><br>
-            <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef()=="chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>
-            <input type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur()=="moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
-            <input type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin()=="Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
-            
-            
-            
-            
+            <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>
+            <input type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
+            <input type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
+
             <p class="mt-5">Etat</p><br>
-          
-            
-            
+
             <div>
-                <input type="radio" id="actif" name="State" value="actif" <?= $user->getFlag()=="a" ? 'checked' : '' ?>>
+                <input type="radio" id="actif" name="State" value="actif" <?= $user->getFlag() == "a" ? 'checked' : '' ?>>
                 <label for="actif">actif</label>
             </div>
 
             <div>
-                <input type="radio" id="wait" name="State" value="wait" <?= $user->getFlag()=="w" ? 'checked' : '' ?> >
+                <input type="radio" id="wait" name="State" value="wait" <?= $user->getFlag() == "w" ? 'checked' : '' ?>>
                 <label for="wait">wait</label>
             </div>
 
             <div>
-                <input type="radio" id="block" name="State" value="block" <?= $user->getFlag()=="b" ? 'checked' : '' ?>>
+                <input type="radio" id="block" name="State" value="block" <?= $user->getFlag() == "b" ? 'checked' : '' ?>>
                 <label for="block">block</label>
             </div>
-         
+
             <div class="row">
                 <div class="d-flex justify-content-center p-2">
                     <button type="submit" class="btn m-10 ml-2 valid w-50">Valider</button>
-                    <button type="submit" class="btn btn-danger m-10 ml-2 w-50">Supprimer</button>
+                    <button type="reset" class="btn btn-danger m-10 ml-2 w-50">Supprimer</button>
                 </div>
             </div>
-        </div>
+           
+        </form>
+
         <div class="col mt-5">
             <h2>Informations</h2>
             <div class="card">
                 <div class="card-body-editing">
-                    Date de Création : <?= $user->getDateCreation()  ?> <br>
-                    Dernière Connexion : <?= $connect->getDateConnection() ?><br>
-                    <?= $user->isChef()=="chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :'. $user->getChef()->getCountRecipe().'  <br> Derniere Recette : '.$user->getChef()->getLastRecipe() : ''?> <br>
+                    Date de Création : <?= $user->getDateCreation() ?> <br>
+                    Dernière Connexion : <?= $user->getLastConnectionLog() ?><br>
+                    <?= $user->isChef() == "chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :' . $user->getChef()->getCountRecipe() . '  <br> Derniere Recette : ' . $user->getChef()->getLastRecipe() : '' ?> <br>
                     <Strong>Utilisateur </Strong><br>
                     Nombre de commande : <?= $user->getCountOrders() ?> <br>
                     Montant total des commandes : <br>
                     Derniere commande : <br>
-                    <?= $user->isAdmin()=="Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : ''?> <br>
-                    <?= $user->isModerateur()=="moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :' : ''?> <br>
+                    <?= $user->isAdmin() == "Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : '' ?> <br>
+                    <?= $user->isModerateur() == "moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :' : '' ?> <br>
                 </div>
 
             </div>
@@ -90,15 +87,12 @@
                 <div class="d-flex flex-row justify-content-between">
                     <nav class="navbar navbar-white  pl-0">
                         <form class="form-inline">
-                            <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder=""
-                                aria-label="Search">
-                            <img id="searchRecipe" src="<?php BASE_URL ?>../../public/images/search.png" alt="" width="20px"
-                                height="25px">
+                            <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
+                            <img id="searchRecipe" src="<?php BASE_URL ?>../../public/images/search.png" alt="" width="20px" height="25px">
                         </form>
                     </nav>
-                   
-                </div>
 
+                </div>
 
                 <table class="table">
 
@@ -113,21 +107,21 @@
 
                     </thead>
                     <?php
-            //var_dump($arrayRecipes);
-            foreach ($arrayOrders as $value) {
-            ?>
-                    <tr>
-                    <td ><?= $value->getIdOrders(); ?></td>
-                    <td><?= $user->getLastname(); ?> <?= $user->getFirstname(); ?></td>
-                    <td></td>
-                    <td></td>
-                    <td><?= $value->getDateCreation(); ?></td>
-                    <td><?= $value->getState($value); ?></td>
-                    <td></td>
-                    </tr>
-            <?php
-            }
-            ?>
+                    //var_dump($arrayRecipes);
+                    foreach ($user->getOrders() as $value) {
+                    ?>
+                        <tr>
+                            <td><?= $value->getIdOrders(); ?></td>
+                            <td><?= $user->getLastname(); ?> <?= $user->getFirstname(); ?></td>
+                            <td></td>
+                            <td></td>
+                            <td><?= $value->getDateCreation(); ?></td>
+                            <td><?= $value->getState($value); ?></td>
+                            <td></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
                 </table>
             </div>
         </div>
@@ -157,13 +151,10 @@
             <div class="container bg-white d-flex flex-column align-items-left" id="recipes">
                 <div class="d-flex flex-row justify-content-between">
                     <nav class="navbar navbar-white bg-white pl-0">
-                       
-                    </nav>
-                    
-                       
-                    
-                </div>
 
+                    </nav>
+
+                </div>
 
                 <table class="table">
 
@@ -178,24 +169,25 @@
                         <th scope="col">Actions</th>
                     </thead>
                     <?php
-            //var_dump($arrayRecipes);
-            foreach ($arrayCom as $com) {
-            ?>
-                    <tr>
-                    <td ></td>
-                    <td><?= $com->getCommentTitle(); ?></td>
-                    <td>a modifier : <?= $com->getNameRecipe(); ?></td>
-                    <td><?= $com->getCommentContent(); ?></td>
-                    <td><?= $value->getDateCreation(); ?></td>
-                    <td><?= $value->getState($value); ?></td>
-                    <td>
-                <a href="">Approuver</a><br>
-               
-                <a data-toggle="modal" href="">Bloquer</a>
-                </td> </tr>
-            <?php
-            }
-            ?>
+                    //var_dump($arrayRecipes);
+                    foreach ($user->getComments() as $com) {
+                    ?>
+                        <tr>
+                            <td></td>
+                            <td><?= $com->getCommentTitle(); ?></td>
+                            <td>a modifier : <?= $com->getNameRecipe(); ?></td>
+                            <td><?= $com->getCommentContent(); ?></td>
+                            <td><?= $value->getDateCreation(); ?></td>
+                            <td><?= $value->getState($value); ?></td>
+                            <td>
+                                <a href="">Approuver</a><br>
+
+                                <a data-toggle="modal" href="">Bloquer</a>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
 
                 </table>
             </div>

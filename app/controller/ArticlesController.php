@@ -32,11 +32,28 @@ class ArticlesController extends BaseController
             $model1 = new ModelOrders();
             $ingredient = new ModelIngredient();
             $unit = new ModelUnit();
-            
             $import = new ModelImportation();
-             // var_dump($import);
-            
-           
         }
+        if ($action == "editing") {
+            $this->editArticle($id);
+        }
+        if ($action == "deleted") {
+            $this->deleteArticle($id);
+        }
+        if ($action == "orders") {
+            $model = new ModelOrders();
+            $this->data['arrayOrders'] = $model->readAll();
+        }
+    }
+
+    public function editArticle($id)
+    {
+        $model = new ModelArticles();
+        $article = $model->readOneBy("idArticle", $id);
+        $this->data['article'] = $article;
+    }
+
+    public function deleteArticle($id)
+    {
     }
 }

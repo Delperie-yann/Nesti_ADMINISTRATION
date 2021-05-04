@@ -15,20 +15,20 @@ class Users
    private $zipCode;
    private $idCity;
 
-   public function getConnectionLog()
+   public function getConnectionLogs()
    {
       $model = new ModelConnectionLog();
       $logs = $model->readAllBy("idUsers", $this->getIdUser());
-      // var_dump($logs);
       return $logs;
    }
+
    public function getLastConnectionLog()
    {
       $lateCoDate = "-";
-      if ($this->getConnectionLog()) {
-         $lateCoDate = $this->getConnectionLog()[0]->getDateConnection();
+      if ($this->getConnectionLogs()) {
+         $lateCoDate = $this->getConnectionLogs()[0]->getDateConnection();
       }
-      // var_dump($this->getConnectionLog());
+   
       return $lateCoDate;
    }
 
@@ -43,16 +43,15 @@ class Users
 
    public function isChef(): bool
    {
-     
       return $this->getChef() != null;
    }
 
-   public function getModerator(){
+   public function getModerator()
+   {
       $model     = new ModelUsers();
       $moderator = $model->findChild("moderator", $this->getIdUser());
       return $moderator;
    }
-
 
    public function isModerateur(): bool
    {
@@ -73,14 +72,11 @@ class Users
 
    public function setUserFromArray($user)
    {
-      //var_dump($user);
       foreach ($user as $key => $value) {
 
          $this->$key = $value;
       }
    }
-
-
 
    public function isPassword($plaintextPassword)
    {
@@ -91,6 +87,7 @@ class Users
    {
       return $this->lastname;
    }
+
    public function setLastname(string $lastname)
    {
       $this->lastname = $lastname;
@@ -100,7 +97,6 @@ class Users
    {
       return $this->passwordHash;
    }
-
 
    public function setPasswordHash(string $passwordHash)
    {
@@ -113,12 +109,14 @@ class Users
    {
       return $this->login;
    }
+
    public function setLogin(string $login)
    {
       $this->login = $login;
 
       return $this;
    }
+
    /**
     * Get the value of flag
     */
@@ -126,6 +124,7 @@ class Users
    {
       return $this->flag;
    }
+
    /**
     * Get the value of flag
     */
@@ -140,9 +139,9 @@ class Users
       if ($this->flag == "b") {
          $flag = "Bloqué";
       }
-
       return $flag;
    }
+
    /**
     * Set the value of flag
     *
@@ -191,7 +190,6 @@ class Users
    public function setAddress1($address1): self
    {
       $this->address1 = $address1;
-
       return $this;
    }
 
@@ -231,7 +229,6 @@ class Users
    public function setZipCode(int $zipCode): self
    {
       $this->zipCode = $zipCode;
-
       return $this;
    }
 
@@ -251,7 +248,6 @@ class Users
    public function setIdCity($idCity): self
    {
       $this->idCity = $idCity;
-
       return $this;
    }
 
@@ -271,7 +267,6 @@ class Users
    public function setEmail($email): self
    {
       $this->email = $email;
-
       return $this;
    }
 
@@ -291,9 +286,9 @@ class Users
    public function setFirstname($firstname): self
    {
       $this->firstname = $firstname;
-
       return $this;
    }
+
    public function getRoles(): string
    {
       $result = "";
@@ -318,6 +313,7 @@ class Users
    public function setRoles()
    {
    }
+
    public function makeAdmin()
    {
       $admin = new Admin();
@@ -325,6 +321,7 @@ class Users
       $model = new ModelAdmin();
       $model->insertAdmin($admin);
    }
+
    public function makeModerator()
    {
       $moderator = new Moderator();
@@ -332,6 +329,7 @@ class Users
       $model = new ModelModerator();
       $model->insertModerator($moderator);
    }
+
    public function makeChef()
    {
       $chef = new Chef();
@@ -339,8 +337,6 @@ class Users
       $model = new ModelChef();
       $model->insertChef($chef);
    }
-
-
 
    /**
     * Get the value of idUser
@@ -358,19 +354,32 @@ class Users
    public function setIdUser($idUser): self
    {
       $this->idUser = $idUser;
-
       return $this;
    }
 
-
    public function getCountOrders()
    {
-       return count($this->getOrders());
+      return count($this->getOrders());
    }
 
-   public function getOrders(){
+   public function getOrders()
+   {
       $modelorder = new ModelOrders();
-      $orders = $modelorder->readAllBy("idUsers",$this->idUser);
+      $orders = $modelorder->readAllBy("idUsers", $this->idUser);
       return $orders;
    }
+
+   public function getComments()
+   {
+      $com = new ModelComment();
+      $comments = $this->data['arrayCom'] = $com->readAll();
+      return $comments;
+   }
+
+   // public function getLastConnection()
+   // {
+   //    $connect = new ModelConnectionLog();
+   //    $co = $connect->readOneBy("idUsers", $this->idUser);
+   //    return $co;
+   // }
 }
