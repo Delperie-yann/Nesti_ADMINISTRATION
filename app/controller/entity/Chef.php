@@ -1,6 +1,6 @@
 <?php
 
-class Chef {
+class Chef extends Users{
 
 
  
@@ -52,7 +52,16 @@ class Chef {
         }
         return $result;
     }
- 
-
+    public function getUser() { 
+        $model= new ModelUsers();
+        return $model->readOneBy("idUsers",$this->idChef);
+    }
+    public function getAllRecipeFromChef()
+    {
+       $model = new ModelRecipes();
+       $logs = $model->readAllBy("idChef", $this->getIdChef());
+       // var_dump($logs);
+       return $logs;
+    }
 
 }

@@ -4,7 +4,7 @@
             <h1 class="mb-2 mt-4">Edition d'une recette</h1>
             <p class="mt-4">Nom de la recette</p>
             <input type="text" class="w-100" value="<?= $recipe->getName() ?>" name="recipeName">
-            <p class="mt-4">Auteur de la recette</p>
+            <p class="mt-4">Auteur de la recette : <?= $recipe->getChef() ?></p>
             <div class="row">
                 <div class="col d-flex justify-content-between flex-column">
                     <p class="mt-4 mb-2">Difficulté (note sur 5)</p>

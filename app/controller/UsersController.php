@@ -69,6 +69,12 @@ class UsersController extends BaseController
         $this->data['user'] = $user;
         $model = new ModelOrders();
         $this->data['arrayOrders'] = $model->readAll();
+    //    var_dump($this->data['arrayOrders']);
+          $com = new ModelComment();
+         $this->data['arrayCom'] = $com->readAll();
+  // $user = new Users();
+   // $user->setName($_SESSION["idUsers"]);
+
     }
     public function delete($id)
     {

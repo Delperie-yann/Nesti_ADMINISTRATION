@@ -83,7 +83,7 @@ class Users
       return password_verify($plaintextPassword, $this->getPasswordHash());
    }
 
-   public function getLastname(): string
+   public function getLastname()
    {
       return $this->lastname;
    }
