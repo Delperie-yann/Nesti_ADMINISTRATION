@@ -66,6 +66,7 @@
                     Derniere commande : <br>
                     <?= $user->isAdmin() == "Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : '' ?> <br>
                     <?= $user->isModerateur() == "moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :' : '' ?> <br>
+                    <Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :
                 </div>
 
             </div>
@@ -113,7 +114,7 @@
                         <tr>
                             <td><?= $value->getIdOrders(); ?></td>
                             <td><?= $user->getLastname(); ?> <?= $user->getFirstname(); ?></td>
-                            <td></td>
+                            <td><?= $value->getCoast(); ?></td>
                             <td></td>
                             <td><?= $value->getDateCreation(); ?></td>
                             <td><?= $value->getState($value); ?></td>

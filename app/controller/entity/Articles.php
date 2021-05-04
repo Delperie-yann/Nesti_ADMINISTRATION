@@ -249,7 +249,7 @@ class Articles
                 $lot=$lot->readOneBy("idArticle",$this->getIdArticle());
                
                 return $lot;
-
+        }
                 
 
         public function getFactoryName()
@@ -260,6 +260,7 @@ class Articles
 
                 return  $factoryName;
         }
+
         public function getArticleQuantIn(){
                 return $this->getLots();
         }
