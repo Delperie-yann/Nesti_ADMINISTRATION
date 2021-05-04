@@ -56,9 +56,25 @@ class StatisticsController extends BaseController
         $TopTenRecipe = ModelRecipes::readAll();
         usort($TopTenRecipe, function ($v1, $v2) {
             return count($v2->getRatting()) <=> count($v1->getRatting());
-           //Bugger!!!!
+         
         });
+        // var_dump($TopTenRecipe);
         $TopTenRecipe = array_slice($TopTenRecipe, 0, 10);
+
+        $largerOrders =  ModelOrderline::readAll();
+        usort($largerOrders, function ($v1, $v2) {
+            // return count($v2->getQuantitybyOrder()) <=> count($v1->getQuantitybyOrder());
+         
+        });
+        // var_dump($TopTenRecipe);
+        $largerOrders = array_slice($largerOrders, 0, 3);
+
+        $NbCount =  ModelArticles::readAll();
+        usort($NbCount, function ($v1, $v2) {
+            // return count($v2->getIdArticle()) <=> count($v1->getIdArticle());
+         
+        });
+        $NbCount = $NbCount;
 
         $cost = [444, 457, 477, 479, 446, 476, 457, 472, 467, 455, 458, 458, 451];
         $vente= [466, 507, 472, 475, 485, 470, 500, 496, 487, 491, 490, 476, 489];
@@ -74,6 +90,8 @@ class StatisticsController extends BaseController
             "TopTenUsers"=> $TopTenUsers,
             "TopTenChef"=>$TopTenChef,
             "TopTenRecipe"=>$TopTenRecipe,
+            "largerOrders"=>$largerOrders,
+            "NbCount"=> $NbCount,
         ];
 }
 

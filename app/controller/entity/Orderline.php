@@ -61,6 +61,14 @@ class Orderline
 
         return $this;
     }
+    public function getQuantitybyOrder()
+    { // Surement à deplacer dans Article....et a modifier
+        $model = new ModelOrderline();
+        $quant = $model->readAllBy("idOrders", $this->getIdOrders());
+        
+        $fullquant=$this->getQuantity();
 
+        return $fullquant;
+    }
   
 }

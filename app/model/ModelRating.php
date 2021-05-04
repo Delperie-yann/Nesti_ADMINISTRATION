@@ -15,6 +15,7 @@ class ModelRating {
         } else {
             $array = [];
         }
+
         return $array;
     }
 

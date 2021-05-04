@@ -1,8 +1,8 @@
 <?php
 include_once(PATH_MODEL.'Connection.php');
-class ModelOrdeline {
+class ModelOrderline {
    
-    public function readAll() {
+    public static function readAll() {
         //requete
         $pdo= Connection::getPdo();
 

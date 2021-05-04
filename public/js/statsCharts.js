@@ -119,7 +119,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         ],
     };
     const options2 = {
-        chart: { title: 'Nombre d articles en vente', width: 900, height: 400 },
+        chart: { title: '', width: 900, height: 400 },
         series: {
             shift: true,
         },

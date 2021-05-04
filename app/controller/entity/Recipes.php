@@ -283,8 +283,8 @@ class Recipes
     public function getRatting()
     {
        $model = new ModelRating();
-       $logs = $model->readAllBy("idChef", $this->getIdChef());
-       // var_dump($logs);
+       $logs = $model->readAllBy("idRecipe", $this->getIdRecipe());
+    //  var_dump(  $logs);
        return $logs;
     }
 }
