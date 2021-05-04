@@ -142,4 +142,16 @@ $this->idModerator = $idModerator;
 
 return $this;
 }
+public function getState($entity)
+{
+    if ($entity->getFlag() == "a") {
+        $state = "Approuvé";
+    } else if ($entity->getFlag() == "b") {
+        $state = "Bloqué";
+        
+    } else {
+        $state = "Annulé";
+    }
+    return $state;
+}
 }

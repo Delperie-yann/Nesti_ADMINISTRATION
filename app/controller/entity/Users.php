@@ -382,4 +382,26 @@ class Users
    //    $co = $connect->readOneBy("idUsers", $this->idUser);
    //    return $co;
    // }
+   public function getCommentNbA(){
+      $comments=$this->getComments();
+      $nbCommentA=0;
+     
+      foreach ($comments as $comment){
+        if( $comment->getflag()=="a"){
+         $nbCommentA+=1;
+        }
+      } return $nbCommentA;
+   // return $nbComment;
+  }
+  public function getCommentNbB(){
+   $comments=$this->getComments();
+   $nbCommentB=0;
+  
+   foreach ($comments as $comment){
+     if( $comment->getflag()=="b"){
+      $nbCommentB+=1;
+     }
+   } return $nbCommentB;
+}
+
 }

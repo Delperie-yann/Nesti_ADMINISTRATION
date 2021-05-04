@@ -1,3 +1,9 @@
+<?php
+
+$session = $_SESSION['Roles'];
+//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
+?>
 <a href="<?= BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Edition</a>
 
 <div class="container">
@@ -62,11 +68,19 @@
                     <?= $user->isChef() == "chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :' . $user->getChef()->getCountRecipe() . '  <br> Derniere Recette : ' . $user->getChef()->getLastRecipe() : '' ?> <br>
                     <Strong>Utilisateur </Strong><br>
                     Nombre de commande : <?= $user->getCountOrders() ?> <br>
-                    Montant total des commandes : <br>
-                    Derniere commande : <br>
+                    Montant total des commandes :  <?php
+                  
+                    $tot=0;
+                    foreach ($ArrayOrder as $order){
+                        $orderForUser= $order->getIdOrders();
+                        $tot+=$order->getCoast($orderForUser); 
+                      
+                    }   echo $tot;
+                   ?>  <br>
+                    Derniere commande : <?= $order-> getLastOrder($order->getIdUsers()) ?><br>
                     <?= $user->isAdmin() == "Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : '' ?> <br>
-                    <?= $user->isModerateur() == "moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :' : '' ?> <br>
-                    <Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : <br> Nombre de commentaire approuvé :
+                    <?= $user->isModerateur() == "moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : '.$user->getCommentNbB().' <br> Nombre de commentaire approuvé : '.$user->getCommentNbA() : '' ?> <br>
+                   
                 </div>
 
             </div>
@@ -115,7 +129,7 @@
                             <td><?= $value->getIdOrders(); ?></td>
                             <td><?= $user->getLastname(); ?> <?= $user->getFirstname(); ?></td>
                             <td><?= $value->getCoast(); ?></td>
-                            <td></td>
+                            <td><?= $value->getNumberArticles(); ?></td>
                             <td><?= $value->getDateCreation(); ?></td>
                             <td><?= $value->getState($value); ?></td>
                             <td></td>
@@ -179,7 +193,7 @@
                             <td>a modifier : <?= $com->getNameRecipe(); ?></td>
                             <td><?= $com->getCommentContent(); ?></td>
                             <td><?= $value->getDateCreation(); ?></td>
-                            <td><?= $value->getState($value); ?></td>
+                            <td><?= $com->getState($com); ?></td>
                             <td>
                                 <a href="">Approuver</a><br>
 
@@ -218,3 +232,10 @@
                             non-alphanumérique.</span></li>
                 </ul>
             </div> -->
+            <?php
+            
+        } else {
+            include_once(PATH_ERROR . '403.php');
+        }
+
+        ?>

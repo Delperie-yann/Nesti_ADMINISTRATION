@@ -72,6 +72,7 @@ class UsersController extends BaseController
     //    var_dump($this->data['arrayOrders']);
           $com = new ModelComment();
          $this->data['arrayCom'] = $com->readAll();
+         
   // $user = new Users();
    // $user->setName($_SESSION["idUsers"]);
 
@@ -89,6 +90,10 @@ class UsersController extends BaseController
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $idUsers);
         $this->data['user'] = $user;
+        $model = new ModelOrders();
+        $orders = $model->readAllBy("idUsers", $idUsers);
+   
+        $this->data['ArrayOrder'] = $orders;
 
         if (isset($_POST["userLastname"])) {
             $user->setLastName(filter_input(INPUT_POST, "userLastname"));

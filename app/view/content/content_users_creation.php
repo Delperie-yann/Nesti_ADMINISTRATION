@@ -8,19 +8,19 @@
                 <h1>Création d'un utilisateur</h1>
 
                 <p class="mt-5">Nom</p><br>
-                <input type="text" class="w-75" name="userLastname">
+                <input type="text" class="w-75" name="userLastname" required>
 
                 <p class="mt-5">Prénom</p><br>
-                <input type="text" class="w-75" name="userFirstname">
+                <input type="text" class="w-75" name="userFirstname" required>
 
                 <p class="mt-5">Adress1</p><br>
-                <input type="text" class="w-75" name="userAdress1">
+                <input type="text" class="w-75" name="userAdress1" required>
 
                 <p class="mt-5">Adress2</p><br>
-                <input type="text" class="w-75" name="userAdress2">
+                <input type="text" class="w-75" name="userAdress2" required>
 
                 <p class="mt-5">Zipcode</p><br>
-                <input type="text" class="w-75" name="userZipCode">
+                <input type="text" class="w-75" name="userZipCode" required>
 
 
                 <p class="mt-5">Rôle</p><br>
@@ -53,9 +53,9 @@
 
             <div class="col mt-5">
                 <p class="mt-5">Login</p><br>
-                <input type="text" class="w-75" name="userLogin">
+                <input type="text" class="w-75" name="userLogin" required>
                 <p class="mt-5">Email</p><br>
-                <input type="text" class="w-75" name="userEmail">
+                <input type="text" class="w-75" name="userEmail" required>
                 <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd"
                     required>
                 &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="3" high="5" min="0" max="5"

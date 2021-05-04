@@ -272,8 +272,6 @@ class Articles
                 $totalQuantity += $this->getLots()->getQuantity();
                 
             }
-            var_dump($this->getLots()->getQuantity());
-         
             return $totalQuantity;
         }
         
