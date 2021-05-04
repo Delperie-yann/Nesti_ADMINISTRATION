@@ -120,4 +120,15 @@ class Orders
         }
         return $quants;
     }
+
+    public function getNumberArticles()
+    {
+        $quants = 0;
+        $model = new ModelOrderline();
+        $orderLines = $model->readAllBy("idOrders", $this->getIdOrders());
+        foreach ($orderLines as $orderLine) {
+            $quants +=  $orderLine->getQuantity();
+        }
+        return $quants;
+    }
 }
