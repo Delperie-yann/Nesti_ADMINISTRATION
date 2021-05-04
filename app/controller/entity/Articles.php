@@ -250,7 +250,7 @@ class Articles
                
                 return $lot;
 
-                
+        }     
 
         public function getFactoryName()
         {
