@@ -3,7 +3,7 @@
         <div class="col">
             <h1 class="mb-2 mt-5">Edition de l'article</h1>
             <p class="mt-5">Nom d'usine de l'article</p>
-            <input type="text" class="w-100 mt-2" value="">
+            <input type="text" class="w-100 mt-2" value="<?= $article->getFactoryName()  ?>">
             <p class="mt-5">Nom de l'article pour l'utilisateur</p>
             <input type="text" class="w-100 mt-2" value="">
             <div class="row">

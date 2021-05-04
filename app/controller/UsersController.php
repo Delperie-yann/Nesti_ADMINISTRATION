@@ -1,9 +1,6 @@
 <?php
 class UsersController extends BaseController
 {
-    // $model = new ModelUsers();
-    // $arrayUsers = $model->readAll();
-
     public function initialize()
     {
         $newUser = new Users();
@@ -14,27 +11,22 @@ class UsersController extends BaseController
         if ($action == '') {
             $model                    = new ModelUsers();
             $this->data['arrayUsers'] = $model->readAll();
-           
-            
         }
         if ($action == "add") {
             $this->addUser();
-
         }
-        if ($action =="editing") {
+        if ($action == "editing") {
             $this->editUser($idUser);
         }
         if ($action == "deleted") {
             $this->delete($idUser);
-          }
-
+        }
     }
     public function addUser()
     {
         $newUser = new Users();
         $model   = new ModelUsers();
-        //  var_dump($_POST["roleAdmin"]);
-        // // die();
+
         if ($_POST["userLogin"]) {
             $newUser->setLastname(filter_input(INPUT_POST, "userLastname"));
             $newUser->setFirstname(filter_input(INPUT_POST, "userFirstname"));
@@ -44,43 +36,37 @@ class UsersController extends BaseController
             $newUser->setAddress1(filter_input(INPUT_POST, "userAdress1"));
             $newUser->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $newUser->setZipCode(filter_input(INPUT_POST, "userZipCode"));
-            if ($_POST["State"]=="actif"){
+            if ($_POST["State"] == "actif") {
                 $newUser->setFlag("a");
             }
-            if ($_POST["State"]=="wait"){
+            if ($_POST["State"] == "wait") {
                 $newUser->setFlag("w");
             }
-            if ($_POST["State"]=="block"){
+            if ($_POST["State"] == "block") {
                 $newUser->setFlag("b");
             }
             //verif IS valid?
             $insertedUser = $model->insertUser($newUser);
-            // var_dump( $insertedUser);
-            if (isset($_POST["roleAdmin"])){
+
+            if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
-           }
-           if (isset($_POST["roleChef"])){
-            $insertedUser->makeChef();
-           }
-            if (isset($_POST["roleModerator"])){
-             $insertedUser->makeModerator();
-           }
-           
-            
-             header('Location:' . BASE_URL . "users");
+            }
+            if (isset($_POST["roleChef"])) {
+                $insertedUser->makeChef();
+            }
+            if (isset($_POST["roleModerator"])) {
+                $insertedUser->makeModerator();
+            }
+
+            header('Location:' . BASE_URL . "users");
         }
     }
-    public function editUser($id)
-    {   
-        $connect = new ModelConnectionLog();
-        $co = $connect->readOneBy("idUsers", $id);
-        
+    public function user($id)
+    {
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $id);
-       
-      
+
         $this->data['user'] = $user;
-        $this->data['connect'] = $co;
         $model = new ModelOrders();
         $this->data['arrayOrders'] = $model->readAll();
     //    var_dump($this->data['arrayOrders']);
@@ -92,15 +78,48 @@ class UsersController extends BaseController
     }
     public function delete($id)
     {
-       
-      $model = new ModelUsers();
-      $user = $model->readOneBy("idUsers", $id);
-      $deletedUsers = $model->deleteUser($user);
-      header('Location:' . BASE_URL . "users");
+        $model = new ModelUsers();
+        $user = $model->readOneBy("idUsers", $id);
+        $deletedUsers = $model->deleteUser($user);
+        header('Location:' . BASE_URL . "users");
     }
 
+    public function editUser($idUsers)
+    {
+        $model = new ModelUsers();
+        $user = $model->readOneBy("idUsers", $idUsers);
+        $this->data['user'] = $user;
 
+        if (isset($_POST["userLastname"])) {
+            $user->setLastName(filter_input(INPUT_POST, "userLastname"));
+            $user->setFirstname(filter_input(INPUT_POST, "userFirstname"));
+            $user->setAddress1(filter_input(INPUT_POST, "userAdress1"));
+            $user->setAddress2(filter_input(INPUT_POST, "userAdress2"));
+            $user->setZipCode(filter_input(INPUT_POST, "userZipCode"));
 
-    
-  }
+            if ($_POST["State"] == "actif") {
+                $user->setFlag("a");
+            }
+            if ($_POST["State"] == "wait") {
+                $user->setFlag("w");
+            }
+            if ($_POST["State"] == "block") {
+                $user->setFlag("b");
+            }
+            //verif IS valid?
+            $insertedUser = $model->updateUsers($user);
 
+            if (isset($_POST["roleAdmin"])) {
+                $insertedUser->makeAdmin();
+            }
+            if (isset($_POST["roleChef"])) {
+                $insertedUser->makeChef();
+            }
+            if (isset($_POST["roleModerator"])) {
+                $insertedUser->makeModerator();
+            }
+
+            header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+        }
+    }
+}
