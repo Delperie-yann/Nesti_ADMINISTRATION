@@ -2,6 +2,21 @@
 include_once(PATH_MODEL.'Connection.php');
 class ModelChef {
 
+
+    public static function readAll() {
+        //requete
+        $pdo= Connection::getPdo();
+
+        $sql="SELECT * from Chef";
+        $result=$pdo->query($sql);
+        if($result){
+            $array = $result-> fetchAll(PDO::FETCH_CLASS,'Chef');
+        } else{
+            $array=[];
+        }
+        return $array;
+    }
+
     public function insertChef(Chef &$idChef){
 
         $pdo= Connection::getPdo();

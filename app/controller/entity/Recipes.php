@@ -179,7 +179,8 @@ class Recipes
     {
         $model = new ModelUsers();
         $chef = $model->readOneBy("idUsers", $this->getIdChef());
-        return $chef->getLastname();
+        $fullName = $chef->getLastname() .' '. $chef->getFirstname(); 
+        return $fullName;
     }
 
     public function setRecipeFromArray($recipe)
@@ -278,5 +279,12 @@ class Recipes
         $model = new ModelParagraph();
         $paragraphs = $model->readAllBy("idRecipe", $this->getIdRecipe());
         return $paragraphs;
+    }
+    public function getRatting()
+    {
+       $model = new ModelRating();
+       $logs = $model->readAllBy("idRecipe", $this->getIdRecipe());
+    //  var_dump(  $logs);
+       return $logs;
     }
 }

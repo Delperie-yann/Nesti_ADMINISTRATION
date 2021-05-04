@@ -244,6 +244,13 @@ class Articles
 
                 return $this->getType() != null;
         }
+        public function getLots(){
+                $lot= new ModelLot();
+                $lot=$lot->readOneBy("idArticle",$this->getIdArticle());
+               
+                return $lot;
+
+                
 
         public function getFactoryName()
         {
@@ -253,7 +260,22 @@ class Articles
 
                 return  $factoryName;
         }
+        public function getArticleQuantIn(){
+                return $this->getLots();
+        }
 
+        public function getNbBought()
+        {
+            $totalQuantity = 0;
+            foreach ($this->getLots() as $lot) {
+                $totalQuantity += $this->getLots()->getQuantity();
+                
+            }
+            var_dump($this->getLots()->getQuantity());
+         
+            return $totalQuantity;
+        }
+        
         public function getArticlePrices()
         {
                 $model = new ModelArticleprice();

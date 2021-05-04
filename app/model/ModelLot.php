@@ -38,6 +38,21 @@ class ModelLot {
         //$lot -> setId($data);
         return $lot;
     }
+
+    public function readAllBy($parameter, $value)
+    {
+        $pdo = Connection::getPdo();
+
+        $sql = "SELECT * FROM lot where $parameter = '$value'";
+        $result = $pdo->query($sql);
+
+        if ($result) {
+            $array = $result->fetchAll(PDO::FETCH_CLASS, 'Lot');
+        } else {
+            $array = [];
+        }
+        return $array;
+    }
     public function findChild($type,$value){
         $pdo= Connection::getPdo();
         $sql="SELECT * FROM $type WHERE id".ucfirst($type)."= $value";
