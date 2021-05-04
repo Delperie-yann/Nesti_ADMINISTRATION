@@ -6,8 +6,6 @@ class Orderline
     private $idArticle;
     private $quantity;
 
-
-
     /**
      * Get the value of idOrders
      */
@@ -61,6 +59,29 @@ class Orderline
 
         return $this;
     }
+    public function getQuantitybyOrder()
+    { // Surement à deplacer dans Article....et a modifier
+        $model = new ModelOrderline();
+        $quant = $model->readAllBy("idOrders", $this->getIdOrders());
+        
+        $fullquant=$this->getQuantity();
 
+        return $fullquant;
+    }
   
+    public function setOrderlineFromArray($orderLine)
+    {
+       foreach ($orderLine as $key => $value) {
+ 
+          $this->$key = $value;
+       }
+    }
+
+    public function getArticle()
+   {
+      $model = new ModelArticles();
+      $article = $model->readOneBy("idArticle", $this->getIdArticle());
+     
+      return $article;
+   }
 }
