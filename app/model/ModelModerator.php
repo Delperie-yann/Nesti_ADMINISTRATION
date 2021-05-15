@@ -17,7 +17,7 @@ class ModelModerator  {
             $stmt->execute($values);
       
             //$newUser = $this->readOneBy("idUsers",$pdo->lastInsertId());
-            echo "Records insert Moderator inserted successfully.";
+            // echo "Records insert Moderator inserted successfully.";
         } catch(PDOException $e){
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

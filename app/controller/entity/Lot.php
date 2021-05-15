@@ -102,11 +102,14 @@
 
     public function setLotFromArray($recipe)
     {
+        if($recipe==true ){
+            foreach ($recipe as $key => $value) {
 
-        foreach ($recipe as $key => $value) {
-
-            $this->$key = $value;
-        }
+                $this->$key = $value;
+            }}
+            
+       
+        
     }
 
     }

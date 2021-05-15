@@ -1,6 +1,7 @@
 <?php
+
 include_once(PATH_MODEL . 'Connection.php');
-class ModelUsers
+class ModelUsers 
 {
 
     public static function readAll() {
@@ -56,18 +57,18 @@ class ModelUsers
         $pdo = Connection::getPdo();
         try {
             // Create prepared statement
-            $sql = "INSERT INTO users (lastName,firstName,email,passwordHash,flag ,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (lastName,firstName,email,passwordHash,flag,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
             $stmt = $pdo->prepare($sql);
         
             $values = [$user->getLastName(), $user->getFirstName(), $user->getEmail(), $user->getPasswordHash(), $user->getFlag(), $user->getDateCreation(), $user->getLogin(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), '1'];
-
+           
             // Execute the prepared statement
             $stmt->execute($values);
-
+            var_dump( $values);
             $newUser = $this->readOneBy("idUsers", $pdo->lastInsertId());
-
-            echo "Records inserted successfully.";
+// var_dump($pdo->lastInsertId()." id");
+            // echo "Records inserted successfully.";
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

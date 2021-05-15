@@ -35,7 +35,7 @@ class ConnectionController extends BaseController
                     $_SESSION["firstname"] = $user->getFirstname();
                     $_SESSION["lastname"]  = $user->getLastname();
 
-                $model = new ModelConnectionLog;
+                $model = new ModelConnectionLog();
                 $model->insertDateCo($user);
                     header('Location:' . BASE_URL . 'recipes');
                 } else {

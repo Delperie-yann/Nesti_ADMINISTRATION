@@ -48,5 +48,27 @@ class ModelUnit {
         return $data;
 
     }
+    public function insertUnit(Unit &$unit)
+    {
+
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement name is insered whitout id in product
+            $sql = "INSERT INTO unit (name) VALUES (?)";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$unit->getName()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $newUnit = $this->readOneBy("idUnit", $pdo->lastInsertId());
+            echo "Records inserted successfully.";
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newUnit;
+    
+    }
 
 }

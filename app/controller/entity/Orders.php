@@ -156,6 +156,6 @@ class Orders
         $ArrayOrderLines2 = array_slice($orderLines, 0, 1);
         foreach($ArrayOrderLines2 as $orderlinedate){
         return $orderlinedate->getDateCreation();
-    }
+        }
     }
 }

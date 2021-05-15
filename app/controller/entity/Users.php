@@ -35,9 +35,13 @@ class Users
    public function getChef()
    {
       $model = new ModelUsers();
-      $data  = $model->findChild("chef", $this->getIdUser());
+      $chef  = $model->findChild("chef", $this->getIdUser());
+      return $chef;
+   }
+   public function getHimAsChef(){
+      
       $chef = new Chef();
-      $chef->setChefFromArray($data);
+      $chef->setChefFromArray($this->getChef());
       return $chef;
    }
 
@@ -320,6 +324,7 @@ class Users
       $admin->setIdAdmin($this->idUser);
       $model = new ModelAdmin();
       $model->insertAdmin($admin);
+      var_dump($admin);
    }
 
    public function makeModerator()
@@ -328,6 +333,7 @@ class Users
       $moderator->setIdModerator($this->idUser);
       $model = new ModelModerator();
       $model->insertModerator($moderator);
+      var_dump($moderator);
    }
 
    public function makeChef()
@@ -336,6 +342,7 @@ class Users
       $chef->setIdChef($this->idUser);
       $model = new ModelChef();
       $model->insertChef($chef);
+      var_dump($chef);
    }
 
    /**

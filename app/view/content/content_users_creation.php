@@ -56,6 +56,7 @@
                 <input type="text" class="w-75" name="userLogin" required>
                 <p class="mt-5">Email</p><br>
                 <input type="text" class="w-75" name="userEmail" required>
+                
                 <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd"
                     required>
                 &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="3" high="5" min="0" max="5"

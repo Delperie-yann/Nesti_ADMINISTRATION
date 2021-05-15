@@ -195,12 +195,15 @@ class Articles
 
         public function getLastimport()
         {
+                
+                
                 $name = new ModelImportation();
-                // var_dump($this->idProduct);
+              
                 $name3 = $name->readOneBy("idArticle", $this->idArticle);
-
+                 $lastImport=$name3->getImportationDate();
                 // var_dump($name3->getImportationDate());
-                return  $name3->getImportationDate();
+               
+                return $lastImport;
         }
 
         public function getStock()

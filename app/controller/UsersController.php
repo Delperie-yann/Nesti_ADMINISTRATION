@@ -46,8 +46,9 @@ class UsersController extends BaseController
                 $newUser->setFlag("b");
             }
             //verif IS valid?
+         
             $insertedUser = $model->insertUser($newUser);
-
+// var_dump($insertedUser);
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
             }
@@ -111,20 +112,29 @@ class UsersController extends BaseController
             if ($_POST["State"] == "block") {
                 $user->setFlag("b");
             }
+            $model = new ModelUsers();
             //verif IS valid?
+            // var_dump($model->updateUsers($user));
+         
             $insertedUser = $model->updateUsers($user);
 
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
+                echo'totoad';
+                var_dump( $insertedUser->makeAdmin());
             }
             if (isset($_POST["roleChef"])) {
                 $insertedUser->makeChef();
+                echo'totoCh';
+                var_dump( $insertedUser->makeChef());
             }
             if (isset($_POST["roleModerator"])) {
                 $insertedUser->makeModerator();
+                echo'totoMO';
+                var_dump( $insertedUser->makeModerator());
             }
 
-            header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+            // header('Location:' . BASE_URL . "users/editing/" . $idUsers);
         }
     }
 }

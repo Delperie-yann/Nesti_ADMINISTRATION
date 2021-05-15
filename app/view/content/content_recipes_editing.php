@@ -13,9 +13,13 @@
                 </div>
                 <div class="col">
                     <div class="col d-flex justify-content-between flex-column p-0">
-                        <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" name="recipedifficult"></div>
-                        <div class="d-flex justify-content-end"><input type="number" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" name="recipePortion"></div>
-                        <div class="d-flex justify-content-end"><input type="text" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()  ?>" name="recipeTimePrepare"></div>
+                        <div class="d-flex justify-content-end"><input type="number" min="0" max="5"
+                                class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" name="recipedifficult">
+                        </div>
+                        <div class="d-flex justify-content-end"><input type="number" min="0" class="w-50 mt-4 mb-2"
+                                value="<?= $recipe->getPortions()  ?>" name="recipePortion"></div>
+                        <div class="d-flex justify-content-end"><input type="text" class="w-50 mt-4 mb-2"
+                                value="<?= $recipe->getPreparationTime()  ?>" name="recipeTimePrepare"></div>
                     </div>
                 </div>
             </div>
@@ -25,8 +29,9 @@
             </div>
         </form>
         <div class="col">
-            <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="post">
-                <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;">
+            <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>"
+                method="post">
+                <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
                     <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
                 </div>
                 <div class="row">
@@ -34,7 +39,8 @@
                         <label for="formFile" class="form-label"></label>
                         <input class="form-control ml-3" type="file" id="formFile" name="pictures">
                     </div>
-                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100" onclick="dlImg()">Ok</button></div>
+                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100"
+                            onclick="dlImg()">Ok</button></div>
                 </div>
             </form>
         </div>
@@ -54,17 +60,19 @@
                             <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
                                 <img src="<?php BASE_URL ?>../../public/images/up-arrow.png" alt="">
                             </button>
-                            <button class="downText btn mt-2 mb-2 d-flex justify-content-center" onclick="downBtn(this)">
+                            <button class="downText btn mt-2 mb-2 d-flex justify-content-center"
+                                onclick="downBtn(this)">
                                 <img src="<?php BASE_URL ?>../../public/images/down-arrow.png" alt="">
                             </button>
-                            <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center" onclick="deleteBtn(this)">
+                            <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center"
+                                onclick="deleteBtn(this)">
                                 <img src="<?php BASE_URL ?>../../public/images/delete.png" alt="">
                             </button>
                         </div>
                         <div class="col">
                             <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
-                                <textarea class="prepText w-100 h-100"><?= $paragraph->getContent() ?></textarea>
-                                <!-- <input type="text" class="w-100" value="<?= $paragraph->getContent() ?>"> -->
+                            <!-- <textarea class="prepText w-100 h-100"><?= $paragraph->getContent() ?></textarea> -->
+                            <input type="text" id="prepText" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>">
                             <?php }
                             ?>
                         </div>
@@ -82,20 +90,32 @@
             <div class="col-sm-4">
                 <h2>Liste des ingrédients</h2>
                 <div class="ingredientsCtn" id="ingCtn">
+                    <?php 
+         
+             foreach ($ingredientrecipe as $ingredient) { ?>
+                    <li class="flex justify-between">
+                        <?= $ingredient->getquantity()." ".($ingredient->getNameUnit()->getName())." de ". $ingredient->getNameProd()->getName()  ?>
+                        <a href="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>/supp">Supprimer</a>
+                    </li>
+
+
+                    <?php } ?>
                 </div>
-                <p class="mt-2 mb-2">Ajouter un ingrédient</p>
-                <input type="text" id="ingName" class="mb-2 w-100" style="height: 38px;">
-                <div class="row">
-                    <div class="col-md-5">
-                        <input type="text" onkeypress="return onlyNumberKey(event)" id="ingQty" class="w-100 h-100">
+                <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
+                    <p class="mt-2 mb-2">Ajouter un ingrédient</p>
+                    <input type="text" id="ingName" name="ingredientName" class="mb-2 w-100" style="height: 38px;">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text"  name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-100">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-100">
+                        </div>
+                        <div class="col-md-2 d-flex justify-content-end">
+                            <button type="submit" class="btn valid" onclick="">Ok</button>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <input type="text" id="ingUnit" class="w-100 h-100">
-                    </div>
-                    <div class="col-md-2 d-flex justify-content-end">
-                        <button type="submit" class="btn valid" onclick="addIngredient()">Ok</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

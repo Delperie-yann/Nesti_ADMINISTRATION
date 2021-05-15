@@ -32,7 +32,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>
             <input type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
             <input type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
-
+<?= var_dump($user->isChef());?>
             <p class="mt-5">Etat</p><br>
 
             <div>
@@ -65,7 +65,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <div class="card-body-editing">
                     Date de Création : <?= $user->getDateCreation() ?> <br>
                     Dernière Connexion : <?= $user->getLastConnectionLog() ?><br>
-                    <?= $user->isChef() == "chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :' . $user->getChef()->getCountRecipe() . '  <br> Derniere Recette : ' . $user->getChef()->getLastRecipe() : '' ?> <br>
+                    <?= $user->isChef() == "chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :' . $user->getHimAsChef()->getCountRecipe() . '  <br> Derniere Recette : ' . $user->getHimAsChef()->getLastRecipe() : '' ?> <br>
                     <Strong>Utilisateur </Strong><br>
                     Nombre de commande : <?= $user->getCountOrders() ?> <br>
                     Montant total des commandes :  <?php

@@ -11,6 +11,7 @@ include './app/loader.php';
 $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
 $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
+$supp = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
 $mySession = new Session();
 if ($mySession->isConnectUser()) {
   //echo("ID : ".$_SESSION['idUser']." est connecter commme ".$_SESSION['Roles']);
