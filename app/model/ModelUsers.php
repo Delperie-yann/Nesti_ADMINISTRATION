@@ -42,12 +42,16 @@ class ModelUsers
     }
 
     public function findChild($type, $value)
-    {
+    {   
         $pdo = Connection::getPdo();
+        try {
         $sql = "SELECT * FROM $type WHERE id" . ucfirst($type) . "= $value";
 
         $result = $pdo->query($sql);
         $data = $result->fetch();
+    } catch (PDOException $e) {
+        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    }
         return $data;
     }
 
@@ -65,7 +69,7 @@ class ModelUsers
            
             // Execute the prepared statement
             $stmt->execute($values);
-            var_dump( $values);
+           
             $newUser = $this->readOneBy("idUsers", $pdo->lastInsertId());
 // var_dump($pdo->lastInsertId()." id");
             // echo "Records inserted successfully.";
@@ -111,7 +115,7 @@ class ModelUsers
             $stmt->execute($values);
             $user = $this->readOneBy("idUsers", $user->getIdUser());
            
-            echo "Records deleted successfully.";
+           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

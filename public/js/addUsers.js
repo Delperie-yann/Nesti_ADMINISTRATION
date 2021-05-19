@@ -1,3 +1,4 @@
+
 let passWord = document.querySelector("#pwd");
 
 passWord.addEventListener("keyup", checkPassword);

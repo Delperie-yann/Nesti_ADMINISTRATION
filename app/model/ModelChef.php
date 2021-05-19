@@ -7,7 +7,7 @@ class ModelChef {
         //requete
         $pdo= Connection::getPdo();
 
-        $sql="SELECT * from Chef";
+        $sql="SELECT * from chef";
         $result=$pdo->query($sql);
         if($result){
             $array = $result-> fetchAll(PDO::FETCH_CLASS,'Chef');

@@ -11,6 +11,7 @@ class Articles
         private $idImage;
         private $idUnit;
         private $idProduct;
+        private $realName;
 
         /**
          * Get the value of idArticle
@@ -160,6 +161,23 @@ class Articles
 
                 return $this;
         }
+        /**
+         * Get the value of realName
+         */
+        public function getRealName()
+        {
+                return $this->realName;
+        }
+
+        /**
+         * Set the value of realName
+         */
+        public function setRealName($realName): self
+        {
+                $this->realName = $realName;
+
+                return $this;
+        }
 
         public function getName()
         {
@@ -302,4 +320,6 @@ class Articles
                 }
                 return $price;
         }
+
+        
 }

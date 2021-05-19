@@ -324,7 +324,7 @@ class Users
       $admin->setIdAdmin($this->idUser);
       $model = new ModelAdmin();
       $model->insertAdmin($admin);
-      var_dump($admin);
+     
    }
 
    public function makeModerator()
@@ -333,7 +333,7 @@ class Users
       $moderator->setIdModerator($this->idUser);
       $model = new ModelModerator();
       $model->insertModerator($moderator);
-      var_dump($moderator);
+     
    }
 
    public function makeChef()
@@ -342,7 +342,7 @@ class Users
       $chef->setIdChef($this->idUser);
       $model = new ModelChef();
       $model->insertChef($chef);
-      var_dump($chef);
+     
    }
 
    /**
@@ -379,7 +379,9 @@ class Users
    public function getComments()
    {
       $com = new ModelComment();
-      $comments = $this->data['arrayCom'] = $com->readAll();
+      $send = $com->readAllBy("idUsers", $this->idUser);
+
+      $comments = $this->data['arrayCom'] = $send;
       return $comments;
    }
 

@@ -1,7 +1,7 @@
 <?php
 
 include_once(PATH_MODEL . 'Connection.php');
-class ModelIngredientRecipe 
+class ModelIngredientrecipe 
 {
 
     public static function readAll() {
@@ -35,7 +35,7 @@ class ModelIngredientRecipe
             $data = [];
         }
        
-        $user = new IngredientRecipe();
+        $user = new Ingredientrecipe();
         $user->setIngredientRecipeFromArray($data);
       
         return $user;

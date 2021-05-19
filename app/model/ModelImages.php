@@ -35,7 +35,7 @@ class ModelImages
 
             $stmt = $pdo->prepare($sql);
 
-            echo ("c'est de la merde php");
+           
             $values = [$images->getName(), $images->getFileExtension()];
             var_dump($values);
             // Execute the prepared statement

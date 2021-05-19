@@ -10,12 +10,16 @@ private $dateCreation;
 private $flag;
 private $idModerator;
 
-
-public function getNameRecipe()
-{
-    
-return $this->idRecipe;
+/**
+ * Get the Name of this recipe
+ */
+public function getNameRecipe($idRecipe)
+{   
+    $model = new ModelRecipes();
+    $name = $model->readOneBy("idRecipe", $idRecipe);
+return  $name->getName();
 }
+
 
 /**
  * Get the value of idRecipe
@@ -153,5 +157,13 @@ public function getState($entity)
         $state = "Annulé";
     }
     return $state;
+}
+public function setCommentFromArray($unit)
+{
+
+    foreach ($unit as $key => $value) {
+
+        $this->$key = $value;
+    }
 }
 }

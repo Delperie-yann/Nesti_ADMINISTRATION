@@ -46,14 +46,26 @@ class ArticlesController extends BaseController
         }
     }
 
-    public function editArticle($id)
+    public function editArticle($idArticles)
     {
         $model = new ModelArticles();
-        $article = $model->readOneBy("idArticle", $id);
+        $article = $model->readOneBy("idArticle", $idArticles);
         $this->data['article'] = $article;
+        if (isset($_POST["nameReal"])) {
+            $article->setRealName(filter_input(INPUT_POST, "nameReal"));
+           
+            $model->updateArticleName($idArticles,$article);
+            
+            header('Location:' . BASE_URL . "articles/editing/" . $idArticles);
+          }
     }
 
-    public function deleteArticle($id)
+    public function deleteArticle($idArticles)
     {
+        $model = new ModelArticles();
+        $article = $model->readOneBy("idArticle", $idArticles);
+        $deletedArticle = $model->deletedArticle($article);
+        header('Location:' . BASE_URL . "articles");
+        
     }
 }

@@ -28,9 +28,10 @@ if(is_int(strpos($session,'Administateur'))){
             <div class="col">
 
                 <?php 
-            // var_dump($arrayVars['TopTenUsers']);
+          
              foreach ($arrayVars['TopTenUsers'] as $user) { ?>
                 <li class="flex justify-between">
+
                     <?= $user->getFirstName() . ' ' . $user->getLastName() ?>
                     <a href="<?=BASE_URL?>users/editing/<?= $user->getIdUser() ?>">Voir</a>
                 </li>
@@ -88,10 +89,14 @@ if(is_int(strpos($session,'Administateur'))){
             <div class="col">
 
                 <?php 
-            // var_dump($arrayVars['TopTenUsers']);
-             foreach ($arrayVars['TopTenChef'] as $chef) { ?>
-                <li class="flex justify-between">
-                    <?= $chef->getUser()->getFirstName() . ' ' . $chef->getUser()->getLastName() ?>
+              
+                        //  var_dump($arrayVars['TopTenChef'] );
+             foreach ($arrayVars['TopTenChef'] as $chef) { 
+                // var_dump($chef );
+                ?>
+             
+                <li class="flex justify-between"> <?=  $chef->getUser()->getFirstName() . ' ' . $chef->getUser()->getLastName() ?>
+                   
                     <a href="<?=BASE_URL?>users/editing/<?= $chef->getIdChef() ?>">Voir</a>
                 </li>
 

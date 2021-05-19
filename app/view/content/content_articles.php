@@ -71,8 +71,11 @@
                     </div>
                     <div class="modal-footer">
                       <div class="btn-group">
-                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Confirmer</button>
-                        <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                      <form action="<?php echo (BASE_URL) ?>articles/deleted/<?= $value->getIdArticle(); ?>" method="POST">
+                                                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span>Confirmer</button>
+                                                    </form>
+
+                                                    <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Annuler</button>
 
                       </div>
                     </div>
