@@ -251,6 +251,7 @@ class Users
     */
    public function setIdCity($idCity): self
    {
+
       $this->idCity = $idCity;
       return $this;
    }
@@ -412,5 +413,34 @@ class Users
      }
    } return $nbCommentB;
 }
+   public  function getTownName(){
+      $model = new ModelCity();
+      $townName = $model-> readOneBy("idCity", $this->idCity);
+   
+     return  $townName->getName();
+   }
+   public  function setTownName(){
+      $model = new ModelCity();
+      $townName = $model-> readOneBy("idCity", $this->idCity);
 
+
+   }
+   public  function setTownId($cityName){
+      $model = new ModelCity();
+      $townName = $model-> readOneBy("name", $cityName);
+     
+      if ($townName->getName() != NULL){
+         $townName=$townName->getIdCity();
+        
+       }else{
+      $newTown=$model->insertCity($cityName);
+            $townName= $newTown->getIdCity(); 
+           
+       }
+     
+     
+      
+     return $townName;
+
+   }
 }

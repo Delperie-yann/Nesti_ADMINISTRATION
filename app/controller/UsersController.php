@@ -38,6 +38,9 @@ class UsersController extends BaseController
         if($action=="block"){
             $this->block($idUser);
         }
+        if($action=="orderline"){
+            $this->readOrder();
+        }
     }
 public function endorse($idUser,$idRecipe){
     $idModerat=$_SESSION['idUser'];
@@ -71,7 +74,7 @@ public function block($idUser,$idRecipe){
     {
         $newUser = new Users();
         $model   = new ModelUsers();
-
+     
         if ($_POST["userLogin"]) {
             $newUser->setLastname(filter_input(INPUT_POST, "userLastname"));
             $newUser->setFirstname(filter_input(INPUT_POST, "userFirstname"));
@@ -81,6 +84,8 @@ public function block($idUser,$idRecipe){
             $newUser->setAddress1(filter_input(INPUT_POST, "userAdress1"));
             $newUser->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $newUser->setZipCode(filter_input(INPUT_POST, "userZipCode"));
+            $newUser->setIdCity($newUser->setTownId(filter_input(INPUT_POST, "userTown")));
+
             if ($_POST["State"] == "actif") {
                 $newUser->setFlag("a");
             }
@@ -90,10 +95,10 @@ public function block($idUser,$idRecipe){
             if ($_POST["State"] == "block") {
                 $newUser->setFlag("b");
             }
-            //verif IS valid?
          
+       
             $insertedUser = $model->insertUser($newUser);
-// var_dump($insertedUser);
+
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
             }
@@ -148,6 +153,26 @@ public function block($idUser,$idRecipe){
             $user->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $user->setZipCode(filter_input(INPUT_POST, "userZipCode"));
 
+            $townInput=(filter_input(INPUT_POST, "userTown"));
+            $modelcity = new ModelCity();
+            $cities = $modelcity->readAll();
+            //Check every city 
+            foreach ($cities as $town){
+                $townName=$town->getName();
+                //if exist change by BDD idcity and stop
+                if($townInput== $townName){
+                         $city = $modelcity->readOneBy("name",  $townName);
+                        $valuecity= $user->setIdCity($city->getIdCity());
+                         break;
+                }else{
+                       //if not exist add and give id insered and stop
+                       if($townInput!="" && $townInput!=NULL){
+                        $newTown=$modelcity->insertCity($townInput);
+                        $valuecity=   $user->setIdCity($newTown->getIdCity());
+                        break;
+                            }
+                    }
+            }
             if ($_POST["State"] == "actif") {
                 $user->setFlag("a");
             }
@@ -158,10 +183,9 @@ public function block($idUser,$idRecipe){
                 $user->setFlag("b");
             }
             $model = new ModelUsers();
-            //verif IS valid?
-            // var_dump($model->updateUsers($user));
-         
             $insertedUser = $model->updateUsers($user);
+
+
 
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
@@ -182,4 +206,26 @@ public function block($idUser,$idRecipe){
             header('Location:' . BASE_URL . "users/editing/" . $idUsers);
         }
     }
+    public function readOrder(){
+        // POST comme from orderScript
+        $order = $_POST['order'];
+        $model = new ModelOrderline();
+        $ArrayOrders=$model->readAllBy("idOrders", $order);
+        $data=[];
+        foreach ($ArrayOrders as $orders){
+            $modelArticle = new ModelArticles();
+            $article=$modelArticle->readOneBy("idArticle", $orders->getIdArticle());
+            $name = $article->getUnitQuantity()." ".$article->getUnitName()." ".$article->getName();
+            $data[] = $name;
+      
+        }      
+        echo json_encode($data);
+        
+        //$value->getUnitQuantity() $value->getUnitName(), $value->getName(); 
+
+       
+        die();
+
+    }
+  
 }

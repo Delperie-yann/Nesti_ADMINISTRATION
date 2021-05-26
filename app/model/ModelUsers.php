@@ -23,7 +23,7 @@ class ModelUsers
         //requete
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login , address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity FROM users where $parameter = '$value'";
+        $sql = "SELECT idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login , address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idCity FROM users where $parameter = '$value'";
 
         $result = $pdo->query($sql);
        
@@ -64,8 +64,8 @@ class ModelUsers
             $sql = "INSERT INTO users (lastName,firstName,email,passwordHash,flag,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
             $stmt = $pdo->prepare($sql);
-        
-            $values = [$user->getLastName(), $user->getFirstName(), $user->getEmail(), $user->getPasswordHash(), $user->getFlag(), $user->getDateCreation(), $user->getLogin(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), '1'];
+            // var_dump($user);
+            $values = [$user->getLastName(), $user->getFirstName(), $user->getEmail(), $user->getPasswordHash(), $user->getFlag(), $user->getDateCreation(), $user->getLogin(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), $user->getIdCity()];
            
             // Execute the prepared statement
             $stmt->execute($values);
@@ -105,11 +105,11 @@ class ModelUsers
     {
         $pdo = Connection::getPdo();
         try {
-            $sql = "UPDATE users SET lastName = ?, firstName = ?, address1 = ?, address2 = ?, zipCode = ?, flag = ?  where idUsers = ?";
+            $sql = "UPDATE users SET lastName = ?, firstName = ?, address1 = ?, address2 = ?, zipCode = ?, flag = ?,idCity = ?  where idUsers = ?";
 
             $stmt = $pdo->prepare($sql);
            
-            $values = [$user->getLastname(), $user->getFirstname(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), $user->getFlag(), $user->getIdUser()];
+            $values = [$user->getLastname(), $user->getFirstname(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), $user->getFlag(), $user->getIdCity(), $user->getIdUser()];
 
             // Execute the prepared statement
             $stmt->execute($values);

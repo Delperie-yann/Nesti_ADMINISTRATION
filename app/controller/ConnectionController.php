@@ -24,8 +24,9 @@ class ConnectionController extends BaseController
             } else {
                 // echo ("else");
 
-                $login    = $_POST["loginUser"];
-                $password = $_POST["password"];
+                $login    = filter_input(INPUT_POST,"loginUser", FILTER_SANITIZE_STRING);
+                $password = filter_input(INPUT_POST,"password", FILTER_SANITIZE_STRING);
+                
                 $model    = new ModelUsers();
                 $user     = $model->readOneBy("login", $login);
                 if (($user != null) && ($user->isPassword($password))) {

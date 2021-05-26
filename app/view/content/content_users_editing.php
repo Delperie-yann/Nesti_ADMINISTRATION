@@ -3,55 +3,58 @@
 $session = $_SESSION['Roles'];
 //var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
-?>
-<a href="<?= BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Edition</a>
+    ?>
+<a href="<?=BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Edition</a>
 
 <div class="container">
 
     <div class="row mt-3">
-        <form action="<?= BASE_URL ?>users/editing/<?= $user->getIdUser() ?>" class="col" method="POST">
+        <form action="<?=BASE_URL ?>users/editing/<?=$user->getIdUser() ?>" class="col" method="POST">
 
             <h1>Edition des utilisateurs</h1>
 
             <p class="mt-5">Nom</p><br>
-            <input type="text" class="w-75" name="userLastname" value="<?= $user->getLastname() ?>">
+            <input type="text" class="w-75" name="userLastname" value="<?=$user->getLastname() ?>">
 
             <p class="mt-5">Prénom</p><br>
-            <input type="text" class="w-75" name="userFirstname" value="<?= $user->getFirstname() ?>">
+            <input type="text" class="w-75" name="userFirstname" value="<?=$user->getFirstname() ?>">
 
             <p class="mt-5">Adress1</p><br>
-            <input type="text" class="w-75" name="userAdress1" value="<?= $user->getAddress1() ?>">
+            <input type="text" class="w-75" name="userAdress1" value="<?=$user->getAddress1() ?>">
 
             <p class="mt-5">Adress2</p><br>
-            <input type="text" class="w-75" name="userAdress2" value="<?= $user->getAddress2() ?>">
+            <input type="text" class="w-75" name="userAdress2" value="<?=$user->getAddress2() ?>">
 
             <p class="mt-5">Zipcode</p><br>
-            <input type="text" class="w-75" name="userZipCode" value="<?= $user->getZipCode() ?>">
+            <input type="text" class="w-75" name="userZipCode" value="<?=$user->getZipCode() ?>">
+
+            <p class="mt-5">Ville</p><br>
+            <input type="text" class="w-75" name="userTown" value="<?=$user->getTownName() ?>">
 
             <p class="mt-5">Rôle</p><br>
-            <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label
+            <input type="checkbox" class="w-75" name="roleChef" <?=$user->isChef() == "chef" ? 'checked' : '' ?>><label
                 for="Chef">Chef</label>
             <input type="checkbox" class="w-75" name="roleModerator"
-                <?= $user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
+                <?=$user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
             <input type="checkbox" class="w-75" name="roleAdmin"
-                <?= $user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
-            
+                <?=$user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
+
             <p class="mt-5">Etat</p><br>
 
             <div>
                 <input type="radio" id="actif" name="State" value="actif"
-                    <?= $user->getFlag() == "a" ? 'checked' : '' ?>>
+                    <?=$user->getFlag() == "a" ? 'checked' : '' ?>>
                 <label for="actif">actif</label>
             </div>
 
             <div>
-                <input type="radio" id="wait" name="State" value="wait" <?= $user->getFlag() == "w" ? 'checked' : '' ?>>
+                <input type="radio" id="wait" name="State" value="wait" <?=$user->getFlag() == "w" ? 'checked' : '' ?>>
                 <label for="wait">wait</label>
             </div>
 
             <div>
                 <input type="radio" id="block" name="State" value="block"
-                    <?= $user->getFlag() == "b" ? 'checked' : '' ?>>
+                    <?=$user->getFlag() == "b" ? 'checked' : '' ?>>
                 <label for="block">block</label>
             </div>
 
@@ -61,35 +64,35 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                     <button type="reset" class="btn btn-danger m-10 ml-2 w-50">Supprimer</button>
                 </div>
             </div>
-
         </form>
 
         <div class="col mt-5">
             <h2>Informations</h2>
             <div class="card">
                 <div class="card-body-editing">
-                    Date de Création : <?= $user->getDateCreation() ?> <br>
-                    Dernière Connexion : <?= $user->getLastConnectionLog() ?><br>
-                    <?= $user->isChef() == "chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :' . $user->getHimAsChef()->getCountRecipe() . '  <br> Derniere Recette : ' . $user->getHimAsChef()->getLastRecipe() : '' ?>
+                    Date de Création : <?=$user->getDateCreation() ?> <br>
+                    Dernière Connexion : <?=$user->getLastConnectionLog() ?><br>
+                    <?=$user->isChef() == "chef" ? '<Strong>Chef patissier</Strong> <br> Nombre de recette :' . $user->getHimAsChef()->getCountRecipe() . '  <br> Derniere Recette : ' . $user->getHimAsChef()->getLastRecipe() : '' ?>
                     <br>
                     <Strong>Utilisateur </Strong><br>
-                    Nombre de commande : <?= $user->getCountOrders() ?> <br>
+                    Nombre de commande : <?=$user->getCountOrders() ?> <br>
                     Montant total des commandes : <?php
-                  
-                    $tot=0;
-                    if(isset($order)){
-                    foreach ($ArrayOrder as $order){
-                        $orderForUser= $order->getIdOrders();
-                        $tot+=$order->getCoast($orderForUser); 
-                      
-                    }   
-                   ?> <br>
-                    Derniere commande : <?= $order==null? '':$order-> getLastOrder($order->getIdUsers());
-                    };
-                    ?><br>
-                    <?= $user->isAdmin() == "Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : '' ?>
+
+    $tot = 0;
+    if (isset($order)) {
+        foreach ($ArrayOrder as $order) {
+            $orderForUser = $order->getIdOrders();
+            $tot += $order->getCoast($orderForUser);
+
+        }
+        ?> <br>
+                    Derniere commande : <?=$order == null ? '' : $order->getLastOrder($order->getIdUsers());
+    }
+    ;
+    ?><br>
+                    <?=$user->isAdmin() == "Administateur" ? '<Strong>Administateur</Strong> <br> Nombre d"importation faite : <br> Date de la derniere importation :' : '' ?>
                     <br>
-                    <?= $user->isModerateur() == "moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : '.$user->getCommentNbB().' <br> Nombre de commentaire approuvé : '.$user->getCommentNbA() : '' ?>
+                    <?=$user->isModerateur() == "moderator" ? '<Strong>Moderateur</Strong> <br> Nombre de commantaire bloqué : ' . $user->getCommentNbB() . ' <br> Nombre de commentaire approuvé : ' . $user->getCommentNbA() : '' ?>
                     <br>
 
                 </div>
@@ -125,42 +128,40 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <table class="table">
 
                     <thead>
-
+                    <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Utilisateur</th>
                         <th scope="col">Montant</th>
                         <th scope="col">Nb d'articles</th>
                         <th scope="col">Date</th>
                         <th scope="col">Etat</th>
-
+                        </tr>
                     </thead>
                     <?php
-                    //var_dump($arrayRecipes);
-                    foreach ($user->getOrders() as $value) {
-                    ?>
-                    <tr>
-                        <td><?= $value->getIdOrders(); ?></td>
-                        <td><?= $user->getLastname(); ?> <?= $user->getFirstname(); ?></td>
-                        <td><?= $value->getCoast(); ?></td>
-                        <td><?= $value->getNumberArticles(); ?></td>
-                        <td><?= $value->getDateCreation(); ?></td>
-                        <td><?= $value->getState($value); ?></td>
-                        <td></td>
+
+                      foreach ($user->getOrders() as $value) {
+        ?>
+                    <tr class="order"   data-idorder="<?=$value->getIdOrders(); ?>" data-url="<?=BASE_URL ?>">
+                        <td><?=$value->getIdOrders(); ?></td>
+                        <td><?=$user->getLastname(); ?> <?=$user->getFirstname(); ?></td>
+                        <td><?=$value->getCoast(); ?></td>
+                        <td><?=$value->getNumberArticles(); ?></td>
+                        <td><?=$value->getDateCreation(); ?></td>
+                        <td><?=$value->getState($value); ?></td>
+
                     </tr>
                     <?php
-                    }
-                    ?>
+}
+    ?>
                 </table>
             </div>
         </div>
 
         <div class="col mt-3">
             <h2>Détails </h2>
-            <div class="card">
-                <div class="card-body-detail">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi, iste architecto ullam optio non
-                    porro esse sint deserunt minus distinctio debitis natus, voluptatum eaque corrupti hic
-                    dignissimos fugit voluptas consequatur!
+            <div class="card" id="order-id">
+                <div class="card-body-detail" id="orderLine">
+
                 </div>
 
             </div>
@@ -197,28 +198,28 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                         <th scope="col">Actions</th>
                     </thead>
                     <?php
-                    //var_dump($arrayRecipes);
+//var_dump($arrayRecipes);
 
-                    foreach ($user->getComments() as $com) {
-                    ?>
+    foreach ($user->getComments() as $com) {
+        ?>
                     <tr>
-                        <td><?= $com->getIdRecipe(); ?></td>
-                        <td><?= $com->getCommentTitle(); ?></td>
-                        <td><?= $com->getNameRecipe($com->getIdRecipe()); ?></td>
-                        <td><?= $com->getCommentContent(); ?></td>
-                        <td><?=  $com->getDateCreation(); ?></td>
-                        <td><?= $com->getState($com);  ?></td>
-                     
-                        <td>
-                        
-                            <a href="<?= BASE_URL . "users/editing/". $com->getIdUsers(). "/" . $com->getIdRecipe()."/1"; ?>">Approuver</a><br>
+                        <td><?=$com->getIdRecipe(); ?></td>
+                        <td><?=$com->getCommentTitle(); ?></td>
+                        <td><?=$com->getNameRecipe($com->getIdRecipe()); ?></td>
+                        <td><?=$com->getCommentContent(); ?></td>
+                        <td><?=$com->getDateCreation(); ?></td>
+                        <td><?=$com->getState($com); ?></td>
 
-                            <a  href="<?= BASE_URL . "users/editing/". $com->getIdUsers(). "/" . $com->getIdRecipe()."/0"; ?>">Bloquer</a>
+                        <td>
+
+                            <a href="<?=BASE_URL . "users/editing/" . $com->getIdUsers() . "/" . $com->getIdRecipe() . "/1"; ?>">Approuver</a><br>
+
+                            <a  href="<?=BASE_URL . "users/editing/" . $com->getIdUsers() . "/" . $com->getIdRecipe() . "/0"; ?>">Bloquer</a>
                         </td>
                     </tr>
                     <?php
-                    }
-                    ?>
+}
+    ?>
 
                 </table>
             </div>
@@ -227,7 +228,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
 </div>
 
 <!-- <div class="col mt-5">
-              
+
                 <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd"
                     required>
                 &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="3" high="5" min="0" max="5"
@@ -248,10 +249,14 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                             non-alphanumérique.</span></li>
                 </ul>
             </div> -->
-<?php
-            
-        } else {
-            include_once(PATH_ERROR . '403.php');
-        }
 
-        ?>
+
+
+
+<?php
+
+} else {
+    include_once PATH_ERROR . '403.php';
+}
+
+?>

@@ -47,7 +47,7 @@
     </div>
     <div class="recipeCtn h-100">
         <div class="row">
-            <form class="col">
+            <div class="col">
                 <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col">
@@ -58,21 +58,22 @@
                     <div class="row prepItem mb-5" id="baseItem" data-order="1">
                         <div class="col-sm-1">
                             <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
-                                <img src="<?php BASE_URL ?>../../public/images/up-arrow.png" alt="">
+                                <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
                             </button>
                             <button class="downText btn mt-2 mb-2 d-flex justify-content-center"
                                 onclick="downBtn(this)">
-                                <img src="<?php BASE_URL ?>../../public/images/down-arrow.png" alt="">
+                                <img src="<?= BASE_URL ?>public/images/down-arrow.png" alt="">
                             </button>
                             <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center"
                                 onclick="deleteBtn(this)">
-                                <img src="<?php BASE_URL ?>../../public/images/delete.png" alt="">
+                                <img src="<?= BASE_URL ?>public/images/delete.png" alt="">
                             </button>
                         </div>
                         <div class="col">
                             <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
                             <!-- <textarea class="prepText w-100 h-100"><?= $paragraph->getContent() ?></textarea> -->
-                            <input type="text" id="prepText" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>">
+                            <input type="text" id="prepText" class="prepText w-100 h-100"
+                                value="<?= $paragraph->getContent() ?>">
                             <?php }
                             ?>
                         </div>
@@ -86,7 +87,7 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            </div>
             <div class="col-sm-4">
                 <h2>Liste des ingrédients</h2>
                 <div class="ingredientsCtn" id="ingCtn">
@@ -106,7 +107,7 @@
                     <input type="text" id="ingName" name="ingredientName" class="mb-2 w-100" style="height: 38px;">
                     <div class="row">
                         <div class="col-md-5">
-                            <input type="text"  name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-100">
+                            <input type="text" name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-100">
                         </div>
                         <div class="col-md-5">
                             <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-100">

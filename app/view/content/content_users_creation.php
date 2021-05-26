@@ -22,6 +22,9 @@
                 <p class="mt-5">Zipcode</p><br>
                 <input type="text" class="w-75" name="userZipCode" required>
 
+                <p class="mt-5">Ville</p><br>
+                <input type="text" class="w-75" name="userTown" required>
+
 
                 <p class="mt-5">Rôle</p><br>
                 <input type="checkbox" class="w-75" name="roleChef"><label for="Chef">Chef</label>
