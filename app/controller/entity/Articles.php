@@ -11,6 +11,7 @@ class Articles
         private $idImage;
         private $idUnit;
         private $idProduct;
+        private $realName;
 
         /**
          * Get the value of idArticle
@@ -160,6 +161,23 @@ class Articles
 
                 return $this;
         }
+        /**
+         * Get the value of realName
+         */
+        public function getRealName()
+        {
+                return $this->realName;
+        }
+
+        /**
+         * Set the value of realName
+         */
+        public function setRealName($realName): self
+        {
+                $this->realName = $realName;
+
+                return $this;
+        }
 
         public function getName()
         {
@@ -195,12 +213,15 @@ class Articles
 
         public function getLastimport()
         {
+                
+                
                 $name = new ModelImportation();
-                // var_dump($this->idProduct);
+              
                 $name3 = $name->readOneBy("idArticle", $this->idArticle);
-
+                 $lastImport=$name3->getImportationDate();
                 // var_dump($name3->getImportationDate());
-                return  $name3->getImportationDate();
+               
+                return $lastImport;
         }
 
         public function getStock()
@@ -272,8 +293,6 @@ class Articles
                 $totalQuantity += $this->getLots()->getQuantity();
                 
             }
-            var_dump($this->getLots()->getQuantity());
-         
             return $totalQuantity;
         }
         
@@ -301,4 +320,6 @@ class Articles
                 }
                 return $price;
         }
+
+        
 }

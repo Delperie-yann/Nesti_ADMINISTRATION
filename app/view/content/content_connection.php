@@ -37,7 +37,7 @@
 
                              <div class="row d-flex justify-content-center">
                                  <div class="col-sm-1 d-flex justify-content-end align-items-center"><img src="public/images/mdp-icon.png" alt="logo identifiant" width="20px" height="20px"></div>
-                                 <div class="col-sm-6"><input type="text" name="password" id="password" class="form-control"></div>
+                                 <div class="col-sm-6"><input type="password" name="password" id="password" class="form-control"></div>
                              </div>
                          </div>
                          <div class="form-group d-flex justify-content-center">

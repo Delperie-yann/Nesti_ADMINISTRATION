@@ -92,6 +92,7 @@ class ModelRecipes
         } else {
             $array = [];
         }
+       
         return $array;
     }
 
@@ -99,20 +100,21 @@ class ModelRecipes
     {
         $pdo = Connection::getPdo();
         try {
-            $sql = "UPDATE recipe SET idImage = ?, name = ?, portions = ?, flag = ?, idChef = ? where idRecipe = ?";
+            $sql = "UPDATE recipe SET idImage = ?, name = ?, difficulty = ? , portions = ?,preparationTime=?, flag = ?, idChef = ? where idRecipe = ?";
 
             $stmt = $pdo->prepare($sql);
 
-            $values = [$recipe->getIdImage(), $recipe->getName(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getIdChef(), $recipe->getIdRecipe()];
+            $values = [$recipe->getIdImage(), $recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getPreparationTime(), $recipe->getFlag(), $recipe->getIdChef(), $recipe->getIdRecipe()];
             // Execute the prepared statement
             $stmt->execute($values);
+            // var_dump(  $stmt->execute($values));
             $recipe = $this->readOneBy("idRecipe", $recipe->getIdRecipe());
-            echo "Records deleted successfully.";
+          
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
-        return $recipe;
+        // return $recipe;
     }
 }
 

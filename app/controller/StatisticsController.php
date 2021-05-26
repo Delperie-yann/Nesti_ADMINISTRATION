@@ -43,15 +43,17 @@ class StatisticsController extends BaseController
             return count($v2->getConnectionLogs()) <=> count($v1->getConnectionLogs());
         });
         $TopTenUsers = array_slice($TopTenUsers, 0, 10);
+        
 
         
         $TopTenChef = ModelChef::readAll();
+        
         usort($TopTenChef, function ($v1, $v2) {
             return count($v2->getAllRecipeFromChef()) <=> count($v1->getAllRecipeFromChef());
            
         });
         $TopTenChef = array_slice($TopTenChef, 0, 10);
-
+       
         
         $TopTenRecipe = ModelRecipes::readAll();
         usort($TopTenRecipe, function ($v1, $v2) {

@@ -7,7 +7,7 @@ class ModelChef {
         //requete
         $pdo= Connection::getPdo();
 
-        $sql="SELECT * from Chef";
+        $sql="SELECT * from chef";
         $result=$pdo->query($sql);
         if($result){
             $array = $result-> fetchAll(PDO::FETCH_CLASS,'Chef');
@@ -32,7 +32,7 @@ class ModelChef {
             $stmt->execute($values);
       
             //$newUser = $this->readOneBy("idUsers",$pdo->lastInsertId());
-            echo "Records insert Chef inserted successfully.";
+            // echo "Records insert Chef inserted successfully.";
         } catch(PDOException $e){
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

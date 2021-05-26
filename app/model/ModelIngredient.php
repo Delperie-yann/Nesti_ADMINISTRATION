@@ -2,16 +2,16 @@
 include_once(PATH_MODEL.'Connection.php');
 class ModelIngredient {
 
-    public function insertChef(Ingredient &$idProduct){
+    public function insertIngredient(Product &$product){
 
         $pdo= Connection::getPdo();
         try{
             // Create prepared statement
-            $sql = "INSERT INTO chef (idProduct) VALUES (?)";
+            $sql = "INSERT INTO ingredient (idProduct) VALUES (?)";
             
             $stmt = $pdo->prepare($sql);
       
-            $values= [$idProduct->getIdProduct()];        
+            $values= [$product->getIdProduct()];        
             // Execute the prepared statement
             // var_dump($values);
             $stmt->execute($values);

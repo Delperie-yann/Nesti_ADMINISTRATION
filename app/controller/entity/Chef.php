@@ -54,13 +54,16 @@ class Chef extends Users{
     }
     public function getUser() { 
         $model= new ModelUsers();
-        return $model->readOneBy("idUsers",$this->idChef);
+        $user=$model->readOneBy("idUsers",$this->getIdChef());
+      
+        return $user;
     }
     public function getAllRecipeFromChef()
     {
        $model = new ModelRecipes();
-       $logs = $model->readAllBy("idChef", $this->getIdChef());
-       // var_dump($logs);
+       
+       $logs = $model->readAllBy("idChef", $this->idChef);
+    //    var_dump($logs);
        return $logs;
     }
 

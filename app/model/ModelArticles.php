@@ -44,4 +44,44 @@ class ModelArticles {
         $data = $result->fetch();
         return $data;
     }
+    public function deletedArticle(Articles &$article)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            $sql = "UPDATE article SET flag = 'b' WHERE idArticle = ?";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$article->getIdArticle()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $deleteArticle = $this->readOneBy("idArticle", $article->getIdArticle());
+          
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return  $deleteArticle;
+    }
+    public function updateArticleName($idArticle,Articles &$article)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            $sql = "UPDATE article SET realName = ? where idArticle = ?";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$article->getRealName(),$idArticle];
+            // var_dump($stmt);
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $article = $this->readOneBy("idArticle", $article->getIdArticle());
+        
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $article;
+    }
+    
 }

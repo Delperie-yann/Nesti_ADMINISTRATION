@@ -86,11 +86,12 @@ return $this;
 
 public function setImportationFromArray($importation)
         {
-    
-            foreach ($importation as $key => $value) {
-    
-                $this->$key = $value;
-            }
-        }
+          
+            if($importation==true ){
+                foreach ($importation as $key => $value) {
+               
+                    $this->$key = $value;
+                }
+            }}
 
 }

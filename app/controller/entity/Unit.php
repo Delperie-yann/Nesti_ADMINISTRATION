@@ -44,14 +44,14 @@ $this->name = $name;
 
 return $this;
 }
-public function getUnit(){
-    $unit = new ModelUnit();
-    // var_dump($this->idProduct);
- $unit1= $unit->readOneBy("idUnit",$this->idUnit);
+// public function getUnit(){
+//     $unit = new ModelUnit();
+//     // var_dump($this->idProduct);
+//  $unit1= $unit->readOneBy("idUnit",$this->idUnit);
   
-    var_dump($unit1->getName());
-    return  $unit1->getName();
-}
+//     // var_dump($unit1->getName());
+//     return  $unit1->getName();
+// }
 public function setUnitFromArray($unit)
 {
 

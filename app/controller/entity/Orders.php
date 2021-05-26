@@ -51,6 +51,7 @@ class Orders
             $state = "Payé";
         } else if ($entity->getFlag() == "w") {
             $state = "En attente";
+            
         } else {
             $state = "Annulé";
         }
@@ -120,6 +121,17 @@ class Orders
         }
         return $quants;
     }
+    public function getCoastByid($idOrders)
+    {
+        $quants = 0;
+        $model = new ModelOrderline();
+        $orderLines = $model->readAllBy("idOrders", $idOrders);
+        $date = strtotime($this->getDateCreation());
+        foreach ($orderLines as $orderLine) {
+            $quants +=  $orderLine->getQuantity() * $orderLine->getArticle()->getLastPriceAt($date);
+        }
+        return $quants;
+    }
 
     public function getNumberArticles()
     {
@@ -130,5 +142,20 @@ class Orders
             $quants +=  $orderLine->getQuantity();
         }
         return $quants;
+    }
+    public function getLastOrder($idUsers)
+    {
+        $model = new ModelOrders();
+        $orderLines = $model->readAllBy("idUsers", $idUsers);
+    
+       
+        usort( $orderLines, function ($v1, $v2) {
+           return $v2->getDateCreation() <=> $v1->getDateCreation();
+         
+        });
+        $ArrayOrderLines2 = array_slice($orderLines, 0, 1);
+        foreach($ArrayOrderLines2 as $orderlinedate){
+        return $orderlinedate->getDateCreation();
+        }
     }
 }

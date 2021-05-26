@@ -24,8 +24,9 @@ class ConnectionController extends BaseController
             } else {
                 // echo ("else");
 
-                $login    = $_POST["loginUser"];
-                $password = $_POST["password"];
+                $login    = filter_input(INPUT_POST,"loginUser", FILTER_SANITIZE_STRING);
+                $password = filter_input(INPUT_POST,"password", FILTER_SANITIZE_STRING);
+                
                 $model    = new ModelUsers();
                 $user     = $model->readOneBy("login", $login);
                 if (($user != null) && ($user->isPassword($password))) {
@@ -35,7 +36,7 @@ class ConnectionController extends BaseController
                     $_SESSION["firstname"] = $user->getFirstname();
                     $_SESSION["lastname"]  = $user->getLastname();
 
-                $model = new ModelConnectionLog;
+                $model = new ModelConnectionLog();
                 $model->insertDateCo($user);
                     header('Location:' . BASE_URL . 'recipes');
                 } else {

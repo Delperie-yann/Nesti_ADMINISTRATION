@@ -15,21 +15,21 @@ function dlImg() {
     }
 }
 
-function addIngredient() {
+// function addIngredient() {
 
-    let ingName = document.getElementById("ingName");
-    let ingQty = document.getElementById("ingQty");
-    let ingUnit = document.getElementById("ingUnit");
-    let div = document.createElement("div");
-    let divCtn = document.getElementById("ingCtn");
-    let ing = ingQty.value + " " + ingUnit.value + " " + ingName.value;
+//     let ingName = document.getElementById("ingName");
+//     let ingQty = document.getElementById("ingQty");
+//     let ingUnit = document.getElementById("ingUnit");
+//     let div = document.createElement("div");
+//     let divCtn = document.getElementById("ingCtn");
+//     let ing = ingQty.value + " " + ingUnit.value + " " + ingName.value;
 
-    div.innerHTML = ing;
-    divCtn.appendChild(div);
-    ingName.value = "";
-    ingQty.value = "";
-    ingUnit.value = "";
-}
+//     div.innerHTML = ing;
+//     divCtn.appendChild(div);
+//     ingName.value = "";
+//     ingQty.value = "";
+//     ingUnit.value = "";
+// }
 
 function addTextArea() {
 
@@ -44,6 +44,7 @@ function addTextArea() {
     prepCtn.appendChild(newItem);
 
     actualize();
+   
 }
 
 function actualize() {

@@ -16,7 +16,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
           <nav class="navbar navbar-white bg-white pl-0">
             <form class="form-inline">
               <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-              <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" width="20px" height="25px">
+              <img id="searchRecipe" src="<?php BASE_URL ?>../public/images/search.png" alt="" width="20px" height="25px">
             </form>
           </nav>
 
@@ -39,8 +39,8 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
 
           foreach ($arrayOrders as $value) {
           ?>
-            <tr>
-              <td class="font-weight-bold"><?= $value->getIdOrders(); ?>
+            <tr class="order"  data-idorder="<?=$value->getIdOrders(); ?>" data-url="<?=BASE_URL ?>">
+              <td class="font-weight-bold" ><?= $value->getIdOrders(); ?>
               <td><?= $value->orderUserName() ?></td>
               <td><?= $value->getCoast(); ?></td>
               <td><?= $value->getNumberArticles(); ?></td>
@@ -60,14 +60,13 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
 
     </div>
 
-    <div class="col mt-3 mr-5">
-      <h2>Détails </h2>
-      <div class="card">
-        <div class="card-body-detail">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi, iste architecto ullam optio non
-          porro esse sint deserunt minus distinctio debitis natus, voluptatum eaque corrupti hic
-          dignissimos fugit voluptas consequatur!
-        </div>
+    <div class="col mt-3">
+            <h2>Détails </h2>
+            <div class="card" id="order-id">
+                <div class="card-body-detail" id="orderLine">
+
+                </div>
+
       </div>
     </div>
 

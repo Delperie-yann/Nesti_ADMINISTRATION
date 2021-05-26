@@ -35,9 +35,13 @@ class Users
    public function getChef()
    {
       $model = new ModelUsers();
-      $data  = $model->findChild("chef", $this->getIdUser());
+      $chef  = $model->findChild("chef", $this->getIdUser());
+      return $chef;
+   }
+   public function getHimAsChef(){
+      
       $chef = new Chef();
-      $chef->setChefFromArray($data);
+      $chef->setChefFromArray($this->getChef());
       return $chef;
    }
 
@@ -247,6 +251,7 @@ class Users
     */
    public function setIdCity($idCity): self
    {
+
       $this->idCity = $idCity;
       return $this;
    }
@@ -320,6 +325,7 @@ class Users
       $admin->setIdAdmin($this->idUser);
       $model = new ModelAdmin();
       $model->insertAdmin($admin);
+     
    }
 
    public function makeModerator()
@@ -328,6 +334,7 @@ class Users
       $moderator->setIdModerator($this->idUser);
       $model = new ModelModerator();
       $model->insertModerator($moderator);
+     
    }
 
    public function makeChef()
@@ -336,6 +343,7 @@ class Users
       $chef->setIdChef($this->idUser);
       $model = new ModelChef();
       $model->insertChef($chef);
+     
    }
 
    /**
@@ -372,7 +380,9 @@ class Users
    public function getComments()
    {
       $com = new ModelComment();
-      $comments = $this->data['arrayCom'] = $com->readAll();
+      $send = $com->readAllBy("idUsers", $this->idUser);
+
+      $comments = $this->data['arrayCom'] = $send;
       return $comments;
    }
 
@@ -382,4 +392,55 @@ class Users
    //    $co = $connect->readOneBy("idUsers", $this->idUser);
    //    return $co;
    // }
+   public function getCommentNbA(){
+      $comments=$this->getComments();
+      $nbCommentA=0;
+     
+      foreach ($comments as $comment){
+        if( $comment->getflag()=="a"){
+         $nbCommentA+=1;
+        }
+      } return $nbCommentA;
+   // return $nbComment;
+  }
+  public function getCommentNbB(){
+   $comments=$this->getComments();
+   $nbCommentB=0;
+  
+   foreach ($comments as $comment){
+     if( $comment->getflag()=="b"){
+      $nbCommentB+=1;
+     }
+   } return $nbCommentB;
+}
+   public  function getTownName(){
+      $model = new ModelCity();
+      $townName = $model-> readOneBy("idCity", $this->idCity);
+   
+     return  $townName->getName();
+   }
+   public  function setTownName(){
+      $model = new ModelCity();
+      $townName = $model-> readOneBy("idCity", $this->idCity);
+
+
+   }
+   public  function setTownId($cityName){
+      $model = new ModelCity();
+      $townName = $model-> readOneBy("name", $cityName);
+     
+      if ($townName->getName() != NULL){
+         $townName=$townName->getIdCity();
+        
+       }else{
+      $newTown=$model->insertCity($cityName);
+            $townName= $newTown->getIdCity(); 
+           
+       }
+     
+     
+      
+     return $townName;
+
+   }
 }

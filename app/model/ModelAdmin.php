@@ -13,11 +13,11 @@ class ModelAdmin {
       
             $values= [$idAdmin -> getIdAdmin()];        
             // Execute the prepared statement
-            var_dump($values);
+            // var_dump($values);
             $stmt->execute($values);
       
             //$newUser = $this->readOneBy("idUsers",$pdo->lastInsertId());
-            echo "Records insert admin inserted successfully.";
+            // echo "Records insert admin inserted successfully.";
         } catch(PDOException $e){
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

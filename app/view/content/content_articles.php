@@ -36,6 +36,11 @@
 
     <?php
     foreach ($arrayArticles as $value) {
+
+    
+      // if($value==NULL){
+      //   $value="";
+      // }
     ?>
 
       <tr>
@@ -43,8 +48,8 @@
         <td><?= $value->getUnitQuantity(); ?> <?= $value->getUnitName()=='UNITE'?'': $value->getUnitName() ; ?> <?= $value->getName(); ?></td>
         <td><?= $value->getPrice(); ?></td>
         <td><?= $value->getType(); ?></td>
-        <td><?= $value->getLastimport(); ?></td>
-        <td><?= $value->getStock(); ?></td>
+        <td><?= $value->getLastimport()==''?'-': $value->getLastimport() ; ?></td> 
+        <td><?= $value->getStock()==''?'0': $value->getStock() ; ?></td>
         <td>
           <a href="<?= BASE_URL . "articles/editing/" .$value->getIdArticle()  ?>">Modifier</a><br>
           <a data-toggle="modal" href="#myModal<?= $value->getIdArticle(); ?>">Supprimer</a>
@@ -66,8 +71,11 @@
                     </div>
                     <div class="modal-footer">
                       <div class="btn-group">
-                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Confirmer</button>
-                        <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                      <form action="<?php echo (BASE_URL) ?>articles/deleted/<?= $value->getIdArticle(); ?>" method="POST">
+                                                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span>Confirmer</button>
+                                                    </form>
+
+                                                    <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Annuler</button>
 
                       </div>
                     </div>

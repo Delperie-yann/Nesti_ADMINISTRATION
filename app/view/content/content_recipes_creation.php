@@ -28,7 +28,7 @@
         </form>
         <div class="col">
             <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addImage" method="post">
-                <div class="mt-2 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;">
+                <div class="mt-2 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
                     <img src="" alt="" id="img" width="550px" height="375px">
                 </div>
                 <div class="row">

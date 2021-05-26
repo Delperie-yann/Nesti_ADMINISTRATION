@@ -4,20 +4,25 @@ class RecipesController extends BaseController
 {
   public function initialize()
   {
-    $model = new ModelRecipes();
+    $model  = new ModelRecipes();
     $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
     $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
-    $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
-    // var_dump("initialze");
+    $id     = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
+    $supp   = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
+    
     if ($action == '') {
       $this->data['arrayRecipes'] = $model->readAll();
     }
-    // var_dump($action);
+   
     if ($action == "add") {
       $this->create();
     }
     if ($action == "editing") {
+      if ($supp == "supp"){
+      $this->suppres($id);
+      }
       $this->editRecipe($id);
+      
     }
     if ($action == "deleted") {
       $this->delete($id);
@@ -25,11 +30,21 @@ class RecipesController extends BaseController
     if ($action == "addimage") {
       $this->addImage($id);
     }
+    
   }
 
+  //Destroy Ingredient in DDB but not Product and Unit created
+  public function suppres($isIngredient){
+    
+    $model = new ModelIngredientrecipe();
+    $isProduct = $model->readOneby("idProduct", $isIngredient);
+    $model->delete($isProduct);
+
+  }
+  // Creat a recipe without picture, ingredient, comment.
   public function create()
   {
-    $model = new ModelRecipes();
+    $model  = new ModelRecipes();
     $recipe = new Recipes();
     $recipe->setName(filter_input(INPUT_POST, "recipeName"));
     $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
@@ -45,20 +60,102 @@ class RecipesController extends BaseController
 
   public function delete($id)
   {
-    $model = new ModelRecipes();
-    $recipe = $model->readOneBy("idRecipe", $id);
+    $model         = new ModelRecipes();
+    $recipe        = $model->readOneBy("idRecipe", $id);
     $deletedRecipe = $model->deleteRecipe($recipe);
     header('Location:' . BASE_URL . "recipes");
   }
 
+  
+
+  public function addPreparation($id)
+  {
+    $model          = new ModelParagraph();
+    $recipe         = $model->readOneBy("idRecipe", $id);
+    $addPreparation = $model->addPreparation($recipe);
+  }
+
+  public function editRecipe($idRecipe)
+  {
+    $model                          = new ModelRecipes();
+    $recipe                         = $model->readOneBy("idRecipe", $idRecipe);
+    $this->data['recipe']           = $recipe;
+    $ing                            = new ModelIngredientrecipe();
+    $ingredientrecipe               = $ing->readAllBy("idRecipe", $recipe->getIdRecipe());
+    $this->data['ingredientrecipe'] = $ingredientrecipe;
+
+    if (isset($_POST["recipeName"])) {
+
+      $recipe->setName(filter_input(INPUT_POST, "recipeName"));
+      $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
+      $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
+      $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
+      $model                          = new ModelRecipes();
+      $model->updateRecipes($recipe);
+    //  var_dump('model : '. $model->updateRecipes($recipe));
+      header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
+      
+    }
+    
+
+    //  if the user click in "ok" insert an Ingredient in table
+    if (isset($_POST["ingredientName"])) {
+      $modelProd  = new ModelProduct();
+      $ingredient = new Product();
+      $ingredient->setName(filter_input(INPUT_POST, "ingredientName"));
+      // var_dump($model->isAlreadyExistProduct(  $ingredient->getName()));
+      $isExistProd = $modelProd->readOneby("name", $ingredient->getName());
+
+      // if the name of ingredient still exist return else or give id of the insered product 
+      if ((($isExistProd->getName()) == null) && ($ingredient->getName()!="")) {
+        $insertedIng = $modelProd->insertProduct($ingredient);
+        $isProdId    = $insertedIng->getIdProduct();
+        $ingredient  = new ModelIngredient();
+        $ingredient->insertIngredient($insertedIng);
+      } else {
+        $isProdId = $isExistProd->getIdProduct();
+      }
+
+      $modelUnit = new ModelUnit();
+      $unit      = new Unit();
+      $unit->setName(filter_input(INPUT_POST, "ingredientUnit"));
+      $isExistUnit = $modelUnit->readOneby("name", $unit->getName());
+
+      // if the name of unit still exist return else or give id of the insered unit
+      if (($isExistUnit)->getName() == null && $unit->getName()!="") {
+        $insertedUnit = $modelUnit->insertUnit($unit);
+        $isUnitid     = $insertedUnit->getIdUnit();
+      
+      } else {
+        $isUnitid = $isExistUnit->getIdUnit();
+      }
+
+      $ing = new Ingredientrecipe();
+      // $ingredientrecipe->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
+      $ing->setIdRecipe($idRecipe);
+      $ing->setIdProduct($isProdId);
+      $ing->setIdUnit($isUnitid);
+      $ing->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
+        $model = new ModelIngredientrecipe();
+
+        // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
+           if($ing->getQuantity()!=0){
+          $insertedRecipe = $model->insertIngredientRecipe($ing);
+     
+
+           header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
+           }
+    }
+
+  }
   public function addImage($id)
   {
     $modelRecipe = new ModelRecipes();
-    $recipe = $modelRecipe->readOneBy("idRecipe", $id);
+    $recipe      = $modelRecipe->readOneBy("idRecipe", $id);
 
-    $target_dir = "public/img/recipes/";
-    $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
-    $uploadOk = 1;
+    $target_dir    = "public/img/recipes/";
+    $target_file   = $target_dir . basename($_FILES["pictures"]["name"]);
+    $uploadOk      = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
     // Check if image file is a actual image or fake image
@@ -101,14 +198,14 @@ class RecipesController extends BaseController
       if (move_uploaded_file($_FILES["pictures"]["tmp_name"], $target_file)) {
         echo "The file " . htmlspecialchars(basename($_FILES["pictures"]["name"])) . " has been uploaded.";
 
-        $model = new ModelImages();
+        $model  = new ModelImages();
         $images = new Images();
 
         $name = explode(".", $_FILES["pictures"]["name"]);
         $images->setName($name[0]);
         $images->setFileExtension($name[1]);
 
-        //verif IS valid?
+        
         $insertedImages = $model->insertImages($images);
         $recipe->setIdImage($insertedImages->getIdImage());
         $modelRecipe->updateRecipes($recipe);
@@ -116,30 +213,6 @@ class RecipesController extends BaseController
       } else {
         echo "Sorry, there was an error uploading your file.";
       }
-    }
-  }
-
-  public function addPreparation($id)
-  {
-    $model = new ModelParagraph();
-    $recipe = $model->readOneBy("idRecipe", $id);
-    $addPreparation = $model->addPreparation($recipe);
-  }
-
-  public function editRecipe($idRecipe)
-  {
-    $model = new ModelRecipes();
-    $recipe = $model->readOneBy("idRecipe", $idRecipe);
-    $this->data['recipe'] = $recipe;
-
-    if (isset($_POST["recipeName"])) {
-      $recipe->setName(filter_input(INPUT_POST, "recipeName"));
-      $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
-      $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
-      $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
-
-      $model->updateRecipes($recipe);
-      header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
     }
   }
 }

@@ -1,7 +1,6 @@
 <?php
 
 $session = $_SESSION['Roles'];
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
 ?>
 <h1 class="mb-2 mt-4 ml-5">Utilisateurs</h1>
