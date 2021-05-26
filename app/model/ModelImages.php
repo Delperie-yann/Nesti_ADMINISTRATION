@@ -2,7 +2,14 @@
 include_once(PATH_MODEL . 'Connection.php');
 class ModelImages
 {
-
+    //=============
+    // readOneBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readOneBy($parameter, $value)
     {
         //requete
@@ -25,7 +32,14 @@ class ModelImages
         //$user -> setId($data);
         return $images;
     }
-
+    //=============
+    // insertImages
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function insertImages(Images &$images)
     {
         $pdo = Connection::getPdo();
@@ -35,7 +49,7 @@ class ModelImages
 
             $stmt = $pdo->prepare($sql);
 
-           
+
             $values = [$images->getName(), $images->getFileExtension()];
             var_dump($values);
             // Execute the prepared statement

@@ -1,3 +1,10 @@
+<?php
+
+$session = $_SESSION['Roles'];
+//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef'))))) {
+?>
+
 <div class="container bg-white d-flex flex-column align-items-left" id="recettes">
     <div class="row mt-3">
         <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
@@ -121,3 +128,10 @@
         </div>
     </div>
 </div>
+<?php
+
+} else {
+    include_once PATH_ERROR . '403.php';
+}
+
+?>

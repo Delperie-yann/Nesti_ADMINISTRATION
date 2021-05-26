@@ -1,7 +1,7 @@
 <?php
 
 $session=$_SESSION['Roles'];
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+
 if(is_int(strpos($session,'Administateur'))){
 ?>
 
@@ -28,7 +28,7 @@ if(is_int(strpos($session,'Administateur'))){
             <div class="col">
 
                 <?php 
-          
+        
              foreach ($arrayVars['TopTenUsers'] as $user) { ?>
                 <li class="flex justify-between">
 
@@ -92,7 +92,7 @@ if(is_int(strpos($session,'Administateur'))){
               
                         //  var_dump($arrayVars['TopTenChef'] );
              foreach ($arrayVars['TopTenChef'] as $chef) { 
-                // var_dump($chef );
+             
                 ?>
              
                 <li class="flex justify-between"> <?=  $chef->getUser()->getFirstName() . ' ' . $chef->getUser()->getLastName() ?>

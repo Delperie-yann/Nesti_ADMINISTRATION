@@ -12,6 +12,7 @@ class UsersController extends BaseController
         $idRecipe  = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
         $state  = filter_input(INPUT_GET, "state", FILTER_SANITIZE_STRING);
 
+
         if ($action == '') {
             $model                    = new ModelUsers();
             $this->data['arrayUsers'] = $model->readAll();
@@ -20,53 +21,49 @@ class UsersController extends BaseController
             $this->addUser();
         }
         if ($action == "editing") {
-        //    var_dump($idUser,$idRecipe,$state);
-                if($state=="1"){
-                    $this->endorse( $idUser,$idRecipe);
-                }
-                if($state=="0"){
-                    $this->block($idUser,$idRecipe);
-                }
+            if ($state == "1") {
+                $this->endorse($idUser, $idRecipe);
+            }
+            if ($state == "0") {
+                $this->block($idUser, $idRecipe);
+            }
             $this->editUser($idUser);
         }
         if ($action == "deleted") {
             $this->delete($idUser);
         }
-        if($action=="endorse"){
-            $this->endorse($idUser);
-        }
-        if($action=="block"){
-            $this->block($idUser);
-        }
-        if($action=="orderline"){
+
+        if ($action == "orderline") {
             $this->readOrder();
         }
     }
-public function endorse($idUser,$idRecipe){
-    $idModerat=$_SESSION['idUser'];
-   
-    $model   = new ModelComment();
-    $newComm = $model->readOneBy2Prameter("idUsers", $idUser,"idRecipe",  $idRecipe);
-    $newComm->setFlag("a");
-    $newComm->setIdModerator($idModerat);
-    $model->updateComment($newComm);
-    // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est Approuver");</script>';
-  
-   
-}
-public function block($idUser,$idRecipe){
-    $idModerat=$_SESSION['idUser'];
-   
-    $model   = new ModelComment();
-    $newComm = $model->readOneBy2Prameter("idUsers", $idUser,"idRecipe",  $idRecipe);
-    // var_dump( $newComm);
-    $newComm->setFlag("b");
-    $newComm->setIdModerator($idModerat);
-    $model->updateComment($newComm);
-    
-   
-    // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est blocké");</script>';
-}
+    public function endorse($idUser, $idRecipe)
+    {
+        $idModerat = $_SESSION['idUser'];
+
+        $model   = new ModelComment();
+        $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
+        $newComm->setFlag("a");
+        $newComm->setIdModerator($idModerat);
+        $model->updateComment($newComm);
+        // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est Approuver");</script>';
+
+
+    }
+    public function block($idUser, $idRecipe)
+    {
+        $idModerat = $_SESSION['idUser'];
+
+        $model   = new ModelComment();
+        $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
+        // var_dump( $newComm);
+        $newComm->setFlag("b");
+        $newComm->setIdModerator($idModerat);
+        $model->updateComment($newComm);
+
+
+        // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est blocké");</script>';
+    }
 
 
 
@@ -74,7 +71,7 @@ public function block($idUser,$idRecipe){
     {
         $newUser = new Users();
         $model   = new ModelUsers();
-     
+
         if ($_POST["userLogin"]) {
             $newUser->setLastname(filter_input(INPUT_POST, "userLastname"));
             $newUser->setFirstname(filter_input(INPUT_POST, "userFirstname"));
@@ -95,10 +92,12 @@ public function block($idUser,$idRecipe){
             if ($_POST["State"] == "block") {
                 $newUser->setFlag("b");
             }
-         
-       
+
+
             $insertedUser = $model->insertUser($newUser);
 
+            // var_dump($newUser);
+            // die();
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
             }
@@ -120,12 +119,12 @@ public function block($idUser,$idRecipe){
         $this->data['user'] = $user;
         $model = new ModelOrders();
         $this->data['arrayOrders'] = $model->readAll();
-    //    var_dump($this->data['arrayOrders']);
-          $com = new ModelComment();
-         $this->data['arrayCom'] = $com->readAll();
-         
-  // $user = new Users();
-   // $user->setName($_SESSION["idUsers"]);
+        //    var_dump($this->data['arrayOrders']);
+        $com = new ModelComment();
+        $this->data['arrayCom'] = $com->readAll();
+
+        // $user = new Users();
+        // $user->setName($_SESSION["idUsers"]);
 
     }
     public function delete($id)
@@ -143,7 +142,7 @@ public function block($idUser,$idRecipe){
         $this->data['user'] = $user;
         $model = new ModelOrders();
         $orders = $model->readAllBy("idUsers", $idUsers);
-   
+
         $this->data['ArrayOrder'] = $orders;
 
         if (isset($_POST["userLastname"])) {
@@ -153,25 +152,25 @@ public function block($idUser,$idRecipe){
             $user->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $user->setZipCode(filter_input(INPUT_POST, "userZipCode"));
 
-            $townInput=(filter_input(INPUT_POST, "userTown"));
+            $townInput = (filter_input(INPUT_POST, "userTown"));
             $modelcity = new ModelCity();
             $cities = $modelcity->readAll();
             //Check every city 
-            foreach ($cities as $town){
-                $townName=$town->getName();
+            foreach ($cities as $town) {
+                $townName = $town->getName();
                 //if exist change by BDD idcity and stop
-                if($townInput== $townName){
-                         $city = $modelcity->readOneBy("name",  $townName);
-                        $valuecity= $user->setIdCity($city->getIdCity());
-                         break;
-                }else{
-                       //if not exist add and give id insered and stop
-                       if($townInput!="" && $townInput!=NULL){
-                        $newTown=$modelcity->insertCity($townInput);
-                        $valuecity=   $user->setIdCity($newTown->getIdCity());
+                if ($townInput == $townName) {
+                    $city = $modelcity->readOneBy("name",  $townName);
+                    $valuecity = $user->setIdCity($city->getIdCity());
+                    break;
+                } else {
+                    //if not exist add and give id insered and stop
+                    if ($townInput != "" && $townInput != NULL) {
+                        $newTown = $modelcity->insertCity($townInput);
+                        $valuecity =   $user->setIdCity($newTown->getIdCity());
                         break;
-                            }
                     }
+                }
             }
             if ($_POST["State"] == "actif") {
                 $user->setFlag("a");
@@ -206,26 +205,24 @@ public function block($idUser,$idRecipe){
             header('Location:' . BASE_URL . "users/editing/" . $idUsers);
         }
     }
-    public function readOrder(){
+    public function readOrder()
+    {
         // POST comme from orderScript
         $order = $_POST['order'];
         $model = new ModelOrderline();
-        $ArrayOrders=$model->readAllBy("idOrders", $order);
-        $data=[];
-        foreach ($ArrayOrders as $orders){
+        $ArrayOrders = $model->readAllBy("idOrders", $order);
+        $data = [];
+        foreach ($ArrayOrders as $orders) {
             $modelArticle = new ModelArticles();
-            $article=$modelArticle->readOneBy("idArticle", $orders->getIdArticle());
-            $name = $article->getUnitQuantity()." ".$article->getUnitName()." ".$article->getName();
+            $article = $modelArticle->readOneBy("idArticle", $orders->getIdArticle());
+            $name = $article->getUnitQuantity() . " " . $article->getUnitName() . " " . $article->getName();
             $data[] = $name;
-      
-        }      
+        }
         echo json_encode($data);
-        
+
         //$value->getUnitQuantity() $value->getUnitName(), $value->getName(); 
 
-       
-        die();
 
+        die();
     }
-  
 }

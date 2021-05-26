@@ -1,14 +1,22 @@
 <?php
 
-include_once(PATH_MODEL . 'Connection.php');
-class ModelUsers 
+include_once PATH_MODEL . 'Connection.php';
+class ModelUsers
 {
+    //=============
+    // readAll
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public static function readAll()
+    {
 
-    public static function readAll() {
-        //requete
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT users.idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login AS loginUser, address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity FROM users";
+        $sql    = "SELECT users.idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login AS loginUser, address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity FROM users";
         $result = $pdo->query($sql);
         if ($result) {
             $array = $result->fetchAll(PDO::FETCH_CLASS, 'Users');
@@ -17,7 +25,14 @@ class ModelUsers
         }
         return $array;
     }
-
+    //=============
+    // readOneBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readOneBy($parameter, $value)
     {
         //requete
@@ -26,7 +41,7 @@ class ModelUsers
         $sql = "SELECT idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login , address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idCity FROM users where $parameter = '$value'";
 
         $result = $pdo->query($sql);
-       
+
         if ($result) {
 
             $data = $result->fetch(PDO::FETCH_ASSOC);
@@ -34,52 +49,72 @@ class ModelUsers
 
             $data = [];
         }
-       
+
         $user = new Users();
         $user->setUserFromArray($data);
-      
+
         return $user;
     }
-
+    //=============
+    // findChild
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function findChild($type, $value)
-    {   
+    {
         $pdo = Connection::getPdo();
         try {
-        $sql = "SELECT * FROM $type WHERE id" . ucfirst($type) . "= $value";
+            $sql = "SELECT * FROM $type WHERE id" . ucfirst($type) . "= $value";
 
-        $result = $pdo->query($sql);
-        $data = $result->fetch();
-    } catch (PDOException $e) {
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-    }
+            $result = $pdo->query($sql);
+            $data   = $result->fetch();
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
         return $data;
     }
-
+    //=============
+    // insertUser
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function insertUser(Users &$user)
     {
 
         $pdo = Connection::getPdo();
         try {
             // Create prepared statement
-            $sql = "INSERT INTO users (lastName,firstName,email,passwordHash,flag,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO users (lastName,firstName,passwordHash,email,flag,dateCreation,login,address1,address2,zipCode,idCity) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
             $stmt = $pdo->prepare($sql);
-            // var_dump($user);
-            $values = [$user->getLastName(), $user->getFirstName(), $user->getEmail(), $user->getPasswordHash(), $user->getFlag(), $user->getDateCreation(), $user->getLogin(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), $user->getIdCity()];
-           
+
+            $values = [$user->getLastName(), $user->getFirstName(), $user->getPasswordHash(), $user->getEmail(), $user->getFlag(), $user->getDateCreation(), $user->getLogin(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), $user->getIdCity()];
+
             // Execute the prepared statement
             $stmt->execute($values);
-           
+
             $newUser = $this->readOneBy("idUsers", $pdo->lastInsertId());
-// var_dump($pdo->lastInsertId()." id");
-            // echo "Records inserted successfully.";
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
         return $newUser;
     }
-    
+    //=============
+    // DeleteUser
+    //=============
+    /**
+     *  Use object user  by is Id and set flag to b
+     * return the user modifiy
+     *
+     *
+     */
     public function deleteUser(Users &$user)
     {
         $pdo = Connection::getPdo();
@@ -98,9 +133,17 @@ class ModelUsers
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
-        return  $deleteUser;
+        return $deleteUser;
     }
-
+    //=============
+    // UPDATE USER
+    //=============
+    /**
+     *  With user objet insert value
+     * and if true
+     * return the new object user
+     *
+     */
     public function updateUsers(Users &$user)
     {
         $pdo = Connection::getPdo();
@@ -108,14 +151,12 @@ class ModelUsers
             $sql = "UPDATE users SET lastName = ?, firstName = ?, address1 = ?, address2 = ?, zipCode = ?, flag = ?,idCity = ?  where idUsers = ?";
 
             $stmt = $pdo->prepare($sql);
-           
+
             $values = [$user->getLastname(), $user->getFirstname(), $user->getAddress1(), $user->getAddress2(), $user->getZipCode(), $user->getFlag(), $user->getIdCity(), $user->getIdUser()];
 
             // Execute the prepared statement
             $stmt->execute($values);
             $user = $this->readOneBy("idUsers", $user->getIdUser());
-           
-           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
