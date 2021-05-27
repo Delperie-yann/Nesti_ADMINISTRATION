@@ -3,19 +3,19 @@
 include_once PATH_MODEL . 'Connection.php';
 class ModelUsers
 {
-    //=============
+     //=============
     // readAll
     //=============
     /**
-     *
-     *
+     * Read all users
+     *  return empty array or object
      *
      */
     public static function readAll()
     {
 
         $pdo = Connection::getPdo();
-
+        try {
         $sql    = "SELECT users.idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login AS loginUser, address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity FROM users";
         $result = $pdo->query($sql);
         if ($result) {
@@ -23,21 +23,26 @@ class ModelUsers
         } else {
             $array = [];
         }
+    } catch (PDOException $e) {
+        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    }
         return $array;
     }
     //=============
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read users with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object users
      */
     public function readOneBy($parameter, $value)
     {
         //requete
         $pdo = Connection::getPdo();
-
+        try {
         $sql = "SELECT idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login , address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idCity FROM users where $parameter = '$value'";
 
         $result = $pdo->query($sql);
@@ -52,7 +57,9 @@ class ModelUsers
 
         $user = new Users();
         $user->setUserFromArray($data);
-
+    } catch (PDOException $e) {
+        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    }
         return $user;
     }
     //=============
@@ -128,7 +135,7 @@ class ModelUsers
             // Execute the prepared statement
             $stmt->execute($values);
             $deleteUser = $this->readOneBy("idUsers", $user->getIdUser());
-            echo "Records deleted successfully.";
+           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

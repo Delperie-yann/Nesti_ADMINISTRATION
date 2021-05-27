@@ -51,9 +51,11 @@ class ModelOrderline
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read orderline with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object orderline
      */
     public function readOneBy($parameter, $value)
     {

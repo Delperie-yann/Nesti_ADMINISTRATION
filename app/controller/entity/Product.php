@@ -45,11 +45,11 @@ return $this;
 }
 public function setProductFromArray($product)
 {
-    // if($product==true ){
+    if(!empty($product) ){
     foreach ($product as $key => $value) {
 
         $this->$key = $value;
-    // }
+    }
 }
 }
 }

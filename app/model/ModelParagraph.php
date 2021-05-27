@@ -26,13 +26,15 @@ class ModelParagraph
         }
         return $array;
     }
-    //=============
+  //=============
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read paragraph with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object Paragraph
      */
 
     public function readOneBy($parameter, $value)

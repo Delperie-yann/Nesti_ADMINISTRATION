@@ -17,7 +17,7 @@ class UsersController extends BaseController
             $model                    = new ModelUsers();
             $this->data['arrayUsers'] = $model->readAll();
         }
-        if ($action == "add") {
+        if ($action == "creation") {
             $this->addUser();
         }
         if ($action == "editing") {
@@ -72,7 +72,7 @@ class UsersController extends BaseController
         $newUser = new Users();
         $model   = new ModelUsers();
 
-        if ($_POST["userLogin"]) {
+        if (isset($_POST["userLogin"])) {
             $newUser->setLastname(filter_input(INPUT_POST, "userLastname"));
             $newUser->setFirstname(filter_input(INPUT_POST, "userFirstname"));
             $newUser->setLogin(filter_input(INPUT_POST, "userLogin"));
@@ -92,40 +92,49 @@ class UsersController extends BaseController
             if ($_POST["State"] == "block") {
                 $newUser->setFlag("b");
             }
+            $userExistEmmail = $model->readOneBy("email", $newUser->getEmail());
+            $userExist = $model->readOneBy("login", $newUser->getLogin());
 
 
-            $insertedUser = $model->insertUser($newUser);
-
-            // var_dump($newUser);
-            // die();
-            if (isset($_POST["roleAdmin"])) {
-                $insertedUser->makeAdmin();
+            $error     = 0;
+            if (($userExistEmmail->getIdUser()) != NUll) {
+                $this->data['emailError'] = true;
+                $error = 1;
             }
-            if (isset($_POST["roleChef"])) {
-                $insertedUser->makeChef();
-            }
-            if (isset($_POST["roleModerator"])) {
-                $insertedUser->makeModerator();
+            if (($userExist->getIdUser()) != NUll) {
+                $this->data['loginError'] = true;
+                $error = 1;
             }
 
-            header('Location:' . BASE_URL . "users");
+
+            if ($error == 0) {
+                $insertedUser = $model->insertUser($newUser);
+                if (isset($_POST["roleAdmin"])) {
+                    $insertedUser->makeAdmin();
+                }
+                if (isset($_POST["roleChef"])) {
+                    $insertedUser->makeChef();
+                }
+                if (isset($_POST["roleModerator"])) {
+                    $insertedUser->makeModerator();
+                }
+                header('Location:' . BASE_URL . "users");
+            } else {
+                isset($this->data['emailError']);
+                isset($this->data['loginError']);
+            }
         }
     }
     public function user($id)
     {
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $id);
-
         $this->data['user'] = $user;
         $model = new ModelOrders();
         $this->data['arrayOrders'] = $model->readAll();
-        //    var_dump($this->data['arrayOrders']);
+
         $com = new ModelComment();
         $this->data['arrayCom'] = $com->readAll();
-
-        // $user = new Users();
-        // $user->setName($_SESSION["idUsers"]);
-
     }
     public function delete($id)
     {
@@ -143,7 +152,7 @@ class UsersController extends BaseController
         $model = new ModelOrders();
         $orders = $model->readAllBy("idUsers", $idUsers);
 
-        $this->data['ArrayOrder'] = $orders;
+        $this->data['arrayOrder'] = $orders;
 
         if (isset($_POST["userLastname"])) {
             $user->setLastName(filter_input(INPUT_POST, "userLastname"));
@@ -185,24 +194,38 @@ class UsersController extends BaseController
             $insertedUser = $model->updateUsers($user);
 
 
+            $error     = 0;
+            if (isset($_POST["roleAdmin"]) == NUll) {
+                $this->data['roleAdmin'] = true;
+                $error = 1;
+            }
+            if (isset($_POST["roleChef"]) == NUll) {
+                $this->data['roleChef'] = true;
+                $error = 1;
+            }
+            if (isset($_POST["roleModerator"]) == NUll) {
+                $this->data['roleModerator'] = true;
+                $error = 1;
+            }
+
 
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
-                // echo'totoad';
-                // // var_dump( $insertedUser->makeAdmin());
             }
             if (isset($_POST["roleChef"])) {
                 $insertedUser->makeChef();
-                // echo'totoCh';
-                // var_dump( $insertedUser->makeChef());
             }
             if (isset($_POST["roleModerator"])) {
                 $insertedUser->makeModerator();
-                // echo'totoMO';
-                // var_dump( $insertedUser->makeModerator());
             }
-
-            header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+            if ($error == 0) {
+              
+                header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+            } else {
+                isset($this->data['roleAdmin']);
+                isset($this->data['roleChef']);
+                isset($this->data['roleModerator']);
+            }
         }
     }
     public function readOrder()

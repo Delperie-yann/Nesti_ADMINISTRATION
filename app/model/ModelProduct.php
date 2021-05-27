@@ -29,9 +29,11 @@ class ModelProduct
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read product with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object Product
      */
     public function readOneBy($parameter, $value)
     {
@@ -96,7 +98,36 @@ class ModelProduct
             // Execute the prepared statement
             $stmt->execute($values);
             $newProduct = $this->readOneBy("idProduct", $pdo->lastInsertId());
-            echo "Records inserted successfully.";
+         
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newProduct;
+    }
+     //=============
+    // insertProductJquery
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function insertProductJquery($product)
+    {
+
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement name is insered whitout id in product
+            $sql = "INSERT INTO product (name) VALUES (?)";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$product];
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $newProduct = $this->readOneBy("idProduct", $pdo->lastInsertId());
+           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }

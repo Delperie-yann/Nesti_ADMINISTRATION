@@ -7,15 +7,12 @@ class ConnectionController extends BaseController
     //=============
     /**
      * 
-     *
-     *
      */
-
     public function initialize()
     {
         $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
         $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
-       
+
         if ($action == '') {
             $model = new Connection();
         }
@@ -35,7 +32,10 @@ class ConnectionController extends BaseController
                     $_SESSION["login"]     = $login;
                     $_SESSION["firstname"] = $user->getFirstname();
                     $_SESSION["lastname"]  = $user->getLastname();
-                    if ((!is_int(strpos($user->getRoles(), 'Administateur')) && (!is_int(strpos($user->getRoles(), 'Chef'))) && (!is_int(strpos($user->getRoles(), 'Moderateur'))))) {
+
+                    if ((!is_int(strpos($user->getRoles(), 'Administateur'))
+                        && (!is_int(strpos($user->getRoles(), 'Chef')))
+                        && (!is_int(strpos($user->getRoles(), 'Moderateur'))))) {
                         header('Location:' . BASE_URL . 'connection');
                         die();
                     }

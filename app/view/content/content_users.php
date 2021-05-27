@@ -28,6 +28,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             <th scope="col">ID</th>
             <th scope="col">Nom</th>
             <th scope="col">Rôle</th>
+            <th scope="col">Email</th>
             <th scope="col">Derniere connexion</th>
             <th scope="col">Etat</th>
             <th scope="col">Actions</th>
@@ -43,6 +44,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             <td class="font-weight-bold"><?= $value->getIdUser(); ?></th>
             <td><?= $value->getFirstname(); ?> <?= $value->getLastname(); ?></td>
             <td><?= $value->getRoles(); ?></td>
+            <td><?= $value->getEmail(); ?></td>
             <td><?= $value->getLastConnectionLog(); ?></td>
             <td><?= $value->getFlag(); ?></td>
             <td>

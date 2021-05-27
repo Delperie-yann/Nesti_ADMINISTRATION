@@ -8,6 +8,8 @@ include './app/loader.php';
 
 $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
 $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
+$id     = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
+$supp   = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
 
 if (($loc == null) || (!isset($_SESSION["login"]))) {
   $loc = "connection";

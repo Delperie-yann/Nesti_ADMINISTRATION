@@ -31,9 +31,11 @@ class ModelArticleprice
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read articleprice with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object articleprice
      */
     public function readOneBy($parameter, $value)
     {

@@ -55,13 +55,15 @@ class ModelCity
         unset($pdo);
         return $newTown;
     }
-    //=============
+   //=============
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read city with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object city
      */
     public function readOneBy($parameter, $value)
     {

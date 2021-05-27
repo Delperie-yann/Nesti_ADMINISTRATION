@@ -1,13 +1,14 @@
 <?php
 
 $session = $_SESSION['Roles'];
+
 //var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
     ?>
 <a href="<?= BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Création</a>
 
 <div class="container">
-    <form action="<?php echo (BASE_URL) ?>users/add" method="POST">
+    <form action="<?php echo (BASE_URL) ?>users/creation" method="POST">
         <div class="row mt-3">
 
             <div class="col">
@@ -23,7 +24,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <input type="text" class="w-75" name="userAdress1" required>
 
                 <p class="mt-5">Adress2</p><br>
-                <input type="text" class="w-75" name="userAdress2" required>
+                <input type="text" class="w-75" name="userAdress2" >
 
                 <p class="mt-5">Zipcode</p><br>
                 <input type="text" class="w-75" name="userZipCode" required>
@@ -62,13 +63,18 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
 
             <div class="col mt-5">
                 <p class="mt-5">Login</p><br>
-                <input type="text" class="w-75" name="userLogin" required>
+                <input type="text" class="w-75" name="userLogin" required> <?php if(isset($loginError)){
+                    echo' <div class="alert alert-danger text-center" role="alert">Login existant</div>';
+                }; ?>
+              
                 <p class="mt-5">Email</p><br>
-                <input type="text" class="w-75" name="userEmail" required>
+                <input type="text" class="w-75" name="userEmail" required>  <?php if(isset($emailError)){
+                    echo' <div class="alert alert-danger text-center" role="alert">Email existant</div>';
+                }; ?>
                 
-                <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd"
+                <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75"  min="8" name="userPwd" id="pwd"
                     required>
-                &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="3" high="5" min="0" max="5"
+                &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="2"  high="4" optimum="5" min="0" max="5"
                     id="pwd_meter">0%</meter><br>
 
                 <ul><br>

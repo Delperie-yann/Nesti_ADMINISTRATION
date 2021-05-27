@@ -7,9 +7,11 @@ class ModelRating
     // readAllBy
     //=============
     /**
-     *
-     *
-     *
+     * Read all grades with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return array of object Rating
      */
     public function readAllBy($parameter, $value)
     {

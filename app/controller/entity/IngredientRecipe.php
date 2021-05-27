@@ -1,9 +1,10 @@
 <?php
 
-class Ingredientrecipe {
+class Ingredientrecipe
+{
 
 
- 
+
     private $idProduct;
     private $idRecipe;
     private $quantity;
@@ -15,14 +16,15 @@ class Ingredientrecipe {
 
 
 
-    
+
     public function setIngredientRecipeFromArray($chef)
     {
-       //var_dump($user);
-       foreach ($chef as $key => $value) {
- 
-          $this->$key = $value;
-       }
+        if (!empty($unit)) {
+            foreach ($chef as $key => $value) {
+
+                $this->$key = $value;
+            }
+        }
     }
 
     /**
@@ -36,7 +38,7 @@ class Ingredientrecipe {
     /**
      * Set the value of idProduct
      */
-    public function setIdProduct($idProduct) : self
+    public function setIdProduct($idProduct): self
     {
         $this->idProduct = $idProduct;
 
@@ -54,7 +56,7 @@ class Ingredientrecipe {
     /**
      * Set the value of idRecipe
      */
-    public function setIdRecipe($idRecipe) : self
+    public function setIdRecipe($idRecipe): self
     {
         $this->idRecipe = $idRecipe;
 
@@ -72,7 +74,7 @@ class Ingredientrecipe {
     /**
      * Set the value of quantity
      */
-    public function setQuantity($quantity) : self
+    public function setQuantity($quantity): self
     {
         $this->quantity = $quantity;
 
@@ -90,7 +92,7 @@ class Ingredientrecipe {
     /**
      * Set the value of recipePosition
      */
-    public function setRecipePosition($recipePosition) : self
+    public function setRecipePosition($recipePosition): self
     {
         $this->recipePosition = $recipePosition;
 
@@ -108,7 +110,7 @@ class Ingredientrecipe {
     /**
      * Set the value of idUnit
      */
-    public function setIdUnit($idUnit) : self
+    public function setIdUnit($idUnit): self
     {
         $this->idUnit = $idUnit;
 
@@ -116,17 +118,16 @@ class Ingredientrecipe {
     }
     public function getNameProd()
     {
-       $model = new ModelProduct();
-       $ProductName = $model->readOneBy("idProduct",$this->getIdProduct());
-    //  var_dump(  $ProductName->getName());
-       return $ProductName;
+        $model = new ModelProduct();
+        $ProductName = $model->readOneBy("idProduct", $this->getIdProduct());
+        //  var_dump(  $ProductName->getName());
+        return $ProductName;
     }
     public function getNameUnit()
     {
-       $model = new ModelUnit();
-       $UnitName = $model->readOneBy("idUnit",$this->getIdUnit());
-    //  var_dump(  $UnitName."   ".$this->getIdUnit());
-       return $UnitName;
+        $model = new ModelUnit();
+        $UnitName = $model->readOneBy("idUnit", $this->getIdUnit());
+        //  var_dump(  $UnitName."   ".$this->getIdUnit());
+        return $UnitName;
     }
-
 }

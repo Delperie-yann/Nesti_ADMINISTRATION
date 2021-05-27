@@ -50,7 +50,7 @@ function addTextArea() {
 function actualize() {
 
     let items = document.querySelectorAll(".prepItem");
-    console.log(items);
+
 
     items.forEach(item => {
         item.querySelector(".upText").style.visibility = "visible";

@@ -15,7 +15,7 @@ class ModelRecipes
         //requete
         $pdo = Connection::getPdo();
 
-        //$sql="SELECT r.idRecipe AS id, r.name AS name, r.dateCreation AS dateCreation, r.difficulty AS difficulty, r.portions AS portions, r.flag AS flag, r.preparationTime AS time, r.idImage AS image, users.firstName as chief,r.idChef as idChief FROM recipe r INNER JOIN chef ON chef.idChef = r.idChef INNER JOIN users ON users.idUsers = chef.idChef";
+      
         $sql    = "SELECT * FROM recipe";
         $result = $pdo->query($sql);
         if ($result) {
@@ -46,7 +46,7 @@ class ModelRecipes
             // Execute the prepared statement
             $stmt->execute($values);
             $newRecipe = $this->readOneBy("idRecipe", $pdo->lastInsertId());
-            echo "Records inserted successfully.";
+        
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
@@ -73,7 +73,7 @@ class ModelRecipes
             // Execute the prepared statement
             $stmt->execute($values);
             $deleteRecipe = $this->readOneBy("idRecipe", $recipe->getIdRecipe());
-            echo "Records deleted successfully.";
+         
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
@@ -84,9 +84,11 @@ class ModelRecipes
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read recipe with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object recipe
      */
     public function readOneBy($parameter, $value)
     {

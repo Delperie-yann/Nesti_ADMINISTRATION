@@ -97,18 +97,19 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
             </div>
             <div class="col-sm-4">
                 <h2>Liste des ingrédients</h2>
-                <div class="ingredientsCtn" id="ingCtn">
+                <ul class="ingredientsCtn" id="ingCtn">
+                   
                     <?php 
          
              foreach ($ingredientrecipe as $ingredient) { ?>
                     <li class="flex justify-between">
-                        <?= $ingredient->getquantity()." ".($ingredient->getNameUnit()->getName())." de ". $ingredient->getNameProd()->getName()  ?>
-                        <a href="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>/supp">Supprimer</a>
+                        <?= $ingredient->getquantity()." ".($ingredient->getNameUnit()->getName())." de ". $ingredient->getNameProd()->getName(); ?>
+                        <a href="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>/supp/<?= $ingredient->getIdProduct() ?>">Supprimer</a>
                     </li>
 
 
                     <?php } ?>
-                </div>
+                </ul>
                 <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
                     <p class="mt-2 mb-2">Ajouter un ingrédient</p>
                     <input type="text" id="ingName" name="ingredientName" class="mb-2 w-100" style="height: 38px;">
@@ -120,7 +121,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                             <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-100">
                         </div>
                         <div class="col-md-2 d-flex justify-content-end">
-                            <button type="submit" class="btn valid" onclick="">Ok</button>
+                            <button type="submit" class="btn valid" id="ingAdd" onclick="" data-id="<?= $recipe->getIdRecipe() ?>">Ok</button>
                         </div>
                     </div>
                 </form>

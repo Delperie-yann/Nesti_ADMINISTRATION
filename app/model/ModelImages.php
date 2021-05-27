@@ -2,13 +2,15 @@
 include_once(PATH_MODEL . 'Connection.php');
 class ModelImages
 {
-    //=============
+  //=============
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read image with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object image
      */
     public function readOneBy($parameter, $value)
     {

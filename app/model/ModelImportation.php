@@ -30,9 +30,11 @@ class ModelImportation
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read importation with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object importation
      */
     public function readOneBy($parameter, $value)
     {

@@ -25,13 +25,15 @@ class ModelIngredientrecipe
         }
         return $array;
     }
-    //=============
+   //=============
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read ingredientrecipe with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object ingredientrecipe
      */
     public function readOneBy($parameter, $value)
     {
@@ -100,7 +102,7 @@ class ModelIngredientrecipe
             // var_dump($values);
             $stmt->execute($values);
 
-            echo "Records inserted successfully.";
+          
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
@@ -116,23 +118,56 @@ class ModelIngredientrecipe
      *
      *
      */
-    public function delete($value)
+    public function delete($value, $value2)
     {
         //requete
         $pdo = Connection::getPdo();
         try {
-            $sql = "DELETE FROM ingredientrecipe where idRecipe = (?)";
+            $sql = "DELETE FROM ingredientrecipe where idRecipe = ? AND idProduct = ? ";
             // var_dump( $sql);
             $stmt = $pdo->prepare($sql);
 
-            $values = $value;
+            $values = [$value, $value2];
             // Execute the prepared statement
             $stmt->execute($values);
 
-            echo "Records deleted successfully.";
+           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
+    }
+     //=============
+    // readOneByTwoElement
+    //=============
+    /**
+     * Read ingredientrecipe with ele1 at value of ele1 and ele2 at value2 of ele2 
+     * 
+     *  $parametrer
+     *  $value
+     *  $parametrer2
+     *  $value2
+     *  return object ingredientrecipe
+     */
+    public function readOneByTwoElement($parameter, $value, $parameter2, $value2)
+    {
+        //requete
+        $pdo = Connection::getPdo();
+
+        $sql = "SELECT * FROM ingredientrecipe where $parameter =  $value AND $parameter2 =  $value2 ";
+
+        $result = $pdo->query($sql);
+        if ($result) {
+
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+        } else {
+
+            $data = [];
+        }
+
+        $user = new Ingredientrecipe();
+        $user->setIngredientRecipeFromArray($data);
+
+        return $user;
     }
 }

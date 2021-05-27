@@ -31,9 +31,11 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             <p class="mt-5">Ville</p><br>
             <input type="text" class="w-75" name="userTown" value="<?=$user->getTownName() ?>">
 
-            <p class="mt-5">Rôle</p><br>
+            <p class="mt-5">Rôle (ajout uniquement)</p><br><?php if(isset($roleAdmin)||isset($roleChef)||isset($roleModerator)){
+                    echo' <div class="alert alert-danger text-center" role="alert">Rôles non enlevable</div>';
+                }; ?>
             <input type="checkbox" class="w-75" name="roleChef" <?=$user->isChef() == "chef" ? 'checked' : '' ?>><label
-                for="Chef">Chef</label>
+                for="Chef">Chef</label> 
             <input type="checkbox" class="w-75" name="roleModerator"
                 <?=$user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
             <input type="checkbox" class="w-75" name="roleAdmin"
@@ -80,7 +82,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
 
     $tot = 0;
     if (isset($order)) {
-        foreach ($ArrayOrder as $order) {
+        foreach ($arrayOrder as $order) {
             $orderForUser = $order->getIdOrders();
             $tot += $order->getCoast($orderForUser);
 

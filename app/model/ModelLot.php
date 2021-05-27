@@ -25,13 +25,15 @@ class ModelLot
 
         return $array;
     }
-    //=============
+  //=============
     // readOneBy
     //=============
     /**
-     *
-     *
-     *
+     * Read lot with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object lot
      */
     public function readOneBy($parameter, $value)
     {
