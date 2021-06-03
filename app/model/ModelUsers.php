@@ -170,4 +170,32 @@ class ModelUsers
         unset($pdo);
         return $user;
     }
+        //=============
+    // UPDATE USER
+    //=============
+    /**
+     *  With user objet insert value
+     * and if true
+     * return the new object user
+     *
+     */
+    public function updatePassword(Users &$user)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            $sql = "UPDATE users SET passwordHash = ?  where idUsers = ?";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$user->getPasswordHash(),$user->getIdUser()];
+
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $user = $this->readOneBy("idUsers", $user->getIdUser());
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $user;
+    }
 }

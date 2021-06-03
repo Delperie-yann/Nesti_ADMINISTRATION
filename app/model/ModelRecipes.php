@@ -158,6 +158,6 @@ class ModelRecipes
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
-        // return $recipe;
+        return $recipe;
     }
 }

@@ -25,11 +25,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
         series: [
             {
                 name: 'Coûts',
-                data: vars.cost,
+                data: vars.totalByDay,
             },
             {
                 name: 'Ventes',
-                data: vars.vente,
+                data: vars.sold,
             },
         ],
     };

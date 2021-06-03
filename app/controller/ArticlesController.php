@@ -51,13 +51,17 @@ class ArticlesController extends BaseController
         $model = new ModelArticles();
         $article = $model->readOneBy("idArticle", $idArticles);
         $this->data['article'] = $article;
-        if (isset($_POST["nameReal"])) {
+        if (isset($_POST["nameReal"]) && $_POST["nameReal"] != "") {
+
             $article->setRealName(filter_input(INPUT_POST, "nameReal"));
-           
-            $model->updateArticleName($idArticles,$article);
-            
-            header('Location:' . BASE_URL . "articles/editing/" . $idArticles);
-          }
+
+            $valid = $model->updateArticleName($idArticles, $article);
+            if ($valid) {
+                $this->data['success'] = "success";
+            } else {
+                $this->data['error'] = "error";
+            }
+        }
     }
 
     public function deleteArticle($idArticles)
@@ -66,6 +70,5 @@ class ArticlesController extends BaseController
         $article = $model->readOneBy("idArticle", $idArticles);
         $deletedArticle = $model->deletedArticle($article);
         header('Location:' . BASE_URL . "articles");
-        
     }
 }

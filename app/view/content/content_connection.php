@@ -25,7 +25,7 @@
                                  <div class="col-sm-6"><label for="username" class="text-info text-dark">Identifiant</label></div>
                              </div>
                              <div class="row d-flex justify-content-center">
-                                 <div class="col-sm-1 d-flex justify-content-end align-items-center"><img src="public/images/identifiant-icon.png" alt="logo identifiant" width="20px" height="20px"></div>
+                                 <div class="col-sm-1 d-flex justify-content-end align-items-center"><img src="public/images/identifiant-icon.png" alt="logo identifiant" class="imagelogo" ></div>
                                  <div class="col-sm-6"><input type="text" name="loginUser" id="username" class="form-control"></div>
                              </div>
                          </div>
@@ -36,7 +36,7 @@
                              </div>
 
                              <div class="row d-flex justify-content-center">
-                                 <div class="col-sm-1 d-flex justify-content-end align-items-center"><img src="public/images/mdp-icon.png" alt="logo identifiant" width="20px" height="20px"></div>
+                                 <div class="col-sm-1 d-flex justify-content-end align-items-center"><img src="public/images/mdp-icon.png" alt="logo identifiant" class="imagelogo" ></div>
                                  <div class="col-sm-6"><input type="password" name="password" id="password" class="form-control"></div>
                              </div>
                          </div>

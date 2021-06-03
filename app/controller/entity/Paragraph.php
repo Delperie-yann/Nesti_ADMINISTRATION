@@ -2,12 +2,12 @@
 
 class Paragraph
 {
-    private $idRecipe;
+    
     private $idParagraph;
     private $content;
     private $paragraphPosition;
     private $dateCreation;
-
+    private $idRecipe;
     
     /**
      * Get the value of idRecipe

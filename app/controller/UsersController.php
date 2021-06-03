@@ -21,12 +21,16 @@ class UsersController extends BaseController
             $this->addUser();
         }
         if ($action == "editing") {
+            if ($idRecipe == "resumepassword") {
+                $this->passwordChange($idUser);
+            }
             if ($state == "1") {
                 $this->endorse($idUser, $idRecipe);
             }
             if ($state == "0") {
                 $this->block($idUser, $idRecipe);
             }
+
             $this->editUser($idUser);
         }
         if ($action == "deleted") {
@@ -125,6 +129,8 @@ class UsersController extends BaseController
             }
         }
     }
+
+
     public function user($id)
     {
         $model = new ModelUsers();
@@ -149,8 +155,8 @@ class UsersController extends BaseController
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $idUsers);
         $this->data['user'] = $user;
-        $model = new ModelOrders();
-        $orders = $model->readAllBy("idUsers", $idUsers);
+        $model2 = new ModelOrders();
+        $orders = $model2->readAllBy("idUsers", $idUsers);
 
         $this->data['arrayOrder'] = $orders;
 
@@ -194,6 +200,7 @@ class UsersController extends BaseController
             $insertedUser = $model->updateUsers($user);
 
 
+
             $error     = 0;
             if (isset($_POST["roleAdmin"]) == NUll) {
                 $this->data['roleAdmin'] = true;
@@ -218,16 +225,34 @@ class UsersController extends BaseController
             if (isset($_POST["roleModerator"])) {
                 $insertedUser->makeModerator();
             }
-            if ($error == 0) {
-              
-                header('Location:' . BASE_URL . "users/editing/" . $idUsers);
-            } else {
+            if ($error != 0) {
+
+                // header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+
                 isset($this->data['roleAdmin']);
                 isset($this->data['roleChef']);
                 isset($this->data['roleModerator']);
+                $this->data["error"] = "error";
+            }
+            if (isset($insertedUser)) {
+                $this->data["success"] = "success";
             }
         }
     }
+    public function passwordChange($idUser)
+    {
+        $Value = $this->randomPassword();
+        $model = new ModelUsers();
+        $user = $model->readOneBy("idUsers", $idUser);
+        $userNewPass = $user->setPasswordHash($Value);
+
+        $newpass = $model->updatePassword($userNewPass);
+
+
+        $this->data['pass'] =  $Value;
+    }
+
+
     public function readOrder()
     {
         // POST comme from orderScript
@@ -247,5 +272,16 @@ class UsersController extends BaseController
 
 
         die();
+    }
+    function randomPassword()
+    {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
     }
 }

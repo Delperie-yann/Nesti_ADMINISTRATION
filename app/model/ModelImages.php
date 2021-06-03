@@ -20,7 +20,6 @@ class ModelImages
         $sql = "SELECT * FROM image where $parameter = '$value'";
 
         $result = $pdo->query($sql);
-        //var_dump($result);
         if ($result) {
 
             $data = $result->fetch(PDO::FETCH_ASSOC);
@@ -28,10 +27,9 @@ class ModelImages
 
             $data = [];
         }
-        //var_dump($data);
         $images = new Images();
         $images->setImagesFromArray($data);
-        //$user -> setId($data);
+
         return $images;
     }
     //=============
@@ -42,7 +40,7 @@ class ModelImages
      *
      *
      */
-    public function insertImages(Images &$images)
+    public function insertImages(Images $images)
     {
         $pdo = Connection::getPdo();
         try {
@@ -51,9 +49,8 @@ class ModelImages
 
             $stmt = $pdo->prepare($sql);
 
-
             $values = [$images->getName(), $images->getFileExtension()];
-            var_dump($values);
+
             // Execute the prepared statement
             $stmt->execute($values);
             $newImages = $this->readOneBy("idImage", $pdo->lastInsertId());
@@ -61,7 +58,6 @@ class ModelImages
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
-        unset($pdo);
         return $newImages;
     }
 }

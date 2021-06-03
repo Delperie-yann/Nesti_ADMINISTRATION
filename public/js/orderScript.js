@@ -49,21 +49,13 @@ $(document).ready(function () {
             //     });
        
             $.post(base_url + "recipes/adding/" + id_recipe, { name: name, quant: quant, unit: unit }).done(function (data) {
-                // alert(data);
-              // reception des données
-                // si ok 
+           
                 if (data.success == true) {
-                 
-
-                    // on a besoin de l'id 
-
                     $('#ingCtn').append(
                         '<li class="flex justify-between">'
                         + quant + " " + unit + " de " + name
                         + '   <a href="' + base_url + 'recipes/editing/' + data.recipe + '/supp/'+ data.idProduct +'">Supprimer</a>'
                         + '</li>');
-
-
                 }else {
                     alert("erreur ajout ingredient");
                 }

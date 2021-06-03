@@ -12,11 +12,11 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
             <nav class="navbar navbar-white bg-white pl-0">
                 <form class="form-inline">
                     <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-                    <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" width="20px" height="25px">
+                    <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" class="imagelogo">
                 </form>
             </nav>
             <div>
-                <a href="<?php BASE_URL ?>recipes/creation" class="btn mb-1 border align-self-end"><img id="add" src="<?php BASE_URL ?>public/images/add.png" alt="" width="20px" height="20px"> Ajouter</a>
+                <a href="<?php BASE_URL ?>recipes/creation" class="btn mb-1 border align-self-end"><img id="add" src="<?php BASE_URL ?>public/images/add.png" alt="" class="imagelogo"> Ajouter</a>
             </div>
         </div>
         <figcaption class="font-weight-bold">Accepté = bleu / En attente = Noir / Bloqué = rouge</figcaption>

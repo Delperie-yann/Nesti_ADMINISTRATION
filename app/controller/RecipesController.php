@@ -20,7 +20,7 @@ class RecipesController extends BaseController
     }
     if ($action == "editing") {
       if ($supp == "supp") {
-      
+
         $this->suppres($id, $idProduct);
       }
       $this->editRecipe($id);
@@ -48,7 +48,7 @@ class RecipesController extends BaseController
     if (isset($isIngredient) == true) {
       $model->delete($idRecipe, $idProduct);
     }
-    header('Location:' . BASE_URL . "recipes/editing/" .$idRecipe);
+    header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
   }
 
   // Creat a recipe without picture, ingredient, comment.
@@ -101,9 +101,10 @@ class RecipesController extends BaseController
       $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
       $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
       $model                          = new ModelRecipes();
-      $model->updateRecipes($recipe);
-      //  var_dump('model : '. $model->updateRecipes($recipe));
-      header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
+      $upadate=$model->updateRecipes($recipe);
+      if(!empty($upadate)){
+        $this->data["success"] = "success";
+      }
     }
 
 
@@ -155,18 +156,20 @@ class RecipesController extends BaseController
     //   }
     // }
   }
-  public function addimage($id)
+  public function addImage($id)
   {
     $modelRecipe = new ModelRecipes();
-    $recipe      = $modelRecipe->readOneBy("idRecipe", $id);
+    $recipe = $modelRecipe->readOneBy("idRecipe", $id);
 
-    $target_dir    = "public/img/recipes/";
-    $target_file   = $target_dir . basename($_FILES["pictures"]["name"]);
-    $uploadOk      = 1;
+    $target_dir = "public/img/recipes/";
+    $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
+    $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    
 
     // Check if image file is a actual image or fake image
-    if (isset($_POST["submit"])) {
+    if (isset($_POST["pictures"])) {
+      var_dump( $_FILES["pictures"]);
       $check = getimagesize($_FILES["pictures"]["tmp_name"]);
       if ($check !== false) {
         echo "File is an image - " . $check["mime"] . ".";
@@ -198,35 +201,35 @@ class RecipesController extends BaseController
       $uploadOk = 0;
     }
     // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {     
-      header('Location:' . BASE_URL . "recipes/editing/" . $id);
+    if ($uploadOk == 0) {
+      echo "Sorry, your file was not uploaded.";
       // if everything is ok, try to upload file
     } else {
       if (move_uploaded_file($_FILES["pictures"]["tmp_name"], $target_file)) {
         echo "The file " . htmlspecialchars(basename($_FILES["pictures"]["name"])) . " has been uploaded.";
 
-        $model  = new ModelImages();
+        $model = new ModelImages();
         $images = new Images();
 
         $name = explode(".", $_FILES["pictures"]["name"]);
         $images->setName($name[0]);
         $images->setFileExtension($name[1]);
 
-
+        //verif IS valid?
         $insertedImages = $model->insertImages($images);
         $recipe->setIdImage($insertedImages->getIdImage());
         $modelRecipe->updateRecipes($recipe);
         header('Location:' . BASE_URL . "recipes/editing/" . $id);
       } else {
         echo "Sorry, there was an error uploading your file.";
-       
-        
       }
     }
   }
+
+
   function adding($id)
   {
-   
+
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
     $quant = filter_input(INPUT_POST, "quant", FILTER_SANITIZE_STRING);
     $unit = filter_input(INPUT_POST, "unit", FILTER_SANITIZE_STRING);
@@ -235,9 +238,9 @@ class RecipesController extends BaseController
 
     $modelProd  = new ModelProduct();
     $ingredient = new Product();
-   $isExistProd = $modelProd->readOneby("name", $name);
-    
-   
+    $isExistProd = $modelProd->readOneby("name", $name);
+
+
     if ((($isExistProd->getName()) == null) && ($name != "")) {
       $insertedIng = $modelProd->insertProductJquery($name);
       $isProdId    = $insertedIng->getIdProduct();
@@ -246,7 +249,7 @@ class RecipesController extends BaseController
     } else {
       $isProdId = $isExistProd->getIdProduct();
     }
- 
+
 
     $modelUnit = new ModelUnit();
     $isExistUnit = $modelUnit->readOneby("name", $unit);
@@ -259,7 +262,7 @@ class RecipesController extends BaseController
       $isUnitid = $isExistUnit->getIdUnit();
     }
     $ing = new Ingredientrecipe();
- 
+
     $ing->setIdRecipe($id);
     $ing->setIdProduct($isProdId);
     $ing->setIdUnit($isUnitid);
@@ -271,14 +274,14 @@ class RecipesController extends BaseController
 
     // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
     if ($ing->getQuantity() != 0) {
-     $model->insertIngredientRecipe($ing);
-     header('Content-Type: application/json');
-     echo json_encode(array('success' => true, 'recipe' => $id, 'name' => $name, 'quant' => $quant, 'unit' => $unit , 'idProduct' => $isProdId));
+      $model->insertIngredientRecipe($ing);
+      header('Content-Type: application/json');
+      echo json_encode(array('success' => true, 'recipe' => $id, 'name' => $name, 'quant' => $quant, 'unit' => $unit, 'idProduct' => $isProdId));
       // var_dump( $insertedRecipe);
 
       // header('Location:' . BASE_URL . "recipes/editing/" . $id);
-    }else{
-       header('Content-Type: application/json');
+    } else {
+      header('Content-Type: application/json');
       echo json_encode(array('success' => false));
     }
 
@@ -286,4 +289,5 @@ class RecipesController extends BaseController
 
     die;
   }
+  
 }
