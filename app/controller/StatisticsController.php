@@ -66,7 +66,7 @@ class StatisticsController extends BaseController
         $largerOrders =  ModelOrderline::readAll();
         
         usort($largerOrders, function ($v1, $v2) {
-            var_dump($v2->getQuantitybyOrder());
+            // var_dump($v2->getQuantitybyOrder());
             // return count($v2->getQuantitybyOrder()) <=> count($v1->getQuantitybyOrder());
          
         });

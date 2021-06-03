@@ -289,5 +289,4 @@ class RecipesController extends BaseController
 
     die;
   }
-  
 }

@@ -50,10 +50,10 @@ function addTextArea() {
     let prepCtn = document.getElementById("prepCtn");
 
     newItem.innerHTML = baseItem;
-    newItem.className += "row mt-5 prepItem ";
+    newItem.className += "row mt-5 prepItem";
     prepCounter++;
     newItem.dataset.order = prepCounter;
-   
+    newItem=
     prepCtn.appendChild(newItem);
 
     actualize();
@@ -63,6 +63,8 @@ function addTextArea() {
 function actualize() {
 
     let items = document.querySelectorAll(".prepItem");
+
+
     items.forEach(item => {
         item.querySelector(".upText").style.visibility = "visible";
         item.querySelector(".downText").style.visibility = "visible";
@@ -70,15 +72,18 @@ function actualize() {
 
     let first = document.querySelector("[data-order='1']");
     first.querySelector(".upText").style.visibility = "hidden";
+
     let last = document.querySelector("[data-order='" + prepCounter + "']");
     last.querySelector(".downText").style.visibility = "hidden";
 }
+
 function upBtn(e) {
     let ctn = e.parentNode.parentNode;
     let txt = ctn.querySelector("div>textarea");
     let txt1 = ctn.previousElementSibling.querySelector("div>textarea");
     let value = txt.value;
     let value1 = txt1.value;
+
     txt.value = value1;
     txt1.value = value;
 }
@@ -89,6 +94,7 @@ function downBtn(e) {
     let txt1 = ctn.nextElementSibling.querySelector("div>textarea");
     let value = txt.value;
     let value1 = txt1.value;
+
     txt.value = value1;
     txt1.value = value;
 }
@@ -96,14 +102,17 @@ function downBtn(e) {
 function deleteBtn(e) {
     let ctn = e.parentNode.parentNode;
     let prepCtn = document.querySelector("#prepCtn");
+
     if (prepCtn.childElementCount != 1) {
         ctn.remove();
     }
 }
 
 function onlyNumberKey(evt) {
+
     let ASCIICode = (evt.which) ? evt.which : evt.keyCode
     if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
         return false;
     return true;
 }
+

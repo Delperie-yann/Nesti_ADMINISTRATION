@@ -50,24 +50,24 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                 </div>
                 <div class="d-flex justify-content-center p-2">
                     <button type="submit" class="btn m-5 valid w-25">Valider</button>
-                    <a type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Annuler</a>
+                    <a  type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Annuler</a>
                 </div>
             </form>
             <div class="col">
-                <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="POST">
-                    <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
-                        <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
+            <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="POST">
+                <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
+                    <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
+                </div>
+                <div class="row">
+                    <div class="mb-5">
+                        <label for="formFile" class="form-label"></label>
+                        <input class="form-control ml-3" type="file" id="formFile" name="pictures">
                     </div>
-                    <div class="row">
-                        <div class="mb-5">
-                            <label for="formFile" class="form-label"></label>
-                            <input class="form-control ml-3" type="file" id="formFile" name="pictures">
-                        </div>
-                        <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100" name="imageDdl" id="idImageDdl">Ok</button></div>
-                    </div>
-                </form>
-            </div>
+                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100 mt-3"  name= "imageDdl" id="idImageDdl">Ok</button></div>
+                </div>
+            </form>
         </div>
+    </div>
         <div class="recipeCtn h-100">
             <div class="row">
                 <div class="col">
@@ -77,27 +77,23 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                             <h2>Préparations</h2>
                         </div>
                     </div>
-
-
-
-                    
                     <div id="prepCtn">
                         <div class="row prepItem mb-5" id="baseItem" data-order="1">
                             <div class="col-sm-1">
-                                <button class="upText btn mt-2 mb-2 d-flex justify-content-center">
+                                <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
                                     <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
                                 </button>
-                                <button class="downText btn mt-2 mb-2 d-flex justify-content-center">
+                                <button class="downText btn mt-2 mb-2 d-flex justify-content-center" onclick="downBtn(this)">
                                     <img src="<?= BASE_URL ?>public/images/down-arrow.png" alt="">
                                 </button>
-                                <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center">
+                                <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center" onclick="deleteBtn(this)">
                                     <img src="<?= BASE_URL ?>public/images/delete.png" alt="">
                                 </button>
                             </div>
                             <div class="col">
                                 <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
                                     <textarea class="prepText w-100 h-100"><?= $paragraph->getContent() ?></textarea>
-                                    <!-- <textarea type="text" id="prepText" class="prepText w-100 h-100"  cols="30" rows="10"> <?= $paragraph->getContent() ?></textarea> -->
+                                    <!-- <input type="text" id="prepText" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>"> -->
                                 <?php }
                                 ?>
                             </div>
@@ -112,58 +108,47 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         </div>
                     </div>
                 </div>
-            
+                <div class="col-sm-4">
+                    <h2>Liste des ingrédients</h2>
+                    <ul class="ingredientsCtn" id="ingCtn">
+
+                        <?php
+
+                        foreach ($ingredientrecipe as $ingredient) { ?>
+                            <li class="flex justify-between">
+                                <?= $ingredient->getquantity() . " " . ($ingredient->getNameUnit()->getName()) . " de " . $ingredient->getNameProd()->getName(); ?>
+                                <a href="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>/supp/<?= $ingredient->getIdProduct() ?>">Supprimer</a>
+                            </li>
 
 
-
-
-
-
-
-
-
-
-                        <div class="col-sm-4">
-                            <h2>Liste des ingrédients</h2>
-                            <ul class="ingredientsCtn" id="ingCtn">
-
-                                <?php
-
-                                foreach ($ingredientrecipe as $ingredient) { ?>
-                                    <li class="flex justify-between">
-                                        <?= $ingredient->getquantity() . " " . ($ingredient->getNameUnit()->getName()) . " de " . $ingredient->getNameProd()->getName(); ?>
-                                        <a href="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>/supp/<?= $ingredient->getIdProduct() ?>">Supprimer</a>
-                                    </li>
-
-
-                                <?php } ?>
-                            </ul>
-                            <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
-                                <p class="mt-2 mb-2">Ajouter un ingrédient</p>
-                                <label for="ingreidentName">Nom de l'ingredient</label>
-                                <input type="text" id="ingName" name="ingredientName" class="mb-2 w-50">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <label for="quantity">Quantité</label>
-                                        <input type="text" name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-50">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="unit">Unité </label>
-                                        <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-50">
-                                    </div>
-                                    <div class="col d-flex justify-content-end">
-                                        <button type="submit" class="btn valid" id="ingAdd" onclick="" data-id="<?= $recipe->getIdRecipe() ?>">Ok</button>
-                                    </div>
-                                </div>
-                            </form>
+                        <?php } ?>
+                    </ul>
+                    <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
+                        <p class="mt-2 mb-2">Ajouter un ingrédient</p>
+                        <label for="ingreidentName">Nom de l'ingredient</label>
+                        <input type="text" id="ingName" name="ingredientName" class="mb-2 w-50" >
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="quantity">Quantité</label>
+                                <input type="text" name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-50">
+                            </div>
+                            <div class="col-md-5">
+                            <label for="unit">Unité </label>
+                                <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-50">
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <button type="submit" class="btn valid" id="ingAdd" onclick="" data-id="<?= $recipe->getIdRecipe() ?>">Ok</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-        <?php
+        </div>
+    </div>
+<?php
 
-    } else {
-        include_once PATH_ERROR . '403.php';
-    }
+} else {
+    include_once PATH_ERROR . '403.php';
+}
 
-        ?>
+?>
