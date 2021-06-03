@@ -1,17 +1,29 @@
 var prepCounter = 1;
-
+window.addEventListener("DOMContentLoaded", (event) => {
+    actualize();
+    let input = document.getElementById("formFile");
+    input.addEventListener("change", dlImg);
+});
 function dlImg() {
+
 
     let img = document.getElementById("img");
     let imgCtn = document.getElementById("imgCtn");
-    let imgDl = document.getElementById("imgDl");
-
+    let imgDl = document.getElementById("formFile");
+    console.log(imgDl.files[0]);
     if (imgDl.value != "") {
-        img.src = imgDl.value;
+        img.src = imgDl.files[0].src;
         img.height = 275;
         img.width = 540;
-        imgCtn.appendChild(img);
-        imgDl.value = "";
+     
+        var fileReader = new FileReader();
+        fileReader.readAsDataURL(imgDl.files[0]);
+        fileReader.onload = function (fileEvent) {
+            img.setAttribute("src", fileEvent.target.result)
+        };
+
+        //   imgCtn.appendChild(img);
+
     }
 }
 
@@ -41,16 +53,17 @@ function addTextArea() {
     newItem.className += "row mt-5 prepItem";
     prepCounter++;
     newItem.dataset.order = prepCounter;
+    newItem=
     prepCtn.appendChild(newItem);
 
     actualize();
-   
+
 }
 
 function actualize() {
 
     let items = document.querySelectorAll(".prepItem");
-    console.log(items);
+
 
     items.forEach(item => {
         item.querySelector(".upText").style.visibility = "visible";
@@ -89,7 +102,7 @@ function downBtn(e) {
 function deleteBtn(e) {
     let ctn = e.parentNode.parentNode;
     let prepCtn = document.querySelector("#prepCtn");
-    
+
     if (prepCtn.childElementCount != 1) {
         ctn.remove();
     }
@@ -103,6 +116,3 @@ function onlyNumberKey(evt) {
     return true;
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
-    actualize();
-});

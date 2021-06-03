@@ -1,54 +1,89 @@
 <?php
-include_once(PATH_MODEL.'Connection.php');
-class ModelProduct {
-   
-    public function readAll() {
+include_once PATH_MODEL . 'Connection.php';
+class ModelProduct
+{
+    //=============
+    // readAll
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function readAll()
+    {
         //requete
-        $pdo= Connection::getPdo();
+        $pdo = Connection::getPdo();
 
-        $sql="SELECT * FROM product ";
-        $result=$pdo->query($sql);
-        if($result){
-            $array = $result-> fetchAll(PDO::FETCH_CLASS,'Product');
-        } else{
-            $array=[];
-            
+        $sql    = "SELECT * FROM product ";
+        $result = $pdo->query($sql);
+        if ($result) {
+            $array = $result->fetchAll(PDO::FETCH_CLASS, 'Product');
+        } else {
+            $array = [];
         }
-     
+
         return $array;
     }
-    public function readOneBy($parameter,$value) {
+    //=============
+    // readOneBy
+    //=============
+    /**
+     * Read product with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object Product
+     */
+    public function readOneBy($parameter, $value)
+    {
         //requete
-        $pdo= Connection::getPdo();
+        $pdo = Connection::getPdo();
 
-        $sql="SELECT * FROM product where $parameter = '$value'";
-      
-        $result=$pdo->query($sql);
+        $sql = "SELECT * FROM product where $parameter = '$value'";
+
+        $result = $pdo->query($sql);
         // var_dump($result);
-        if($result){
-         
-            $data = $result-> fetch(PDO::FETCH_ASSOC) ;
-        } else{
-          
-            $data=[];
+        if ($result) {
+
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+        } else {
+
+            $data = [];
         }
         //var_dump($data);
         $user = new Product();
-        $user -> setProductFromArray($data);
+        $user->setProductFromArray($data);
         // var_dump($user);
         //$user -> setId($data);
         return $user;
     }
-    public function findChildType($table,$type,$value){
-        $pdo= Connection::getPdo();
-        $sql="SELECT * FROM $table WHERE id".ucfirst($type)."= $value";
-    //    var_dump($sql);
-        $result=$pdo->query($sql);
+    //=============
+    // findChildType
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function findChildType($table, $type, $value)
+    {
+        $pdo = Connection::getPdo();
+        $sql = "SELECT * FROM $table WHERE id" . ucfirst($type) . "= $value";
+        //    var_dump($sql);
+        $result = $pdo->query($sql);
         // var_dump($result);
-        $data = $result-> fetch();
+        $data = $result->fetch();
         return $data;
-
     }
+    //=============
+    // insertProduct
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function insertProduct(Product &$product)
     {
 
@@ -63,31 +98,63 @@ class ModelProduct {
             // Execute the prepared statement
             $stmt->execute($values);
             $newProduct = $this->readOneBy("idProduct", $pdo->lastInsertId());
-            echo "Records inserted successfully.";
+         
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
         return $newProduct;
-    
     }
-  
+     //=============
+    // insertProductJquery
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function insertProductJquery($product)
+    {
 
-        public function isAlreadyExistProduct($string) {
-          
-            $pdo= Connection::getPdo();
-    
-            $sql="SELECT EXISTS (SELECT * FROM product WHERE name like (?) > 0)";
-          
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement name is insered whitout id in product
+            $sql = "INSERT INTO product (name) VALUES (?)";
+
             $stmt = $pdo->prepare($sql);
 
-            $values = [$string];
-            $result=$stmt->execute($values);
-      
-       
+            $values = [$product];
+            // Execute the prepared statement
+            $stmt->execute($values);
+            $newProduct = $this->readOneBy("idProduct", $pdo->lastInsertId());
            
-            return $result;
-
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newProduct;
     }
+    //=============
+    // isAlreadyExistProduct
+    //=============
+    /**
+     *
+     *
+     *
+     */
 
+    public function isAlreadyExistProduct($string)
+    {
+
+        $pdo = Connection::getPdo();
+
+        $sql = "SELECT EXISTS (SELECT * FROM product WHERE name like (?) > 0)";
+
+        $stmt = $pdo->prepare($sql);
+
+        $values = [$string];
+        $result = $stmt->execute($values);
+
+        return $result;
+    }
 }

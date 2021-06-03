@@ -1,11 +1,10 @@
 
-
 let passWord = document.querySelector("#pwd");
 
 passWord.addEventListener("keyup", checkPassword);
 
 function checkPassword() {
-
+    
     var meter = document.getElementById("pwd_meter").value;
     var pwd = document.getElementById("pwd").value;
 
@@ -46,13 +45,16 @@ function checkPassword() {
         document.getElementById("pwd_warn5").style.color = "red";
     }
 
+    $(this).css("background-color","#fffff"  );
     document.getElementById("pwd_meter").value = updated;
 
     if (updated === 5) {
         PWD_CHECK = 1;
+      
     } else {
         PWD_CHECK = 0;
     }
+  
 }
 
 

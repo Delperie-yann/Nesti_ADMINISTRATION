@@ -9,38 +9,48 @@ class RecipesController extends BaseController
     $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
     $id     = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
     $supp   = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
-    
+    $idProduct = filter_input(INPUT_GET, "state", FILTER_SANITIZE_STRING);
+
     if ($action == '') {
       $this->data['arrayRecipes'] = $model->readAll();
     }
-   
+
     if ($action == "add") {
       $this->create();
     }
     if ($action == "editing") {
-      if ($supp == "supp"){
-      $this->suppres($id);
+      if ($supp == "supp") {
+
+        $this->suppres($id, $idProduct);
       }
       $this->editRecipe($id);
-      
     }
     if ($action == "deleted") {
       $this->delete($id);
     }
     if ($action == "addimage") {
-      $this->addImage($id);
+      $this->addimage($id);
     }
-    
+    if ($action == "adding") {
+      $this->adding($id);
+    }
   }
+
+
+
 
   //Destroy Ingredient in DDB but not Product and Unit created
-  public function suppres($isIngredient){
-    
-    $model = new ModelIngredientrecipe();
-    $isProduct = $model->readOneby("idProduct", $isIngredient);
-    $model->delete($isProduct);
+  public function suppres($idRecipe, $idProduct)
+  {
 
+    $model = new ModelIngredientrecipe();
+    $isIngredient = $model->readOneByTwoElement("idRecipe", $idRecipe, "idProduct", $idProduct);
+    if (isset($isIngredient) == true) {
+      $model->delete($idRecipe, $idProduct);
+    }
+    header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
   }
+
   // Creat a recipe without picture, ingredient, comment.
   public function create()
   {
@@ -66,7 +76,7 @@ class RecipesController extends BaseController
     header('Location:' . BASE_URL . "recipes");
   }
 
-  
+
 
   public function addPreparation($id)
   {
@@ -91,75 +101,75 @@ class RecipesController extends BaseController
       $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
       $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
       $model                          = new ModelRecipes();
-      $model->updateRecipes($recipe);
-    //  var_dump('model : '. $model->updateRecipes($recipe));
-      header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
-      
-    }
-    
-
-    //  if the user click in "ok" insert an Ingredient in table
-    if (isset($_POST["ingredientName"])) {
-      $modelProd  = new ModelProduct();
-      $ingredient = new Product();
-      $ingredient->setName(filter_input(INPUT_POST, "ingredientName"));
-      // var_dump($model->isAlreadyExistProduct(  $ingredient->getName()));
-      $isExistProd = $modelProd->readOneby("name", $ingredient->getName());
-
-      // if the name of ingredient still exist return else or give id of the insered product 
-      if ((($isExistProd->getName()) == null) && ($ingredient->getName()!="")) {
-        $insertedIng = $modelProd->insertProduct($ingredient);
-        $isProdId    = $insertedIng->getIdProduct();
-        $ingredient  = new ModelIngredient();
-        $ingredient->insertIngredient($insertedIng);
-      } else {
-        $isProdId = $isExistProd->getIdProduct();
+      $upadate=$model->updateRecipes($recipe);
+      if(!empty($upadate)){
+        $this->data["success"] = "success";
       }
-
-      $modelUnit = new ModelUnit();
-      $unit      = new Unit();
-      $unit->setName(filter_input(INPUT_POST, "ingredientUnit"));
-      $isExistUnit = $modelUnit->readOneby("name", $unit->getName());
-
-      // if the name of unit still exist return else or give id of the insered unit
-      if (($isExistUnit)->getName() == null && $unit->getName()!="") {
-        $insertedUnit = $modelUnit->insertUnit($unit);
-        $isUnitid     = $insertedUnit->getIdUnit();
-      
-      } else {
-        $isUnitid = $isExistUnit->getIdUnit();
-      }
-
-      $ing = new Ingredientrecipe();
-      // $ingredientrecipe->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
-      $ing->setIdRecipe($idRecipe);
-      $ing->setIdProduct($isProdId);
-      $ing->setIdUnit($isUnitid);
-      $ing->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
-        $model = new ModelIngredientrecipe();
-
-        // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
-           if($ing->getQuantity()!=0){
-          $insertedRecipe = $model->insertIngredientRecipe($ing);
-     
-
-           header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
-           }
     }
 
+
+    // //  if the user click in "ok" insert an Ingredient in table
+    // if (isset($_POST["ingredientName"])) {
+    //   $modelProd  = new ModelProduct();
+    //   $ingredient = new Product();
+    //   $ingredient->setName(filter_input(INPUT_POST, "ingredientName"));
+    //   // var_dump($model->isAlreadyExistProduct(  $ingredient->getName()));
+    //   $isExistProd = $modelProd->readOneby("name", $ingredient->getName());
+
+    //   // if the name of ingredient still exist return else or give id of the insered product 
+    //   if ((($isExistProd->getName()) == null) && ($ingredient->getName() != "")) {
+    //     $insertedIng = $modelProd->insertProduct($ingredient);
+    //     $isProdId    = $insertedIng->getIdProduct();
+    //     $ingredient  = new ModelIngredient();
+    //     $ingredient->insertIngredient($insertedIng);
+    //   } else {
+    //     $isProdId = $isExistProd->getIdProduct();
+    //   }
+
+    //   $modelUnit = new ModelUnit();
+    //   $unit      = new Unit();
+    //   $unit->setName(filter_input(INPUT_POST, "ingredientUnit"));
+    //   $isExistUnit = $modelUnit->readOneby("name", $unit->getName());
+
+    //   // if the name of unit still exist return else or give id of the insered unit
+    //   if (($isExistUnit)->getName() == null && $unit->getName() != "") {
+    //     $insertedUnit = $modelUnit->insertUnit($unit);
+    //     $isUnitid     = $insertedUnit->getIdUnit();
+    //   } else {
+    //     $isUnitid = $isExistUnit->getIdUnit();
+    //   }
+
+    //   $ing = new Ingredientrecipe();
+    //   // $ingredientrecipe->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
+    //   $ing->setIdRecipe($idRecipe);
+    //   $ing->setIdProduct($isProdId);
+    //   $ing->setIdUnit($isUnitid);
+    //   $ing->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
+    //   $model = new ModelIngredientrecipe();
+
+    //   // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
+    //   if ($ing->getQuantity() != 0) {
+    //     $insertedRecipe = $model->insertIngredientRecipe($ing);
+
+
+    //     header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
+    //   }
+    // }
   }
   public function addImage($id)
   {
     $modelRecipe = new ModelRecipes();
-    $recipe      = $modelRecipe->readOneBy("idRecipe", $id);
+    $recipe = $modelRecipe->readOneBy("idRecipe", $id);
 
-    $target_dir    = "public/img/recipes/";
-    $target_file   = $target_dir . basename($_FILES["pictures"]["name"]);
-    $uploadOk      = 1;
+    $target_dir = "public/img/recipes/";
+    $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
+    $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    
 
     // Check if image file is a actual image or fake image
-    if (isset($_POST["submit"])) {
+    if (isset($_POST["pictures"])) {
+      var_dump( $_FILES["pictures"]);
       $check = getimagesize($_FILES["pictures"]["tmp_name"]);
       if ($check !== false) {
         echo "File is an image - " . $check["mime"] . ".";
@@ -198,14 +208,14 @@ class RecipesController extends BaseController
       if (move_uploaded_file($_FILES["pictures"]["tmp_name"], $target_file)) {
         echo "The file " . htmlspecialchars(basename($_FILES["pictures"]["name"])) . " has been uploaded.";
 
-        $model  = new ModelImages();
+        $model = new ModelImages();
         $images = new Images();
 
         $name = explode(".", $_FILES["pictures"]["name"]);
         $images->setName($name[0]);
         $images->setFileExtension($name[1]);
 
-        
+        //verif IS valid?
         $insertedImages = $model->insertImages($images);
         $recipe->setIdImage($insertedImages->getIdImage());
         $modelRecipe->updateRecipes($recipe);
@@ -214,5 +224,69 @@ class RecipesController extends BaseController
         echo "Sorry, there was an error uploading your file.";
       }
     }
+  }
+
+
+  function adding($id)
+  {
+
+    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
+    $quant = filter_input(INPUT_POST, "quant", FILTER_SANITIZE_STRING);
+    $unit = filter_input(INPUT_POST, "unit", FILTER_SANITIZE_STRING);
+
+
+
+    $modelProd  = new ModelProduct();
+    $ingredient = new Product();
+    $isExistProd = $modelProd->readOneby("name", $name);
+
+
+    if ((($isExistProd->getName()) == null) && ($name != "")) {
+      $insertedIng = $modelProd->insertProductJquery($name);
+      $isProdId    = $insertedIng->getIdProduct();
+      $ingredient  = new ModelIngredient();
+      $ingredient->insertIngredient($insertedIng);
+    } else {
+      $isProdId = $isExistProd->getIdProduct();
+    }
+
+
+    $modelUnit = new ModelUnit();
+    $isExistUnit = $modelUnit->readOneby("name", $unit);
+
+    // if the name of unit still exist return else or give id of the insered unit
+    if (($isExistUnit)->getName() == null && $unit != "") {
+      $insertedUnit = $modelUnit->insertUnitJquery($unit);
+      $isUnitid     = $insertedUnit->getIdUnit();
+    } else {
+      $isUnitid = $isExistUnit->getIdUnit();
+    }
+    $ing = new Ingredientrecipe();
+
+    $ing->setIdRecipe($id);
+    $ing->setIdProduct($isProdId);
+    $ing->setIdUnit($isUnitid);
+    if ($quant != 0) {
+      $ing->setQuantity($quant);
+    }
+
+    $model = new ModelIngredientrecipe();
+
+    // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
+    if ($ing->getQuantity() != 0) {
+      $model->insertIngredientRecipe($ing);
+      header('Content-Type: application/json');
+      echo json_encode(array('success' => true, 'recipe' => $id, 'name' => $name, 'quant' => $quant, 'unit' => $unit, 'idProduct' => $isProdId));
+      // var_dump( $insertedRecipe);
+
+      // header('Location:' . BASE_URL . "recipes/editing/" . $id);
+    } else {
+      header('Content-Type: application/json');
+      echo json_encode(array('success' => false));
+    }
+
+
+
+    die;
   }
 }

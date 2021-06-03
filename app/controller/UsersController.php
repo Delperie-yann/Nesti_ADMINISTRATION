@@ -12,61 +12,62 @@ class UsersController extends BaseController
         $idRecipe  = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
         $state  = filter_input(INPUT_GET, "state", FILTER_SANITIZE_STRING);
 
+
         if ($action == '') {
             $model                    = new ModelUsers();
             $this->data['arrayUsers'] = $model->readAll();
         }
-        if ($action == "add") {
+        if ($action == "creation") {
             $this->addUser();
         }
         if ($action == "editing") {
-        //    var_dump($idUser,$idRecipe,$state);
-                if($state=="1"){
-                    $this->endorse( $idUser,$idRecipe);
-                }
-                if($state=="0"){
-                    $this->block($idUser,$idRecipe);
-                }
+            if ($idRecipe == "resumepassword") {
+                $this->passwordChange($idUser);
+            }
+            if ($state == "1") {
+                $this->endorse($idUser, $idRecipe);
+            }
+            if ($state == "0") {
+                $this->block($idUser, $idRecipe);
+            }
+
             $this->editUser($idUser);
         }
         if ($action == "deleted") {
             $this->delete($idUser);
         }
-        if($action=="endorse"){
-            $this->endorse($idUser);
-        }
-        if($action=="block"){
-            $this->block($idUser);
-        }
-        if($action=="orderline"){
+
+        if ($action == "orderline") {
             $this->readOrder();
         }
     }
-public function endorse($idUser,$idRecipe){
-    $idModerat=$_SESSION['idUser'];
-   
-    $model   = new ModelComment();
-    $newComm = $model->readOneBy2Prameter("idUsers", $idUser,"idRecipe",  $idRecipe);
-    $newComm->setFlag("a");
-    $newComm->setIdModerator($idModerat);
-    $model->updateComment($newComm);
-    // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est Approuver");</script>';
-  
-   
-}
-public function block($idUser,$idRecipe){
-    $idModerat=$_SESSION['idUser'];
-   
-    $model   = new ModelComment();
-    $newComm = $model->readOneBy2Prameter("idUsers", $idUser,"idRecipe",  $idRecipe);
-    // var_dump( $newComm);
-    $newComm->setFlag("b");
-    $newComm->setIdModerator($idModerat);
-    $model->updateComment($newComm);
-    
-   
-    // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est blocké");</script>';
-}
+    public function endorse($idUser, $idRecipe)
+    {
+        $idModerat = $_SESSION['idUser'];
+
+        $model   = new ModelComment();
+        $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
+        $newComm->setFlag("a");
+        $newComm->setIdModerator($idModerat);
+        $model->updateComment($newComm);
+        // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est Approuver");</script>';
+
+
+    }
+    public function block($idUser, $idRecipe)
+    {
+        $idModerat = $_SESSION['idUser'];
+
+        $model   = new ModelComment();
+        $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
+        // var_dump( $newComm);
+        $newComm->setFlag("b");
+        $newComm->setIdModerator($idModerat);
+        $model->updateComment($newComm);
+
+
+        // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est blocké");</script>';
+    }
 
 
 
@@ -74,8 +75,8 @@ public function block($idUser,$idRecipe){
     {
         $newUser = new Users();
         $model   = new ModelUsers();
-     
-        if ($_POST["userLogin"]) {
+
+        if (isset($_POST["userLogin"])) {
             $newUser->setLastname(filter_input(INPUT_POST, "userLastname"));
             $newUser->setFirstname(filter_input(INPUT_POST, "userFirstname"));
             $newUser->setLogin(filter_input(INPUT_POST, "userLogin"));
@@ -95,38 +96,51 @@ public function block($idUser,$idRecipe){
             if ($_POST["State"] == "block") {
                 $newUser->setFlag("b");
             }
-         
-       
-            $insertedUser = $model->insertUser($newUser);
+            $userExistEmmail = $model->readOneBy("email", $newUser->getEmail());
+            $userExist = $model->readOneBy("login", $newUser->getLogin());
 
-            if (isset($_POST["roleAdmin"])) {
-                $insertedUser->makeAdmin();
+
+            $error     = 0;
+            if (($userExistEmmail->getIdUser()) != NUll) {
+                $this->data['emailError'] = true;
+                $error = 1;
             }
-            if (isset($_POST["roleChef"])) {
-                $insertedUser->makeChef();
-            }
-            if (isset($_POST["roleModerator"])) {
-                $insertedUser->makeModerator();
+            if (($userExist->getIdUser()) != NUll) {
+                $this->data['loginError'] = true;
+                $error = 1;
             }
 
-            header('Location:' . BASE_URL . "users");
+
+            if ($error == 0) {
+                $insertedUser = $model->insertUser($newUser);
+                if (isset($_POST["roleAdmin"])) {
+                    $insertedUser->makeAdmin();
+                }
+                if (isset($_POST["roleChef"])) {
+                    $insertedUser->makeChef();
+                }
+                if (isset($_POST["roleModerator"])) {
+                    $insertedUser->makeModerator();
+                }
+                header('Location:' . BASE_URL . "users");
+            } else {
+                isset($this->data['emailError']);
+                isset($this->data['loginError']);
+            }
         }
     }
+
+
     public function user($id)
     {
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $id);
-
         $this->data['user'] = $user;
         $model = new ModelOrders();
         $this->data['arrayOrders'] = $model->readAll();
-    //    var_dump($this->data['arrayOrders']);
-          $com = new ModelComment();
-         $this->data['arrayCom'] = $com->readAll();
-         
-  // $user = new Users();
-   // $user->setName($_SESSION["idUsers"]);
 
+        $com = new ModelComment();
+        $this->data['arrayCom'] = $com->readAll();
     }
     public function delete($id)
     {
@@ -141,10 +155,10 @@ public function block($idUser,$idRecipe){
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $idUsers);
         $this->data['user'] = $user;
-        $model = new ModelOrders();
-        $orders = $model->readAllBy("idUsers", $idUsers);
-   
-        $this->data['ArrayOrder'] = $orders;
+        $model2 = new ModelOrders();
+        $orders = $model2->readAllBy("idUsers", $idUsers);
+
+        $this->data['arrayOrder'] = $orders;
 
         if (isset($_POST["userLastname"])) {
             $user->setLastName(filter_input(INPUT_POST, "userLastname"));
@@ -153,25 +167,25 @@ public function block($idUser,$idRecipe){
             $user->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $user->setZipCode(filter_input(INPUT_POST, "userZipCode"));
 
-            $townInput=(filter_input(INPUT_POST, "userTown"));
+            $townInput = (filter_input(INPUT_POST, "userTown"));
             $modelcity = new ModelCity();
             $cities = $modelcity->readAll();
             //Check every city 
-            foreach ($cities as $town){
-                $townName=$town->getName();
+            foreach ($cities as $town) {
+                $townName = $town->getName();
                 //if exist change by BDD idcity and stop
-                if($townInput== $townName){
-                         $city = $modelcity->readOneBy("name",  $townName);
-                        $valuecity= $user->setIdCity($city->getIdCity());
-                         break;
-                }else{
-                       //if not exist add and give id insered and stop
-                       if($townInput!="" && $townInput!=NULL){
-                        $newTown=$modelcity->insertCity($townInput);
-                        $valuecity=   $user->setIdCity($newTown->getIdCity());
+                if ($townInput == $townName) {
+                    $city = $modelcity->readOneBy("name",  $townName);
+                    $valuecity = $user->setIdCity($city->getIdCity());
+                    break;
+                } else {
+                    //if not exist add and give id insered and stop
+                    if ($townInput != "" && $townInput != NULL) {
+                        $newTown = $modelcity->insertCity($townInput);
+                        $valuecity =   $user->setIdCity($newTown->getIdCity());
                         break;
-                            }
                     }
+                }
             }
             if ($_POST["State"] == "actif") {
                 $user->setFlag("a");
@@ -187,45 +201,87 @@ public function block($idUser,$idRecipe){
 
 
 
+            $error     = 0;
+            if (isset($_POST["roleAdmin"]) == NUll) {
+                $this->data['roleAdmin'] = true;
+                $error = 1;
+            }
+            if (isset($_POST["roleChef"]) == NUll) {
+                $this->data['roleChef'] = true;
+                $error = 1;
+            }
+            if (isset($_POST["roleModerator"]) == NUll) {
+                $this->data['roleModerator'] = true;
+                $error = 1;
+            }
+
+
             if (isset($_POST["roleAdmin"])) {
                 $insertedUser->makeAdmin();
-                // echo'totoad';
-                // // var_dump( $insertedUser->makeAdmin());
             }
             if (isset($_POST["roleChef"])) {
                 $insertedUser->makeChef();
-                // echo'totoCh';
-                // var_dump( $insertedUser->makeChef());
             }
             if (isset($_POST["roleModerator"])) {
                 $insertedUser->makeModerator();
-                // echo'totoMO';
-                // var_dump( $insertedUser->makeModerator());
             }
+            if ($error != 0) {
 
-            header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+                // header('Location:' . BASE_URL . "users/editing/" . $idUsers);
+
+                isset($this->data['roleAdmin']);
+                isset($this->data['roleChef']);
+                isset($this->data['roleModerator']);
+                $this->data["error"] = "error";
+            }
+            if (isset($insertedUser)) {
+                $this->data["success"] = "success";
+            }
         }
     }
-    public function readOrder(){
+    public function passwordChange($idUser)
+    {
+        $Value = $this->randomPassword();
+        $model = new ModelUsers();
+        $user = $model->readOneBy("idUsers", $idUser);
+        $userNewPass = $user->setPasswordHash($Value);
+
+        $newpass = $model->updatePassword($userNewPass);
+
+
+        $this->data['pass'] =  $Value;
+    }
+
+
+    public function readOrder()
+    {
         // POST comme from orderScript
         $order = $_POST['order'];
         $model = new ModelOrderline();
-        $ArrayOrders=$model->readAllBy("idOrders", $order);
-        $data=[];
-        foreach ($ArrayOrders as $orders){
+        $ArrayOrders = $model->readAllBy("idOrders", $order);
+        $data = [];
+        foreach ($ArrayOrders as $orders) {
             $modelArticle = new ModelArticles();
-            $article=$modelArticle->readOneBy("idArticle", $orders->getIdArticle());
-            $name = $article->getUnitQuantity()." ".$article->getUnitName()." ".$article->getName();
+            $article = $modelArticle->readOneBy("idArticle", $orders->getIdArticle());
+            $name = $article->getUnitQuantity() . " " . $article->getUnitName() . " " . $article->getName();
             $data[] = $name;
-      
-        }      
+        }
         echo json_encode($data);
-        
+
         //$value->getUnitQuantity() $value->getUnitName(), $value->getName(); 
 
-       
-        die();
 
+        die();
     }
-  
+    function randomPassword()
+    {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
 }

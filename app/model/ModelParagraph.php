@@ -1,15 +1,23 @@
 <?php
 
-include_once(PATH_MODEL . 'Connection.php');
+include_once PATH_MODEL . 'Connection.php';
 class ModelParagraph
 {
+    //=============
+    // readAll
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readAll()
     {
         //requete
         $pdo = Connection::getPdo();
 
         //$sql="SELECT r.idRecipe AS id, r.name AS name, r.dateCreation AS dateCreation, r.difficulty AS difficulty, r.portions AS portions, r.flag AS flag, r.preparationTime AS time, r.idImage AS image, users.firstName as chief,r.idChef as idChief FROM recipe r INNER JOIN chef ON chef.idChef = r.idChef INNER JOIN users ON users.idUsers = chef.idChef";
-        $sql = "SELECT * FROM recipe";
+        $sql    = "SELECT * FROM recipe";
         $result = $pdo->query($sql);
         if ($result) {
             $array = $result->fetchAll(PDO::FETCH_CLASS, 'Recipes');
@@ -18,6 +26,16 @@ class ModelParagraph
         }
         return $array;
     }
+  //=============
+    // readOneBy
+    //=============
+    /**
+     * Read paragraph with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object Paragraph
+     */
 
     public function readOneBy($parameter, $value)
     {
@@ -39,12 +57,20 @@ class ModelParagraph
 
         return $recipe;
     }
+    //=============
+    // readAllBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
 
     public function readAllBy($parameter, $value)
     {
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT * FROM paragraph where $parameter = '$value'";
+        $sql    = "SELECT * FROM paragraph where $parameter = '$value'";
         $result = $pdo->query($sql);
 
         if ($result) {
@@ -54,7 +80,14 @@ class ModelParagraph
         }
         return $array;
     }
-
+    //=============
+    // addPreparation
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function addPreparation(Paragraph &$recipe)
     {
         $pdo = Connection::getPdo();

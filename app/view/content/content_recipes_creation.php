@@ -1,3 +1,10 @@
+<?php
+
+$session = $_SESSION['Roles'];
+//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef'))))) {
+?>
+
 <div class="container bg-white d-flex flex-column align-items-left" id="recettes">
     <div class="row mt-3">
         <form action="<?php echo (BASE_URL) ?>recipes/add" method="POST">
@@ -26,6 +33,7 @@
                 </div>
             </div>
         </form>
+
         <div class="col">
             <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addImage" method="post">
                 <div class="mt-2 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
@@ -41,6 +49,8 @@
             </form>
         </div>
     </div>
+
+
     <div class="recipeCtn h-100">
         <div class="row">
             <div class="col">
@@ -53,13 +63,13 @@
                 <div id="prepCtn">
                     <div class="row prepItem mb-5" id="baseItem" data-order="1">
                         <div class="col-sm-1">
-                            <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
+                            <button class="upText btn mt-2 mb-2 d-flex justify-content-center" >
                                 <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
                             </button>
-                            <button class="downText btn mt-2 mb-2 d-flex justify-content-center" onclick="downBtn(this)">
+                            <button class="downText btn mt-2 mb-2 d-flex justify-content-center" >
                                 <img src="<?= BASE_URL ?>public/images/down-arrow.png" alt="">
                             </button>
-                            <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center" onclick="deleteBtn(this)">
+                            <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center" >
                                 <img src="<?= BASE_URL ?>public/images/delete.png" alt="">
                             </button>
                         </div>
@@ -71,7 +81,7 @@
                 <div class="row mt-4 h-50">
                     <div class="col-sm-1"></div>
                     <div class="col">
-                        <button class="btn w-100" onclick="addTextArea()">
+                        <button class="btn w-100" >
                             <img src="<?= BASE_URL ?>public/images/addinput.png" alt="Ajouter zone de texte">
                         </button>
                     </div>
@@ -85,16 +95,23 @@
                 <input type="text" id="ingName" class="mb-2 w-100" style="height: 38px;">
                 <div class="row">
                     <div class="col-md-5">
-                        <input type="text" onkeypress="return onlyNumberKey(event)" id="ingQty" class="w-100 h-100">
+                        <input type="text"  id="ingQty" class="w-100 h-100">
                     </div>
                     <div class="col-md-5">
                         <input type="text" id="ingUnit" class="w-100 h-100">
                     </div>
                     <div class="col-md-2 d-flex justify-content-end">
-                        <button type="submit" class="btn valid" onclick="addIngredient()">Ok</button>
+                        <button type="submit" class="btn valid" >Ok</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?php
+
+} else {
+    include_once PATH_ERROR . '403.php';
+}
+
+?>

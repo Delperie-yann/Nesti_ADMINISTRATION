@@ -1,14 +1,22 @@
 <?php
-include_once(PATH_MODEL . 'Connection.php');
+include_once PATH_MODEL . 'Connection.php';
 class ModelRecipes
 {
+    //=============
+    // readAll
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public static function readAll()
     {
         //requete
         $pdo = Connection::getPdo();
 
-        //$sql="SELECT r.idRecipe AS id, r.name AS name, r.dateCreation AS dateCreation, r.difficulty AS difficulty, r.portions AS portions, r.flag AS flag, r.preparationTime AS time, r.idImage AS image, users.firstName as chief,r.idChef as idChief FROM recipe r INNER JOIN chef ON chef.idChef = r.idChef INNER JOIN users ON users.idUsers = chef.idChef";
-        $sql = "SELECT * FROM recipe";
+      
+        $sql    = "SELECT * FROM recipe";
         $result = $pdo->query($sql);
         if ($result) {
             $array = $result->fetchAll(PDO::FETCH_CLASS, 'Recipes');
@@ -17,7 +25,14 @@ class ModelRecipes
         }
         return $array;
     }
-
+    //=============
+    // insertRecipe
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function insertRecipe(Recipes &$recipe)
     {
         $pdo = Connection::getPdo();
@@ -31,14 +46,21 @@ class ModelRecipes
             // Execute the prepared statement
             $stmt->execute($values);
             $newRecipe = $this->readOneBy("idRecipe", $pdo->lastInsertId());
-            echo "Records inserted successfully.";
+        
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
         return $newRecipe;
     }
-
+    //=============
+    // deleteRecipe
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function deleteRecipe(Recipes &$recipe)
     {
         $pdo = Connection::getPdo();
@@ -51,14 +73,23 @@ class ModelRecipes
             // Execute the prepared statement
             $stmt->execute($values);
             $deleteRecipe = $this->readOneBy("idRecipe", $recipe->getIdRecipe());
-            echo "Records deleted successfully.";
+         
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
-        return  $deleteRecipe;
+        return $deleteRecipe;
     }
-
+    //=============
+    // readOneBy
+    //=============
+    /**
+     * Read recipe with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object recipe
+     */
     public function readOneBy($parameter, $value)
     {
         //requete
@@ -73,18 +104,25 @@ class ModelRecipes
         } else {
             $data = [];
         }
-        
+
         $recipe = new Recipes();
         $recipe->setRecipeFromArray($data);
-       
+
         return $recipe;
     }
-
+    //=============
+    // readAllBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readAllBy($parameter, $value)
     {
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT * FROM recipe where $parameter = '$value'";
+        $sql    = "SELECT * FROM recipe where $parameter = '$value'";
         $result = $pdo->query($sql);
 
         if ($result) {
@@ -92,10 +130,17 @@ class ModelRecipes
         } else {
             $array = [];
         }
-       
+
         return $array;
     }
-
+    //=============
+    // updateRecipes
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function updateRecipes(Recipes &$recipe)
     {
         $pdo = Connection::getPdo();
@@ -109,12 +154,10 @@ class ModelRecipes
             $stmt->execute($values);
             // var_dump(  $stmt->execute($values));
             $recipe = $this->readOneBy("idRecipe", $recipe->getIdRecipe());
-          
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
-        // return $recipe;
+        return $recipe;
     }
 }
-

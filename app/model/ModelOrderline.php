@@ -1,12 +1,22 @@
 <?php
-include_once(PATH_MODEL.'Connection.php');
-class ModelOrderline {
-   
-    public static function readAll() {
+include_once PATH_MODEL . 'Connection.php';
+class ModelOrderline
+{
+
+    //=============
+    // readAll
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public static function readAll()
+    {
         //requete
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT * FROM orderline ";
+        $sql    = "SELECT * FROM orderline ";
         $result = $pdo->query($sql);
         if ($result) {
             $array = $result->fetchAll(PDO::FETCH_CLASS, 'Orderline');
@@ -15,12 +25,19 @@ class ModelOrderline {
         }
         return $array;
     }
-
+    //=============
+    // readAllBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readAllBy($parameter, $value)
     {
         $pdo = Connection::getPdo();
 
-        $sql = "SELECT * FROM orderline where $parameter = '$value'";
+        $sql    = "SELECT * FROM orderline where $parameter = '$value'";
         $result = $pdo->query($sql);
 
         if ($result) {
@@ -30,7 +47,16 @@ class ModelOrderline {
         }
         return $array;
     }
-
+    //=============
+    // readOneBy
+    //=============
+    /**
+     * Read orderline with ele1 at value ele2
+     * 
+     *  $parametrer
+     *  $value
+     *  return object orderline
+     */
     public function readOneBy($parameter, $value)
     {
         //requete

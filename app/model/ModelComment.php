@@ -1,21 +1,37 @@
 <?php
-include_once(PATH_MODEL.'Connection.php');
-class ModelComment {
-
-    public function readAll() {
+include_once(PATH_MODEL . 'Connection.php');
+class ModelComment
+{
+    //=============
+    // readAll
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function readAll()
+    {
         //requete
-        $pdo= Connection::getPdo();
+        $pdo = Connection::getPdo();
 
-        $sql="SELECT * FROM comment";
-        $result=$pdo->query($sql);
-        if($result){
-            $array = $result-> fetchAll(PDO::FETCH_CLASS,'Comment');
-        } else{
-            $array=[];
+        $sql = "SELECT * FROM comment";
+        $result = $pdo->query($sql);
+        if ($result) {
+            $array = $result->fetchAll(PDO::FETCH_CLASS, 'Comment');
+        } else {
+            $array = [];
         }
         return $array;
     }
-
+    //=============
+    // readAllBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readAllBy($parameter, $value)
     {
         $pdo = Connection::getPdo();
@@ -30,6 +46,14 @@ class ModelComment {
         }
         return $array;
     }
+    //=============
+    // readOneBy
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function readOneBy($parameter, $value)
     {
         //requete
@@ -44,12 +68,20 @@ class ModelComment {
         } else {
             $data = [];
         }
-        
+
         $comment = new Comment();
         $comment->setCommentFromArray($data);
-       
+
         return $comment;
     }
+    //=============
+    // updateComment
+    //=============
+    /**
+     *
+     *
+     *
+     */
     public function updateComment(Comment &$comment)
     {
         $pdo = Connection::getPdo();
@@ -57,28 +89,34 @@ class ModelComment {
             $sql = "UPDATE comment SET flag = ?, idModerator = ?  where idUsers = ? AND idRecipe= ?";
 
             $stmt = $pdo->prepare($sql);
-           
-            $values = [$comment->getFlag(), $comment->getIdModerator(), $comment->getIdUsers(),$comment->getIdRecipe()];
+
+            $values = [$comment->getFlag(), $comment->getIdModerator(), $comment->getIdUsers(), $comment->getIdRecipe()];
 
             // Execute the prepared statement
             $stmt->execute($values);
-         
+
             $comment = $this->readOneBy("idUsers", $comment->getIdUsers());
-           
-           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
         // return $comment;
     }
-    public function readOneBy2Prameter($parameter, $value,$parameter2, $value2)
+    //=============
+    // readOneBy2Prameter
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function readOneBy2Prameter($parameter, $value, $parameter2, $value2)
     {
         //requete
         $pdo = Connection::getPdo();
 
         $sql = "SELECT * FROM comment where $parameter = '$value' and $parameter2 = '$value2'";
-       
+
         $result = $pdo->query($sql);
 
         if ($result) {
@@ -86,11 +124,9 @@ class ModelComment {
         } else {
             $data = [];
         }
-        
+
         $comment = new Comment();
         $comment->setCommentFromArray($data);
         return $comment;
-       
     }
-    
 }

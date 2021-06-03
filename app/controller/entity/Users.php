@@ -66,6 +66,7 @@ class Users
    {
       $model = new ModelUsers();
       $admin = $model->findChild("administrator", $this->getIdUser());
+  
       return $admin;
    }
 
@@ -76,10 +77,11 @@ class Users
 
    public function setUserFromArray($user)
    {
+      if($user==true ){
       foreach ($user as $key => $value) {
 
          $this->$key = $value;
-      }
+      }}
    }
 
    public function isPassword($plaintextPassword)
@@ -306,6 +308,7 @@ class Users
       }
       if ($this->isAdmin()) {
          $result .= "Administateur" . $format;
+        
       }
       if ($result == "") {
          $result = "Utilisateur" . $format;
