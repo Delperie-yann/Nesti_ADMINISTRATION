@@ -63,7 +63,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         <label for="formFile" class="form-label"></label>
                         <input class="form-control ml-3" type="file" id="formFile" name="pictures">
                     </div>
-                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100 mt-3"  name= "imageDdl" id="idImageDdl">Ok</button></div>
+                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100 "  name= "imageDdl" id="idImageDdl">Ok</button></div>
                 </div>
             </form>
         </div>
@@ -79,7 +79,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     </div>
                     <div id="prepCtn">
                         <div class="row prepItem mb-5" id="baseItem" data-order="1">
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
                                     <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
                                 </button>
@@ -100,7 +100,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         </div>
                     </div>
                     <div class="row mt-4 h-50">
-                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2"></div>
                         <div class="col">
                             <button class="btn w-100" onclick="addTextArea()">
                                 <img src="<?php BASE_URL ?>../../public/images/addinput.png" alt="Ajouter zone de texte">
