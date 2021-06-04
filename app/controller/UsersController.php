@@ -1,6 +1,11 @@
 <?php
 class UsersController extends BaseController
-{
+{    
+    /**
+     * initialize
+     *
+     * @return void
+     */
     public function initialize()
     {
         $newUser = new Users();
@@ -41,6 +46,14 @@ class UsersController extends BaseController
             $this->readOrder();
         }
     }
+        
+    /**
+     * endorse
+     *
+     * @param  mixed $idUser
+     * @param  mixed $idRecipe
+     * @return void
+     */
     public function endorse($idUser, $idRecipe)
     {
         $idModerat = $_SESSION['idUser'];
@@ -50,27 +63,37 @@ class UsersController extends BaseController
         $newComm->setFlag("a");
         $newComm->setIdModerator($idModerat);
         $model->updateComment($newComm);
-        // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est Approuver");</script>';
+    
 
-
-    }
+    }    
+    /**
+     * block
+     *
+     * @param  mixed $idUser
+     * @param  mixed $idRecipe
+     * @return void
+     */
     public function block($idUser, $idRecipe)
     {
         $idModerat = $_SESSION['idUser'];
 
         $model   = new ModelComment();
         $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
-        // var_dump( $newComm);
+      
         $newComm->setFlag("b");
         $newComm->setIdModerator($idModerat);
         $model->updateComment($newComm);
 
 
-        // echo '<script type="text/javascript">window.alert("Le commenatire avec le titre '."' ".$newComm->getCommentTitle()." '".' est blocké");</script>';
     }
 
 
-
+    
+    /**
+     * addUser
+     *
+     * @return void
+     */
     public function addUser()
     {
         $newUser = new Users();
@@ -85,7 +108,28 @@ class UsersController extends BaseController
             $newUser->setAddress1(filter_input(INPUT_POST, "userAdress1"));
             $newUser->setAddress2(filter_input(INPUT_POST, "userAdress2"));
             $newUser->setZipCode(filter_input(INPUT_POST, "userZipCode"));
-            $newUser->setIdCity($newUser->setTownId(filter_input(INPUT_POST, "userTown")));
+      
+            $townInput = (filter_input(INPUT_POST, "userTown"));
+            $modelcity = new ModelCity();
+            $cities = $modelcity->readAll();
+            //Check every city 
+            foreach ($cities as $town) {
+                $townName = $town->getName();
+                //if exist change by BDD idcity and stop
+                if ($townInput == $townName) {
+                    $city = $modelcity->readOneBy("name",  $townName);
+                    $Uservaluecity = $newUser->setIdCity($city->getIdCity());
+                    break;
+                } else {
+                    //if not exist add and give id insered and stop
+                    if ($townInput != "" && $townInput != NULL) {
+                        $newTown = $modelcity->insertCity($townInput);
+                        $Uservaluecity =   $newUser->setIdCity($newTown->getIdCity());
+                        break;
+                    }
+                }
+            }
+           
 
             if ($_POST["State"] == "actif") {
                 $newUser->setFlag("a");
@@ -98,7 +142,7 @@ class UsersController extends BaseController
             }
             $userExistEmmail = $model->readOneBy("email", $newUser->getEmail());
             $userExist = $model->readOneBy("login", $newUser->getLogin());
-
+           
 
             $error     = 0;
             if (($userExistEmmail->getIdUser()) != NUll) {
@@ -122,15 +166,22 @@ class UsersController extends BaseController
                 if (isset($_POST["roleModerator"])) {
                     $insertedUser->makeModerator();
                 }
+              
+               
                 header('Location:' . BASE_URL . "users");
             } else {
-                isset($this->data['emailError']);
-                isset($this->data['loginError']);
+                isset($this->data['emailError'])+isset($this->data['loginError']);
             }
         }
     }
 
-
+    
+    /**
+     * user
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function user($id)
     {
         $model = new ModelUsers();
@@ -141,7 +192,13 @@ class UsersController extends BaseController
 
         $com = new ModelComment();
         $this->data['arrayCom'] = $com->readAll();
-    }
+    }    
+    /**
+     * delete
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function delete($id)
     {
         $model = new ModelUsers();
@@ -149,7 +206,13 @@ class UsersController extends BaseController
         $deletedUsers = $model->deleteUser($user);
         header('Location:' . BASE_URL . "users");
     }
-
+    
+    /**
+     * editUser
+     *
+     * @param  mixed $idUsers
+     * @return void
+     */
     public function editUser($idUsers)
     {
         $model = new ModelUsers();
@@ -229,16 +292,20 @@ class UsersController extends BaseController
 
                 // header('Location:' . BASE_URL . "users/editing/" . $idUsers);
 
-                isset($this->data['roleAdmin']);
-                isset($this->data['roleChef']);
-                isset($this->data['roleModerator']);
+                isset($this->data['roleAdmin'])+isset($this->data['roleChef'])+isset($this->data['roleModerator']);
                 $this->data["error"] = "error";
             }
             if (isset($insertedUser)) {
                 $this->data["success"] = "success";
             }
         }
-    }
+    }    
+    /**
+     * passwordChange
+     *
+     * @param  mixed $idUser
+     * @return void
+     */
     public function passwordChange($idUser)
     {
         $Value = $this->randomPassword();
@@ -252,7 +319,12 @@ class UsersController extends BaseController
         $this->data['pass'] =  $Value;
     }
 
-
+    
+    /**
+     * readOrder
+     *
+     * @return void
+     */
     public function readOrder()
     {
         // POST comme from orderScript
@@ -272,7 +344,12 @@ class UsersController extends BaseController
 
 
         die();
-    }
+    }    
+    /**
+     * randomPassword
+     *
+     * @return void
+     */
     function randomPassword()
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';

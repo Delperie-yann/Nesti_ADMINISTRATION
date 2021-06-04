@@ -2,16 +2,16 @@
 
 class Paragraph
 {
-    
+
     private $idParagraph;
     private $content;
     private $paragraphPosition;
     private $dateCreation;
     private $idRecipe;
-    
+
     /**
      * Get the value of idRecipe
-     */ 
+     */
     public function getIdRecipe()
     {
         return $this->idRecipe;
@@ -21,7 +21,7 @@ class Paragraph
      * Set the value of idRecipe
      *
      * @return  self
-     */ 
+     */
     public function setIdRecipe($idRecipe)
     {
         $this->idRecipe = $idRecipe;
@@ -31,7 +31,7 @@ class Paragraph
 
     /**
      * Get the value of idParagraph
-     */ 
+     */
     public function getIdParagraph()
     {
         return $this->idParagraph;
@@ -41,7 +41,7 @@ class Paragraph
      * Set the value of idParagraph
      *
      * @return  self
-     */ 
+     */
     public function setIdParagraph($idParagraph)
     {
         $this->idParagraph = $idParagraph;
@@ -51,7 +51,7 @@ class Paragraph
 
     /**
      * Get the value of content
-     */ 
+     */
     public function getContent()
     {
         return $this->content;
@@ -61,7 +61,7 @@ class Paragraph
      * Set the value of content
      *
      * @return  self
-     */ 
+     */
     public function setContent($content)
     {
         $this->content = $content;
@@ -71,7 +71,7 @@ class Paragraph
 
     /**
      * Get the value of paragraphPosition
-     */ 
+     */
     public function getParagraphPosition()
     {
         return $this->paragraphPosition;
@@ -81,7 +81,7 @@ class Paragraph
      * Set the value of paragraphPosition
      *
      * @return  self
-     */ 
+     */
     public function setParagraphPosition($paragraphPosition)
     {
         $this->paragraphPosition = $paragraphPosition;
@@ -91,7 +91,7 @@ class Paragraph
 
     /**
      * Get the value of dateCreation
-     */ 
+     */
     public function getDateCreation()
     {
         return $this->dateCreation;
@@ -101,21 +101,26 @@ class Paragraph
      * Set the value of dateCreation
      *
      * @return  self
-     */ 
+     */
     public function setDateCreation($dateCreation)
     {
         $this->dateCreation = $dateCreation;
 
         return $this;
     }
-
+    
+    /**
+     * setParagraphFromArray
+     *
+     * @param  mixed $paragraph
+     * @return void
+     */
     public function setParagraphFromArray($paragraph)
-   {
-      //var_dump($user);
-      foreach ($paragraph as $key => $value) {
+    {
+       
+        foreach ($paragraph as $key => $value) {
 
-         $this->$key = $value;
-      }
-   }
-
+            $this->$key = $value;
+        }
+    }
 }

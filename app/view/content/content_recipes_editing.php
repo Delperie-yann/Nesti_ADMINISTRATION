@@ -1,4 +1,8 @@
-<?php
+<?php declare(strict_types = 1);
+
+
+/** @var object $recipe */
+/** @var object $ingredientrecipe */
 
 $session = $_SESSION['Roles'];
 //var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
@@ -103,7 +107,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         <div class="col-sm-2"></div>
                         <div class="col">
                             <button class="btn w-100" onclick="addTextArea()">
-                                <img src="<?php BASE_URL ?>../../public/images/addinput.png" alt="Ajouter zone de texte">
+                                <img src="<?= BASE_URL ?>../../public/images/addinput.png" alt="Ajouter zone de texte">
                             </button>
                         </div>
                     </div>

@@ -45,21 +45,29 @@ class Orders
         return $this;
     }
 
+    /**
+     * getState
+     *
+     * @param  mixed $entity
+     * @return string
+     */
     public function getState($entity)
     {
         if ($entity->getFlag() == "a") {
             $state = "Payé";
         } else if ($entity->getFlag() == "w") {
             $state = "En attente";
-            
         } else {
             $state = "Annulé";
         }
         return $state;
     }
 
+
     /**
-     * Get the value of dateCreation
+     * getDateCreation
+     *
+     * @return string
      */
     public function getDateCreation()
     {
@@ -102,6 +110,11 @@ class Orders
         return $this;
     }
 
+    /**
+     * orderUserName
+     *
+     * @return string
+     */
     public function orderUserName()
     {
         $model = new ModelUsers();
@@ -110,6 +123,11 @@ class Orders
         return  $fullName;
     }
 
+    /**
+     * getCoast
+     *
+     * @return double
+     */
     public function getCoast()
     {
         $quants = 0;
@@ -121,6 +139,12 @@ class Orders
         }
         return $quants;
     }
+    /**
+     * getCoastByid
+     *
+     * @param  mixed $idOrders
+     * @return int
+     */
     public function getCoastByid($idOrders)
     {
         $quants = 0;
@@ -133,6 +157,11 @@ class Orders
         return $quants;
     }
 
+    /**
+     * getNumberArticles
+     *
+     * @return int
+     */
     public function getNumberArticles()
     {
         $quants = 0;
@@ -143,19 +172,24 @@ class Orders
         }
         return $quants;
     }
+    /**
+     * getLastOrder
+     *
+     * @param  mixed $idUsers
+     * @return string
+     */
     public function getLastOrder($idUsers)
     {
         $model = new ModelOrders();
         $orderLines = $model->readAllBy("idUsers", $idUsers);
-    
-       
-        usort( $orderLines, function ($v1, $v2) {
-           return $v2->getDateCreation() <=> $v1->getDateCreation();
-         
+
+
+        usort($orderLines, function ($v1, $v2) {
+            return $v2->getDateCreation() <=> $v1->getDateCreation();
         });
         $ArrayOrderLines2 = array_slice($orderLines, 0, 1);
-        foreach($ArrayOrderLines2 as $orderlinedate){
-        return $orderlinedate->getDateCreation();
+        foreach ($ArrayOrderLines2 as $orderlinedate) {
+            return $orderlinedate->getDateCreation();
         }
     }
 }

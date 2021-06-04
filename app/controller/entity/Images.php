@@ -87,7 +87,13 @@ class Images
 
         return $this;
     }
-
+    
+    /**
+     * setImagesFromArray
+     *
+     * @param  mixed $images
+     * @return void
+     */
     public function setImagesFromArray($images)
     {
         foreach ($images as $key => $value) {

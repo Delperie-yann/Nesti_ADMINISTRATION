@@ -82,7 +82,13 @@ class Articleprice
         $this->idArticle = $idArticle;
 
         return $this;
-    }
+    }    
+    /**
+     * setArticlepriceFromArray
+     *
+     * @param  mixed $recipe
+     * @return void
+     */
     public function setArticlepriceFromArray($recipe)
         {
     

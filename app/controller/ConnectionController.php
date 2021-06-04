@@ -2,11 +2,11 @@
 
 class ConnectionController extends BaseController
 {
-    //=============
-    // initialize
-    //=============
+      
     /**
-     * 
+     * initialize
+     *
+     * @return void
      */
     public function initialize()
     {

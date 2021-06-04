@@ -1,4 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
+
+
+/** @var string $loc */
+
+/** @var string $action */
 
 switch ($loc) {
 

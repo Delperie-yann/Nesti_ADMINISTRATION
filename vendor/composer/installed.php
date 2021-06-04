@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '401baa0f3075509e8d605adc764e1d3c1e8ebe45',
+    'reference' => '830a2ad71da686cdd2b0da4dceaecd4b3ba816dc',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,16 +18,16 @@
       'aliases' => 
       array (
       ),
-      'reference' => '401baa0f3075509e8d605adc764e1d3c1e8ebe45',
+      'reference' => '830a2ad71da686cdd2b0da4dceaecd4b3ba816dc',
     ),
     'phpstan/phpstan' => 
     array (
-      'pretty_version' => '0.12.81',
-      'version' => '0.12.81.0',
+      'pretty_version' => '0.12.88',
+      'version' => '0.12.88.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0dd5b0ebeff568f7000022ea5f04aa86ad3124b8',
+      'reference' => '464d1a81af49409c41074aa6640ed0c4cbd9bb68',
     ),
   ),
 );

@@ -1,4 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
+
+
+
+/** @var array<object> $arrayArticles */
+
 
 $session = $_SESSION['Roles'];
 //var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
@@ -13,14 +18,14 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
       <nav class="navbar navbar-white bg-white pl-0">
         <form class="form-inline">
           <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-          <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" width="20px" height="25px">
+          <img id="searchRecipe" src="<?= BASE_URL?>public/images/search.png" alt="" width="20px" height="25px">
         </form>
       </nav>
       <div>
-        <a href="<?php BASE_URL ?>articles/orders" class="btn mb-1 border align-self-end bg-warning"><i class="far fa-eye mr-3"></i> Commandes</a>
+        <a href="<?= BASE_URL ?>articles/orders" class="btn mb-1 border align-self-end bg-warning"><i class="far fa-eye mr-3"></i> Commandes</a>
       </div>
       <div>
-        <a href="<?php BASE_URL ?>articles/importation" class="btn mb-1 border align-self-end"><img id="ajouter" src="<?php BASE_URL ?>public/images/add.png" alt="" width="20px" height="20px"> Importer</a>
+        <a href="<?= BASE_URL ?>articles/importation" class="btn mb-1 border align-self-end"><img id="ajouter" src="<?= BASE_URL ?>public/images/add.png" alt="" width="20px" height="20px"> Importer</a>
       </div>
     </div>
 

@@ -1,26 +1,14 @@
 <?php
 
-// $model = new ModelArticles ();
-// $arrayArticles = $model -> readAll(); 
-// include 'app/view/common/head.php';
-// switch ($action) {
-//     case 'orders':
-//       include(PATH_CONTENT . "/content_articles_orders.php");
-//       break;
-//     case 'importation':
-//       include(PATH_CONTENT . "/content_articles_importation.php");
-//       break;
-//     case 'editing':
-//       include(PATH_CONTENT . "/content_articles_editing.php");
-//       break;
-//     default:
-//       include(PATH_CONTENT . "/content_articles.php");
-//       break;
-//   }
-//   include 'app/view/common/footer.php';
+
 
 class ArticlesController extends BaseController
-{
+{    
+    /**
+     * initialize
+     *
+     * @return void
+     */
     public function initialize()
     {
         $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
@@ -45,7 +33,13 @@ class ArticlesController extends BaseController
             $this->data['arrayOrders'] = $model->readAll();
         }
     }
-
+    
+    /**
+     * editArticle
+     *
+     * @param  mixed $idArticles
+     * @return void
+     */
     public function editArticle($idArticles)
     {
         $model = new ModelArticles();
@@ -63,7 +57,13 @@ class ArticlesController extends BaseController
             }
         }
     }
-
+    
+    /**
+     * deleteArticle
+     *
+     * @param  mixed $idArticles
+     * @return void
+     */
     public function deleteArticle($idArticles)
     {
         $model = new ModelArticles();

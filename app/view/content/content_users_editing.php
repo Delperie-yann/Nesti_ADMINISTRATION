@@ -1,7 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
+
+/** @var object $user */
+/** @var array<object> $arrayOrder */
+
 
 $session = $_SESSION['Roles'];
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
 ?>
 
@@ -46,7 +50,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <p class="mt-5">Adresse</p><br>
                 <input type="text" class="w-75" name="userAdress2" value="<?= $user->getAddress2() ?>">
 
-                <p class="mt-5">code postal</p><br>
+                <p class="mt-5">Code postal</p><br>
                 <input type="text" class="w-75" name="userZipCode" value="<?= $user->getZipCode() ?>">
 
                 <p class="mt-5">Ville</p><br>
@@ -153,7 +157,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                         <nav class="navbar navbar-white  pl-0">
                             <form class="form-inline">
                                 <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-                                <img id="searchRecipe" src="<?php BASE_URL ?>../../public/images/search.png" alt="" width="20px" height="25px">
+                                <img id="searchRecipe" src="<?= BASE_URL ?>../../public/images/search.png" alt="" width="20px" height="25px">
                             </form>
                         </nav>
 
@@ -259,29 +263,6 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             </div>
         </div>
     </div>
-
-    <!-- <div class="col mt-5">
-
-                <p class="mt-5">Mot de passe</p><br><input type="password" class="w-75" name="userPwd" id="pwd"
-                    required>
-                &nbsp;<br><br>Complexité du mot de passe : <meter value="0" low="3" high="5" min="0" max="5"
-                    id="pwd_meter">0%</meter><br>
-
-                <ul><br>
-                    <li><span class="advice mr-5" id=><em><b>Conseils pour le mot de passe (Tous les lignes ci-dessous
-                                    doivent être vertes).</b></em></span></li>
-                    <li><span class="advice mr-5" id="pwd_warn1">Le mot de passe doit faire plus de 8 caractères.</span>
-                    </li>
-                    <li><span class="advice" id="pwd_warn2">Le mot de passe doit contenir au moins une lettre
-                            minuscule.</span></li>
-                    <li><span class="advice" id="pwd_warn3">Le mot de passe doit contenir au moins une lettre
-                            majuscule.</span></li>
-                    <li><span class="advice" id="pwd_warn4">Le mot de passe doit contenir au moins un chiffre.</span>
-                    </li>
-                    <li><span class="advice" id="pwd_warn5">Le mot de passe doit contenir au moins un caractère
-                            non-alphanumérique.</span></li>
-                </ul>
-            </div> -->
 
 
 

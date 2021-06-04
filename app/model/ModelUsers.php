@@ -1,4 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
+
+
+/** @var string $sql */
+
+?><?php
 
 include_once PATH_MODEL . 'Connection.php';
 class ModelUsers
@@ -15,7 +20,9 @@ class ModelUsers
     {
 
         $pdo = Connection::getPdo();
+       
         try {
+           
         $sql    = "SELECT users.idUsers AS idUser, lastName AS lastname, firstName AS firstname, email AS email, passwordHash AS passwordHash, flag AS flag, dateCreation AS dateCreation, login AS loginUser, address1 AS address1, address2 AS address2, zipCode AS zipCode, idcity AS idcity FROM users";
         $result = $pdo->query($sql);
         if ($result) {
@@ -24,7 +31,8 @@ class ModelUsers
             $array = [];
         }
     } catch (PDOException $e) {
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+      
+        die("ERROR: Could not able to execute querry " . $e->getMessage());
     }
         return $array;
     }
@@ -58,7 +66,7 @@ class ModelUsers
         $user = new Users();
         $user->setUserFromArray($data);
     } catch (PDOException $e) {
-        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        die("ERROR: Could not able to execute querry " . $e->getMessage());
     }
         return $user;
     }
@@ -79,7 +87,7 @@ class ModelUsers
             $result = $pdo->query($sql);
             $data   = $result->fetch();
         } catch (PDOException $e) {
-            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            die("ERROR: Could not able to execute querry " . $e->getMessage());
         }
         return $data;
     }
@@ -105,11 +113,12 @@ class ModelUsers
 
             // Execute the prepared statement
             $stmt->execute($values);
-
+           
             $newUser = $this->readOneBy("idUsers", $pdo->lastInsertId());
         } catch (PDOException $e) {
-            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            die("ERROR: Could not able to execute querry " . $e->getMessage());
         }
+      
         unset($pdo);
         return $newUser;
     }
@@ -121,6 +130,12 @@ class ModelUsers
      * return the user modifiy
      *
      *
+     */    
+    /**
+     * deleteUser
+     *
+     * @param  mixed $user
+     * @return object
      */
     public function deleteUser(Users &$user)
     {
@@ -137,7 +152,7 @@ class ModelUsers
             $deleteUser = $this->readOneBy("idUsers", $user->getIdUser());
            
         } catch (PDOException $e) {
-            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+            die("ERROR: Could not able to execute querry " . $e->getMessage());
         }
         unset($pdo);
         return $deleteUser;
@@ -150,6 +165,12 @@ class ModelUsers
      * and if true
      * return the new object user
      *
+     */    
+    /**
+     * updateUsers
+     *
+     * @param  mixed $user
+     * @return object
      */
     public function updateUsers(Users &$user)
     {
@@ -178,6 +199,12 @@ class ModelUsers
      * and if true
      * return the new object user
      *
+     */    
+    /**
+     * updatePassword
+     *
+     * @param  mixed $user
+     * @return object
      */
     public function updatePassword(Users &$user)
     {

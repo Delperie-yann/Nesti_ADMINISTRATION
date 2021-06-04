@@ -1,4 +1,9 @@
-<?php
+<?php declare(strict_types = 1);
+
+
+/** @var array<object> $arrayVars */
+
+
 
 $session = $_SESSION['Roles'];
 

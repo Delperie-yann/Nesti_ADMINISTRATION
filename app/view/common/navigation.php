@@ -1,3 +1,7 @@
+<?php declare(strict_types = 1);
+/** @var string $loc */
+?>
+
 <nav class="navbar navbar-expand-xl p-0" id="mainNav">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"

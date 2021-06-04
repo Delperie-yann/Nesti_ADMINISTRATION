@@ -18,9 +18,6 @@ class Rating
 
             $this->$key = $value;
         }
-
-
-
     }
 
     /**

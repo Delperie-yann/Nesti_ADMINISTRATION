@@ -2,6 +2,11 @@
 
 class RecipesController extends BaseController
 {
+  /**
+   * initialize
+   *
+   * @return void
+   */
   public function initialize()
   {
     $model  = new ModelRecipes();
@@ -67,7 +72,13 @@ class RecipesController extends BaseController
     $insertedRecipe = $model->insertRecipe($recipe);
     header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
   }
-
+  
+  /**
+   * delete
+   *
+   * @param  mixed $id
+   * @return void
+   */
   public function delete($id)
   {
     $model         = new ModelRecipes();
@@ -77,14 +88,26 @@ class RecipesController extends BaseController
   }
 
 
-
+  
+  /**
+   * addPreparation
+   *
+   * @param  mixed $id
+   * @return void
+   */
   public function addPreparation($id)
   {
     $model          = new ModelParagraph();
     $recipe         = $model->readOneBy("idRecipe", $id);
     $addPreparation = $model->addPreparation($recipe);
   }
-
+  
+  /**
+   * editRecipe
+   *
+   * @param  mixed $idRecipe
+   * @return void
+   */
   public function editRecipe($idRecipe)
   {
     $model                          = new ModelRecipes();
@@ -101,61 +124,22 @@ class RecipesController extends BaseController
       $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
       $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
       $model                          = new ModelRecipes();
-      $upadate=$model->updateRecipes($recipe);
-      if(!empty($upadate)){
+      $upadate = $model->updateRecipes($recipe);
+      if (!empty($upadate)) {
         $this->data["success"] = "success";
       }
     }
 
 
-    // //  if the user click in "ok" insert an Ingredient in table
-    // if (isset($_POST["ingredientName"])) {
-    //   $modelProd  = new ModelProduct();
-    //   $ingredient = new Product();
-    //   $ingredient->setName(filter_input(INPUT_POST, "ingredientName"));
-    //   // var_dump($model->isAlreadyExistProduct(  $ingredient->getName()));
-    //   $isExistProd = $modelProd->readOneby("name", $ingredient->getName());
-
-    //   // if the name of ingredient still exist return else or give id of the insered product 
-    //   if ((($isExistProd->getName()) == null) && ($ingredient->getName() != "")) {
-    //     $insertedIng = $modelProd->insertProduct($ingredient);
-    //     $isProdId    = $insertedIng->getIdProduct();
-    //     $ingredient  = new ModelIngredient();
-    //     $ingredient->insertIngredient($insertedIng);
-    //   } else {
-    //     $isProdId = $isExistProd->getIdProduct();
-    //   }
-
-    //   $modelUnit = new ModelUnit();
-    //   $unit      = new Unit();
-    //   $unit->setName(filter_input(INPUT_POST, "ingredientUnit"));
-    //   $isExistUnit = $modelUnit->readOneby("name", $unit->getName());
-
-    //   // if the name of unit still exist return else or give id of the insered unit
-    //   if (($isExistUnit)->getName() == null && $unit->getName() != "") {
-    //     $insertedUnit = $modelUnit->insertUnit($unit);
-    //     $isUnitid     = $insertedUnit->getIdUnit();
-    //   } else {
-    //     $isUnitid = $isExistUnit->getIdUnit();
-    //   }
-
-    //   $ing = new Ingredientrecipe();
-    //   // $ingredientrecipe->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
-    //   $ing->setIdRecipe($idRecipe);
-    //   $ing->setIdProduct($isProdId);
-    //   $ing->setIdUnit($isUnitid);
-    //   $ing->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
-    //   $model = new ModelIngredientrecipe();
-
-    //   // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
-    //   if ($ing->getQuantity() != 0) {
-    //     $insertedRecipe = $model->insertIngredientRecipe($ing);
-
-
-    //     header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
-    //   }
-    // }
+   
   }
+    
+  /**
+   * addImage
+   *
+   * @param  mixed $id
+   * @return void
+   */
   public function addImage($id)
   {
     $modelRecipe = new ModelRecipes();
@@ -165,11 +149,11 @@ class RecipesController extends BaseController
     $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
+
 
     // Check if image file is a actual image or fake image
     if (isset($_POST["pictures"])) {
-      var_dump( $_FILES["pictures"]);
+      var_dump($_FILES["pictures"]);
       $check = getimagesize($_FILES["pictures"]["tmp_name"]);
       if ($check !== false) {
         echo "File is an image - " . $check["mime"] . ".";
@@ -226,7 +210,13 @@ class RecipesController extends BaseController
     }
   }
 
-
+  
+  /**
+   * adding
+   *
+   * @param  mixed $id
+   * @return void
+   */
   function adding($id)
   {
 

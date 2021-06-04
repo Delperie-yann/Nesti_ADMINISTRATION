@@ -20,13 +20,13 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <p class="mt-5">Prénom</p><br>
                 <input type="text" class="w-75" name="userFirstname" required>
 
-                <p class="mt-5">Adress1</p><br>
+                <p class="mt-5">Adresse</p><br>
                 <input type="text" class="w-75" name="userAdress1" required>
 
-                <p class="mt-5">Adress2</p><br>
+                <p class="mt-5">Adresse</p><br>
                 <input type="text" class="w-75" name="userAdress2" >
 
-                <p class="mt-5">Zipcode</p><br>
+                <p class="mt-5">Code postal</p><br>
                 <input type="text" class="w-75" name="userZipCode" required>
 
                 <p class="mt-5">Ville</p><br>
