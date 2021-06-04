@@ -17,10 +17,7 @@ class ArticlesController extends BaseController
         if ($action == '') {
             $model = new ModelArticles();
             $this->data['arrayArticles'] = $model->readAll();
-            $model1 = new ModelOrders();
-            $ingredient = new ModelIngredient();
-            $unit = new ModelUnit();
-            $import = new ModelImportation();
+      
         }
         if ($action == "editing") {
             $this->editArticle($id);

@@ -267,9 +267,7 @@ class RecipesController extends BaseController
       $model->insertIngredientRecipe($ing);
       header('Content-Type: application/json');
       echo json_encode(array('success' => true, 'recipe' => $id, 'name' => $name, 'quant' => $quant, 'unit' => $unit, 'idProduct' => $isProdId));
-      // var_dump( $insertedRecipe);
-
-      // header('Location:' . BASE_URL . "recipes/editing/" . $id);
+    
     } else {
       header('Content-Type: application/json');
       echo json_encode(array('success' => false));
