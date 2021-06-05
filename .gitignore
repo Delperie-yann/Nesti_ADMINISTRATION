@@ -9,7 +9,8 @@
 # my file
 *.jpg
 *.jpeg
-
+*.png
+*.xml
 
 # User-specific files
 *.rsuser
