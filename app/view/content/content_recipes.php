@@ -1,7 +1,11 @@
-<?php
+<?php declare(strict_types = 1);
+
+
+/** @var array<object> $arrayRecipes */
+
 
 $session = $_SESSION['Roles'];
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef'))))) {
 ?>
 
@@ -12,11 +16,11 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
             <nav class="navbar navbar-white bg-white pl-0">
                 <form class="form-inline">
                     <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-                    <img id="searchRecipe" src="<?php BASE_URL ?>public/images/search.png" alt="" class="imagelogo">
+                    <img id="searchRecipe" src="<?= BASE_URL ?>public/images/search.png" alt="" class="imagelogo">
                 </form>
             </nav>
             <div>
-                <a href="<?php BASE_URL ?>recipes/creation" class="btn mb-1 border align-self-end"><img id="add" src="<?php BASE_URL ?>public/images/add.png" alt="" class="imagelogo"> Ajouter</a>
+                <a href="<?= BASE_URL ?>recipes/create" class="btn mb-1 border align-self-end"><img id="add" src="<?= BASE_URL ?>public/images/add.png" alt="" class="imagelogo"> Ajouter</a>
             </div>
         </div>
         <figcaption class="font-weight-bold">Accepté = bleu / En attente = Noir / Bloqué = rouge</figcaption>
@@ -28,7 +32,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                 <th scope="col">Nom</th>
                 <th scope="col">Difficulté</th>
                 <th scope="col">Pour</th>
-                <th scope="col">Temps</th>
+                <th scope="col">Temps(minute)</th>
                 <th scope="col">Chef</th>
                 <th scope="col">Actions</th>
 

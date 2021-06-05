@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+
+/** @var object $recipe */
+/** @var object $ingredientrecipe */
+
 $session = $_SESSION['Roles'];
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef'))))) {
 ?>
 
@@ -17,6 +23,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
             </div>
         <?php
         };
+
         if (isset($error)) { ?>
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
@@ -27,6 +34,18 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
             </div> <?php
                 }
                     ?>
+        <?php if (isset($recipeName)) {
+            echo '<div class="alert alert-danger text-center" role="alert">Erreur saisie nom</div>';
+        }; ?>
+        <?php if (isset($recipedifficult)) {
+            echo ' <div class="alert alert-danger text-center" role="alert">Erreur saisie difficulté</div>';
+        }; ?>
+        <?php if (isset($recipePortion)) {
+            echo ' <div class="alert alert-danger text-center" role="alert">Erreur saisie portion</div>';
+        }; ?>
+        <?php if (isset($recipeTimePrepare)) {
+            echo ' <div class="alert alert-danger text-center" role="alert">Erreur saisie temps de preparation</div>';
+        }; ?>
         <div class="row mt-3">
             <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
                 <h1 class="mb-2 mt-4">Edition d'une recette</h1>
@@ -44,30 +63,30 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                             <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" name="recipedifficult">
                             </div>
                             <div class="d-flex justify-content-end"><input type="number" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" name="recipePortion"></div>
-                            <div class="d-flex justify-content-end"><input type="text" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()  ?>" name="recipeTimePrepare"></div>
+                            <div class="d-flex justify-content-end"><input type="text" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()   ?>" name="recipeTimePrepare"></div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center p-2">
                     <button type="submit" class="btn m-5 valid w-25">Valider</button>
-                    <a  type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Annuler</a>
+                    <a type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Annuler</a>
                 </div>
             </form>
             <div class="col">
-            <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="POST">
-                <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
-                    <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
-                </div>
-                <div class="row">
-                    <div class="mb-5">
-                        <label for="formFile" class="form-label"></label>
-                        <input class="form-control ml-3" type="file" id="formFile" name="pictures">
+                <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="POST">
+                    <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
+                        <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
                     </div>
-                    <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100 mt-3"  name= "imageDdl" id="idImageDdl">Ok</button></div>
-                </div>
-            </form>
+                    <div class="row">
+                        <div class="mb-5">
+                            <label for="formFile" class="form-label"></label>
+                            <input class="form-control ml-3" type="file" id="formFile" name="pictures">
+                        </div>
+                        <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100 " name="imageDdl" id="idImageDdl">Ok</button></div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
         <div class="recipeCtn h-100">
             <div class="row">
                 <div class="col">
@@ -79,7 +98,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     </div>
                     <div id="prepCtn">
                         <div class="row prepItem mb-5" id="baseItem" data-order="1">
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
                                     <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
                                 </button>
@@ -100,10 +119,10 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         </div>
                     </div>
                     <div class="row mt-4 h-50">
-                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2"></div>
                         <div class="col">
                             <button class="btn w-100" onclick="addTextArea()">
-                                <img src="<?php BASE_URL ?>../../public/images/addinput.png" alt="Ajouter zone de texte">
+                                <img src="<?= BASE_URL ?>../../public/images/addinput.png" alt="Ajouter zone de texte">
                             </button>
                         </div>
                     </div>
@@ -126,14 +145,14 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
                         <p class="mt-2 mb-2">Ajouter un ingrédient</p>
                         <label for="ingreidentName">Nom de l'ingredient</label>
-                        <input type="text" id="ingName" name="ingredientName" class="mb-2 w-50" >
+                        <input type="text" id="ingName" name="ingredientName" class="mb-2 w-50">
                         <div class="row">
                             <div class="col-md-5">
                                 <label for="quantity">Quantité</label>
                                 <input type="text" name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-50">
                             </div>
                             <div class="col-md-5">
-                            <label for="unit">Unité </label>
+                                <label for="unit">Unité </label>
                                 <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-50">
                             </div>
                             <div class="col d-flex justify-content-end">

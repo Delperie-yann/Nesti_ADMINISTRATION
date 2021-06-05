@@ -1,3 +1,7 @@
+<?php declare(strict_types = 1);
+/** @var string $loc */
+?>
+
 <nav class="navbar navbar-expand-xl p-0" id="mainNav">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -32,9 +36,9 @@
         <form class="form-inline logOut my-2 my-lg-0 justify-content-around">
             <a class="nav-link" href="">
                 <i class="fas fa-user mr-2 text-dark"></i>
-                <?php print_r($_SESSION["firstname"]." ".$_SESSION["lastname"]." ".$_SESSION['idUser']) ?>
+                <?php print_r($_SESSION["firstname"]." ".$_SESSION["lastname"]) ?>
             </a>
-            <a class="nav-link text-dark" value="Deconnection" href="<?= BASE_URL ?>deconnection">
+            <a class="nav-link text-dark"  href="<?= BASE_URL ?>deconnection">
                 <i class="fas fa-sign-out-alt mr-2 text-dark" <?= ( $loc =='deco')?'active':''; ?>></i>
                 Déconnexion</a>
         </form>

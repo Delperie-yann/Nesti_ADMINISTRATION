@@ -11,9 +11,12 @@
 
 class StatisticsController extends BaseController
 {
-    // $model = new ModelUsers();
-    // $arrayUsers = $model->readAll();
-
+       
+    /**
+     * initialize
+     *
+     * @return void
+     */
     public function initialize()
     {
         $loc    = filter_input(INPUT_GET, "loc", FILTER_SANITIZE_STRING);
@@ -22,7 +25,12 @@ class StatisticsController extends BaseController
         if ($action == '') {
             $this->dashboard();
         }
-    }
+    }    
+    /**
+     * dashboard
+     *
+     * @return void
+     */
     public  function dashboard()
     {
         $connexionByHour = [];
@@ -60,22 +68,21 @@ class StatisticsController extends BaseController
             return count($v2->getRatting()) <=> count($v1->getRatting());
          
         });
-        // var_dump($TopTenRecipe);
+    
         $TopTenRecipe = array_slice($TopTenRecipe, 0, 10);
 
         $largerOrders =  ModelOrderline::readAll();
         
-        usort($largerOrders, function ($v1, $v2) {
-            // var_dump($v2->getQuantitybyOrder());
-            // return count($v2->getQuantitybyOrder()) <=> count($v1->getQuantitybyOrder());
+        // usort($largerOrders, function ($v1, $v2) {
+        //     return $v2->getQuantitybyOrder() <=> $v1->getQuantitybyOrder();
          
-        });
+        // });
         // var_dump($TopTenRecipe);
         $largerOrders = array_slice($largerOrders, 0, 3);
 
         $NbCount =  ModelArticles::readAll();
         usort($NbCount, function ($v1, $v2) {
-            // return count($v2->getIdArticle()) <=> count($v1->getIdArticle());
+            return $v2->getIdArticle() <=> $v1->getIdArticle();
          
         });
         $NbCount = $NbCount;

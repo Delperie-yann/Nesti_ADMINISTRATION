@@ -26,9 +26,16 @@ class Ingredient {
 
         return $this;
     }
+        
+    /**
+     * setIngredientFromArray
+     *
+     * @param  mixed $chef
+     * @return void
+     */
     public function setIngredientFromArray($chef)
     {
-       //var_dump($user);
+      
        foreach ($chef as $key => $value) {
  
           $this->$key = $value;

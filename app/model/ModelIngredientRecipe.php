@@ -25,7 +25,7 @@ class ModelIngredientrecipe
         }
         return $array;
     }
-   //=============
+    //=============
     // readOneBy
     //=============
     /**
@@ -101,8 +101,6 @@ class ModelIngredientrecipe
             // Execute the prepared statement
             // var_dump($values);
             $stmt->execute($values);
-
-          
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
@@ -130,14 +128,12 @@ class ModelIngredientrecipe
             $values = [$value, $value2];
             // Execute the prepared statement
             $stmt->execute($values);
-
-           
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());
         }
         unset($pdo);
     }
-     //=============
+    //=============
     // readOneByTwoElement
     //=============
     /**

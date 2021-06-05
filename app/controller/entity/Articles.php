@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+
+/** @var string $val */
+/** @var string $price */
 
 class Articles
 {
@@ -127,19 +132,19 @@ class Articles
 
         public function getIdUnit()
         {
-                if ($unit = "UNITE") {
-                        $this->unit = "";
+                if ($this->idUnit == "UNITE") {
+                        $this->idUnit = "";
                 }
 
-                return $this->unit;
+                return $this->idUnit;
         }
 
         /**
          * Set the value of unit
          */
-        public function setIdUnit($unit): self
+        public function setIdUnit($idUnit): self
         {
-                $this->unit = $unit;
+                $this->idUnit = $idUnit;
 
                 return $this;
         }
@@ -189,19 +194,32 @@ class Articles
                 return  $name1->getName();
         }
 
+        /**
+         * getPrice
+         *
+         * @return bool
+         */
         public function getPrice()
         {
                 $name = new ModelArticleprice();
-                // var_dump($this->idProduct);
+
                 $name2 = $name->readAllBy("idArticle", $this->idArticle);
                 // prendre le dernier prix de vente
+                $val = 0;
                 foreach ($name2 as $price) {
-                        $val = $price->getPrice();
+                        if ($price->getPrice() != null) {
+                                $val = $price->getPrice();
+                        }
                 }
-
                 return $val;
         }
 
+        /**
+         * setArticleFromArray
+         *
+         * @param  mixed $recipe
+         * @return void
+         */
         public function setArticleFromArray($recipe)
         {
 
@@ -211,46 +229,58 @@ class Articles
                 }
         }
 
+        /**
+         * getLastimport
+         *
+         * @return string
+         */
         public function getLastimport()
         {
-                
-                
+
+
                 $name = new ModelImportation();
-              
+
                 $name3 = $name->readOneBy("idArticle", $this->idArticle);
-                 $lastImport=$name3->getImportationDate();
-                // var_dump($name3->getImportationDate());
-               
+                $lastImport = $name3->getImportationDate();
+
                 return $lastImport;
         }
 
+        /**
+         * getStock
+         *
+         * @return string
+         */
         public function getStock()
         {
                 $name = new ModelLot();
-                // var_dump($this->idProduct);
                 $name4 = $name->readOneBy("idArticle", $this->idArticle);
-
-                // var_dump($name4->getquantity());
                 return  $name4->getQuantity();
         }
 
+        /**
+         * getUnitName
+         *
+         * @return string
+         */
         public function getUnitName()
         {
                 $unit = new ModelUnit();
-                // var_dump($this->idProduct);
                 $unit1 = $unit->readOneBy("idUnit", $this->idUnit);
                 $unity = $unit1->getName();
-                //  var_dump($unity);
-
-                // var_dump($unit1->getName());
                 return  $unity;
         }
 
+        /**
+         * getType
+         *
+         * @return string
+         */
         public function getType()
         {
                 $model = new ModelProduct();
                 $data  = $model->findChildType("ingredient", "product", $this->getIdProduct());
-                // var_dump($data);
+
                 if ($data != Null) {
                         $type = "ingredient";
                 } else {
@@ -260,19 +290,36 @@ class Articles
                 return $type;
         }
 
+        /**
+         * isIngredient
+         *
+         * @return bool
+         */
         public function isIngredient(): bool
         {
 
                 return $this->getType() != null;
         }
-        public function getLots(){
-                $lot= new ModelLot();
-                $lot=$lot->readOneBy("idArticle",$this->getIdArticle());
-               
+
+        /**
+         * getLots
+         *
+         * @return object
+         */
+        public function getLots()
+        {
+                $lot = new ModelLot();
+                $lot = $lot->readOneBy("idArticle", $this->getIdArticle());
+
                 return $lot;
         }
-                
 
+
+        /**
+         * getFactoryName
+         *
+         * @return string
+         */
         public function getFactoryName()
         {
                 $article = new ModelArticles();
@@ -282,33 +329,54 @@ class Articles
                 return  $factoryName;
         }
 
-        public function getArticleQuantIn(){
+        /**
+         * getArticleQuantIn
+         *
+         * @return object
+         */
+        public function getArticleQuantIn()
+        {
                 return $this->getLots();
         }
 
+        /**
+         * getNbBought
+         *
+         * @return double
+         */
         public function getNbBought()
         {
-            $totalQuantity = 0;
-            foreach ($this->getLots() as $lot) {
-                $totalQuantity += $this->getLots()->getQuantity();
-                
-            }
-            return $totalQuantity;
+                $totalQuantity = 0;
+                foreach ($this->getLots() as $lot) {
+                        $totalQuantity += $this->getLots()->getQuantity();
+                }
+                return $totalQuantity;
         }
-        
+
+        /**
+         * getArticlePrices
+         *
+         * @return object
+         */
         public function getArticlePrices()
         {
                 $model = new ModelArticleprice();
-              
+
                 $articlePrices = $model->readAllBy("idArticle", $this->getIdArticle());
                 return $articlePrices;
         }
 
+        /**
+         * getLastPriceAt
+         *
+         * @param  string $dateMax
+         * @return string
+         */
         public function getLastPriceAt(String $dateMax): String
         {
                 $maxDate = 0;
                 $arrayArticlePrice = $this->getArticlePrices();
-            
+                $price = 0;
                 foreach ($arrayArticlePrice as $value) {
                         $date = strtotime($value->getDateStart());
                         if ($date <= $dateMax) {
@@ -320,6 +388,4 @@ class Articles
                 }
                 return $price;
         }
-
-        
 }

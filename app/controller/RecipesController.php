@@ -2,6 +2,11 @@
 
 class RecipesController extends BaseController
 {
+  /**
+   * initialize
+   *
+   * @return void
+   */
   public function initialize()
   {
     $model  = new ModelRecipes();
@@ -15,7 +20,7 @@ class RecipesController extends BaseController
       $this->data['arrayRecipes'] = $model->readAll();
     }
 
-    if ($action == "add") {
+    if ($action == "create") {
       $this->create();
     }
     if ($action == "editing") {
@@ -51,23 +56,68 @@ class RecipesController extends BaseController
     header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
   }
 
-  // Creat a recipe without picture, ingredient, comment.
+ 
+  /**
+   * create
+   * Creat a recipe without picture, ingredient, comment.  
+   * @return void
+   */
   public function create()
   {
     $model  = new ModelRecipes();
     $recipe = new Recipes();
-    $recipe->setName(filter_input(INPUT_POST, "recipeName"));
-    $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
-    $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
-    $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
-    $recipe->setFlag("a");
-    $recipe->setIdChef($_SESSION['idUser']);
+    if (isset($_POST["recipeName"])) {
+      $recipeName = filter_input(INPUT_POST, "recipeName");
+      $recipedifficult = filter_input(INPUT_POST, "recipedifficult");
+      $recipePortion = filter_input(INPUT_POST, "recipePortion");
+      $recipeTimePrepare = filter_input(INPUT_POST, "recipeTimePrepare");
+      $error        = 0;
+      // accepted :  aze aze aze
+      if (!preg_match("/^[a-zA-Z\s\.]*$/", $recipeName)) {
+        $error        = 1;
+        $this->data['recipeName'] = false;
+      }
+      //  accepted : 1 to 5
+      if (!preg_match("/^([1-5][0-5]{0,0}|5)$/", $recipedifficult)) {
+        $error        = 1;
+        $this->data['recipedifficult'] = false;
+      }
+      // accepted : 1 to 9
+      if (!preg_match("/^([1-9])$/", $recipePortion)) {
+        $error        = 1;
+        $this->data['recipePortion'] = false;
+      }
+      // accepted : 1 to 9
+      if (!preg_match("/^([1-9][0-9]{0,2}|10)$/", $recipeTimePrepare)) {
+        $error        = 1;
+        $this->data['recipeTimePrepare'] = false;
+      }
+      // if fonction have no error controle create object and redirect 
+      if ($error == 0) {
+        $recipe->setName($recipeName);
+        $recipe->setDifficulty($recipedifficult);
+        $recipe->setPortions($recipePortion);
+        $recipe->setPreparationTime($recipeTimePrepare*100);
+        $recipe->setFlag("a");
+        $recipe->setIdChef($_SESSION['idUser']);
+        $insertedRecipe = $model->insertRecipe($recipe);
+        header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
+      } else {
 
-    //verif IS valid?
-    $insertedRecipe = $model->insertRecipe($recipe);
-    header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
+        isset($this->data['recipeName']) + isset($this->data['recipedifficult']) + isset($this->data['recipePortion']) + isset($this->data['recipeTimePrepare']);
+      }
+    }
   }
 
+
+
+
+  /**
+   * delete
+   *
+   * @param  mixed $id
+   * @return void
+   */
   public function delete($id)
   {
     $model         = new ModelRecipes();
@@ -78,6 +128,12 @@ class RecipesController extends BaseController
 
 
 
+  /**
+   * addPreparation
+   *
+   * @param  mixed $id
+   * @return void
+   */
   public function addPreparation($id)
   {
     $model          = new ModelParagraph();
@@ -85,6 +141,12 @@ class RecipesController extends BaseController
     $addPreparation = $model->addPreparation($recipe);
   }
 
+  /**
+   * editRecipe
+   *
+   * @param  mixed $idRecipe
+   * @return void
+   */
   public function editRecipe($idRecipe)
   {
     $model                          = new ModelRecipes();
@@ -95,67 +157,65 @@ class RecipesController extends BaseController
     $this->data['ingredientrecipe'] = $ingredientrecipe;
 
     if (isset($_POST["recipeName"])) {
+      $recipeName = filter_input(INPUT_POST, "recipeName");
+      $recipedifficult = filter_input(INPUT_POST, "recipedifficult");
+      $recipePortion = filter_input(INPUT_POST, "recipePortion");
+      $recipeTimePrepare = filter_input(INPUT_POST, "recipeTimePrepare");
+      $error        = 0;
+      // accepted :  aze aze aze
+      if (!preg_match("/^[a-zA-Z\s\.]*$/", $recipeName)) {
+        $error        = 1;
+        $this->data['recipeName'] = false;
+      }
+      //  accepted : 1 to 5
+      if (!preg_match("/^([1-5][0-5]{0,0}|5)$/", $recipedifficult)) {
+        $error        = 1;
+        $this->data['recipedifficult'] = false;
+      }
+      // accepted : 1 to 9
+      if (!preg_match("/^([1-9])$/", $recipePortion)) {
+        $error        = 1;
+        $this->data['recipePortion'] = false;
+      }
+      // accepted : 1 to 9
+      if (!preg_match("/^([1-9][0-9]{0,2}|10)$/", $recipeTimePrepare)) {
+        $error        = 1;
+        $this->data['recipeTimePrepare'] = false;
+      }
+      // if fonction have no error controle create object and redirect 
+      if ($error == 0) {
+        $recipe->setName($recipeName);
+        $recipe->setDifficulty($recipedifficult);
+        $recipe->setPortions($recipePortion);
+        $recipe->setPreparationTime($recipeTimePrepare*100);
+       
+        $model                          = new ModelRecipes();
+        $upadate = $model->updateRecipes($recipe);
+       
+        if (!empty($upadate)) {
+          $this->data["success"] = "success";
+        }
+      } else {
 
+        isset($this->data['recipeName']) + isset($this->data['recipedifficult']) + isset($this->data['recipePortion']) + isset($this->data['recipeTimePrepare']);
+      }
+    }
+    if (isset($_POST["recipeName"])) {
       $recipe->setName(filter_input(INPUT_POST, "recipeName"));
       $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
       $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
       $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
-      $model                          = new ModelRecipes();
-      $upadate=$model->updateRecipes($recipe);
-      if(!empty($upadate)){
-        $this->data["success"] = "success";
-      }
+    
+     
     }
-
-
-    // //  if the user click in "ok" insert an Ingredient in table
-    // if (isset($_POST["ingredientName"])) {
-    //   $modelProd  = new ModelProduct();
-    //   $ingredient = new Product();
-    //   $ingredient->setName(filter_input(INPUT_POST, "ingredientName"));
-    //   // var_dump($model->isAlreadyExistProduct(  $ingredient->getName()));
-    //   $isExistProd = $modelProd->readOneby("name", $ingredient->getName());
-
-    //   // if the name of ingredient still exist return else or give id of the insered product 
-    //   if ((($isExistProd->getName()) == null) && ($ingredient->getName() != "")) {
-    //     $insertedIng = $modelProd->insertProduct($ingredient);
-    //     $isProdId    = $insertedIng->getIdProduct();
-    //     $ingredient  = new ModelIngredient();
-    //     $ingredient->insertIngredient($insertedIng);
-    //   } else {
-    //     $isProdId = $isExistProd->getIdProduct();
-    //   }
-
-    //   $modelUnit = new ModelUnit();
-    //   $unit      = new Unit();
-    //   $unit->setName(filter_input(INPUT_POST, "ingredientUnit"));
-    //   $isExistUnit = $modelUnit->readOneby("name", $unit->getName());
-
-    //   // if the name of unit still exist return else or give id of the insered unit
-    //   if (($isExistUnit)->getName() == null && $unit->getName() != "") {
-    //     $insertedUnit = $modelUnit->insertUnit($unit);
-    //     $isUnitid     = $insertedUnit->getIdUnit();
-    //   } else {
-    //     $isUnitid = $isExistUnit->getIdUnit();
-    //   }
-
-    //   $ing = new Ingredientrecipe();
-    //   // $ingredientrecipe->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
-    //   $ing->setIdRecipe($idRecipe);
-    //   $ing->setIdProduct($isProdId);
-    //   $ing->setIdUnit($isUnitid);
-    //   $ing->setQuantity(filter_input(INPUT_POST, "ingredientQuant"));
-    //   $model = new ModelIngredientrecipe();
-
-    //   // if the quantity of ingredient is not 0 insert a row of IngredientRecipe 
-    //   if ($ing->getQuantity() != 0) {
-    //     $insertedRecipe = $model->insertIngredientRecipe($ing);
-
-
-    //     header('Location:' . BASE_URL . "recipes/editing/" . $idRecipe);
-    //   }
-    // }
   }
+
+  /**
+   * addImage
+   *
+   * @param  mixed $id
+   * @return void
+   */
   public function addImage($id)
   {
     $modelRecipe = new ModelRecipes();
@@ -165,11 +225,11 @@ class RecipesController extends BaseController
     $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
+
 
     // Check if image file is a actual image or fake image
     if (isset($_POST["pictures"])) {
-      var_dump( $_FILES["pictures"]);
+      var_dump($_FILES["pictures"]);
       $check = getimagesize($_FILES["pictures"]["tmp_name"]);
       if ($check !== false) {
         echo "File is an image - " . $check["mime"] . ".";
@@ -227,6 +287,12 @@ class RecipesController extends BaseController
   }
 
 
+  /**
+   * adding
+   *
+   * @param  mixed $id
+   * @return void
+   */
   function adding($id)
   {
 
@@ -237,10 +303,10 @@ class RecipesController extends BaseController
 
 
     $modelProd  = new ModelProduct();
-    $ingredient = new Product();
+
     $isExistProd = $modelProd->readOneby("name", $name);
 
-
+    // if exist a product with the same name give id else insered it
     if ((($isExistProd->getName()) == null) && ($name != "")) {
       $insertedIng = $modelProd->insertProductJquery($name);
       $isProdId    = $insertedIng->getIdProduct();
@@ -277,9 +343,6 @@ class RecipesController extends BaseController
       $model->insertIngredientRecipe($ing);
       header('Content-Type: application/json');
       echo json_encode(array('success' => true, 'recipe' => $id, 'name' => $name, 'quant' => $quant, 'unit' => $unit, 'idProduct' => $isProdId));
-      // var_dump( $insertedRecipe);
-
-      // header('Location:' . BASE_URL . "recipes/editing/" . $id);
     } else {
       header('Content-Type: application/json');
       echo json_encode(array('success' => false));

@@ -136,8 +136,10 @@ class Recipes
      * Get the value of preparationTime
      */
     public function getPreparationTime()
-    {
-        return $this->preparationTime;
+
+    {    $info =date_parse($this->preparationTime);
+    
+        return ($info["hour"]*100)+$info["minute"];;
     }
 
     /**
@@ -146,7 +148,9 @@ class Recipes
      * @return self
      */
     public function setPreparationTime($preparationTime): self
-    {
+    {   if($preparationTime>6000){
+        $preparationTime=(10000 +$preparationTime)-6000;
+    }
         $this->preparationTime = $preparationTime;
 
         return $this;
@@ -246,7 +250,12 @@ class Recipes
         $TimeFinal = "$heures h $minutes min $secondes2 s";
         return $TimeFinal;
     }
-
+    
+    /**
+     * getIdColor
+     *
+     * @return string
+     */
     function getIdColor()
     {
         $color = "text-dark";
@@ -259,27 +268,48 @@ class Recipes
         }
         return $color;
     }
-
+    
+    /**
+     * getImages
+     *
+     * @return object
+     */
     public function getImages()
     {
         $model = new ModelImages();
         $images = $model->readOneBy("idImage", $this->getIdImage());
         return $images;
     }
-
+    
+    /**
+     * displayImages
+     *
+     * @return string
+     */
     public function displayImages()
     {
         $imageName = $this->getImages()->getName();
         $imageExtension = $this->getImages()->getFileExtension();
         return BASE_URL . "public/img/recipes/$imageName.$imageExtension";
     }
-
+    
+    /**
+     * getParagraphs
+     *
+     * @return object
+     */
     public function getParagraphs()
     {
         $model = new ModelParagraph();
         $paragraphs = $model->readAllBy("idRecipe", $this->getIdRecipe());
         return $paragraphs;
     }
+        
+    /**
+     * getRatting
+     *
+     * @return object
+     */
     public function getRatting()
     {
        $model = new ModelRating();

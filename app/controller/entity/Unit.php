@@ -52,6 +52,14 @@ class Unit
     //     // var_dump($unit1->getName());
     //     return  $unit1->getName();
     // }
+
+        
+    /**
+     * setUnitFromArray
+     *
+     * @param  mixed $unit
+     * @return void
+     */
     public function setUnitFromArray($unit)
     {
         if (!empty($unit)) {

@@ -6,10 +6,16 @@ class ConnectionLog{
     Private $dateConnection;
     Private $IdUserLog;
 
-
+    
+    /**
+     * setConnectionLogFromArray
+     *
+     * @param  mixed $ConnectionLog
+     * @return void
+     */
     public function setConnectionLogFromArray($ConnectionLog)
     {
-    //var_dump($user);
+   
      foreach ($ConnectionLog as $key => $value) {
    
       $this->$key = $value;
@@ -76,9 +82,16 @@ class ConnectionLog{
 
         return $this;
     }
+        
+    /**
+     * setLogFromArray
+     *
+     * @param  mixed $log
+     * @return void
+     */
     public function setLogFromArray($log)
     {
-       //var_dump($user);
+     
        foreach ($log as $key => $value) {
  
           $this->$key = $value;

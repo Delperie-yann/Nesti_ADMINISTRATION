@@ -59,16 +59,22 @@ class Orderline
 
         return $this;
     }
-    public function getQuantitybyOrder()
-    { // Surement à deplacer dans Article....et a modifier
-        $model = new ModelOrderline();
-        $quant = $model->readAllBy("idOrders", $this->getIdOrders());
+    // public function getQuantitybyOrder()
+    // { // Surement à deplacer dans Article....et a modifier
+    //     $model = new ModelOrderline();
+    //     $quant = $model->readAllBy("idOrders", $this->getIdOrders());
         
-        $fullquant=$this->getQuantity();
+    //     $fullquant=$this->getQuantity();
 
-        return $fullquant;
-    }
-  
+    //     return $fullquant;
+    // }
+      
+    /**
+     * setOrderlineFromArray
+     *
+     * @param  mixed $orderLine
+     * @return void
+     */
     public function setOrderlineFromArray($orderLine)
     {
        foreach ($orderLine as $key => $value) {
@@ -76,7 +82,12 @@ class Orderline
           $this->$key = $value;
        }
     }
-
+    
+    /**
+     * getArticle
+     *
+     * @return object
+     */
     public function getArticle()
    {
       $model = new ModelArticles();

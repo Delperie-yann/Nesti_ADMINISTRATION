@@ -5,10 +5,11 @@ class ModelArticleprice
     //=============
     // readAll
     //=============
+   
     /**
+     * readAll
      *
-     *
-     *
+     * @return array
      */
     public function readAll()
     {
@@ -33,9 +34,11 @@ class ModelArticleprice
     /**
      * Read articleprice with ele1 at value ele2
      * 
-     *  $parametrer
-     *  $value
-     *  return object articleprice
+     * readOneBy
+     *
+     * @param  mixed $parameter
+     * @param  mixed $value
+     * @return object articleprice
      */
     public function readOneBy($parameter, $value)
     {
@@ -45,7 +48,7 @@ class ModelArticleprice
         $sql = "SELECT * FROM articleprice where $parameter = '$value'";
 
         $result = $pdo->query($sql);
-        //var_dump($result);
+     
         if ($result) {
 
             $data = $result->fetch(PDO::FETCH_ASSOC);

@@ -2,7 +2,12 @@
 
 class Session
 {
-
+    
+    /**
+     * isConnectUser
+     *
+     * @return bool
+     */
     public function isConnectUser()
     {
         $isConnect = false;
@@ -12,10 +17,12 @@ class Session
         return $isConnect;
     }
 
-    //  public function connectUser()
-    //  {
-    //   $_SESSION["idUser"] = $id;
-    //  }
+      
+    /**
+     * disconnectUser
+     *
+     * @return void
+     */
     public function disconnectUser()
     {
         $_SESSION["deconnection"] = "réussie";

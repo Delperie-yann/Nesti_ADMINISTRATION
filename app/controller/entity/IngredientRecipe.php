@@ -16,7 +16,13 @@ class Ingredientrecipe
 
 
 
-
+    
+    /**
+     * setIngredientRecipeFromArray
+     *
+     * @param  mixed $chef
+     * @return void
+     */
     public function setIngredientRecipeFromArray($chef)
     {
         if (!empty($unit)) {
@@ -115,19 +121,29 @@ class Ingredientrecipe
         $this->idUnit = $idUnit;
 
         return $this;
-    }
+    }    
+    /**
+     * getNameProd
+     *
+     * @return object
+     */
     public function getNameProd()
     {
         $model = new ModelProduct();
         $ProductName = $model->readOneBy("idProduct", $this->getIdProduct());
-        //  var_dump(  $ProductName->getName());
+       
         return $ProductName;
-    }
+    }    
+    /**
+     * getNameUnit
+     *
+     * @return object
+     */
     public function getNameUnit()
     {
         $model = new ModelUnit();
         $UnitName = $model->readOneBy("idUnit", $this->getIdUnit());
-        //  var_dump(  $UnitName."   ".$this->getIdUnit());
+        
         return $UnitName;
     }
 }

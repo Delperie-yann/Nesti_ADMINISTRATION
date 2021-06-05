@@ -22,7 +22,7 @@ class ModelAdmin
 
             $values = [$idAdmin->getIdAdmin()];
             // Execute the prepared statement
-            // var_dump($values);
+      
             $stmt->execute($values);
 
             //$newUser = $this->readOneBy("idUsers",$pdo->lastInsertId());

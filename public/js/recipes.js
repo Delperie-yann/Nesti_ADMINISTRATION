@@ -49,11 +49,11 @@ function addTextArea() {
     let newItem = document.createElement("div");
     let prepCtn = document.getElementById("prepCtn");
 
-    newItem.innerHTML = baseItem;
+    // newItem.innerHTML = baseItem;
     newItem.className += "row mt-5 prepItem";
     prepCounter++;
     newItem.dataset.order = prepCounter;
-    newItem=
+    newItem
     prepCtn.appendChild(newItem);
 
     actualize();
@@ -63,8 +63,6 @@ function addTextArea() {
 function actualize() {
 
     let items = document.querySelectorAll(".prepItem");
-
-
     items.forEach(item => {
         item.querySelector(".upText").style.visibility = "visible";
         item.querySelector(".downText").style.visibility = "visible";
@@ -115,4 +113,3 @@ function onlyNumberKey(evt) {
         return false;
     return true;
 }
-

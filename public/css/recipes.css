@@ -15,11 +15,12 @@
     --colorButtonAlert: #fac02e;
     --colorButtonValidate: #b0d41c;
 }
-
-p {
-    margin-block-start: unset;
-    margin-block-end: unset;
+.imageMin{
+    width:20px;
+    height:25px;
 }
+
+
 
 .valid {
     background-color: var(--colorButtonValidate);

@@ -43,7 +43,13 @@ class City
 
     return $this;
   }
-
+  
+  /**
+   * setCityFromArray
+   *
+   * @param  mixed $user
+   * @return void
+   */
   public function setCityFromArray($user)
   {
     if ($user == true) {

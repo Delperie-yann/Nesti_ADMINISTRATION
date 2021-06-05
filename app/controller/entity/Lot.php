@@ -99,7 +99,13 @@
 
         return $this;
     }
-
+    
+    /**
+     * setLotFromArray
+     *
+     * @param  mixed $recipe
+     * @return void
+     */
     public function setLotFromArray($recipe)
     {
         if($recipe==true ){

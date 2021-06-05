@@ -16,7 +16,7 @@ if ((is_int(strpos($session, 'Administateur')))) {
           <form class="form w-25">
             <input class="form-control mt-3 mb-3" id="customSearch" type="search" placeholder="" aria-label="Search">
             <div class="d-flex justify-content-end">
-              <a href="<?php BASE_URL ?>index.php?loc=" class=" btn btnImportation border pr-3 pl-3"> Importer</a>
+              <a href="<?= BASE_URL ?>index.php?loc=" class=" btn btnImportation border pr-3 pl-3"> Importer</a>
             </div>
           </form>
           </div>
