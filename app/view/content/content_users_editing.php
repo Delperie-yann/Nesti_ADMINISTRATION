@@ -56,7 +56,8 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <p class="mt-5">Ville</p><br>
                 <input type="text" class="w-75" name="userTown" value="<?= $user->getTownName() ?>">
 
-                <p class="mt-5">Rôle (ajout uniquement)</p><br><?php if (isset($roleAdmin) || isset($roleChef) || isset($roleModerator)) {
+                <p class="mt-5">Rôle (ajout uniquement)</p><br>
+                <?php if (isset($roleAdmin) || isset($roleChef) || isset($roleModerator)) {
                                                                     echo ' <div class="alert alert-danger text-center" role="alert">Rôles non enlevable</div>';
                                                                 }; ?>
                 <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>

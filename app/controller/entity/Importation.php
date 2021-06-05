@@ -83,7 +83,13 @@ class Importation
 
         return $this;
     }
-
+    
+    /**
+     * setImportationFromArray
+     *
+     * @param  mixed $importation
+     * @return void
+     */
     public function setImportationFromArray($importation)
     {
 

@@ -5,7 +5,7 @@
 
 
 $session = $_SESSION['Roles'];
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef'))))) {
 ?>
 
@@ -20,7 +20,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                 </form>
             </nav>
             <div>
-                <a href="<?= BASE_URL ?>recipes/creation" class="btn mb-1 border align-self-end"><img id="add" src="<?= BASE_URL ?>public/images/add.png" alt="" class="imagelogo"> Ajouter</a>
+                <a href="<?= BASE_URL ?>recipes/create" class="btn mb-1 border align-self-end"><img id="add" src="<?= BASE_URL ?>public/images/add.png" alt="" class="imagelogo"> Ajouter</a>
             </div>
         </div>
         <figcaption class="font-weight-bold">Accepté = bleu / En attente = Noir / Bloqué = rouge</figcaption>
@@ -32,7 +32,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                 <th scope="col">Nom</th>
                 <th scope="col">Difficulté</th>
                 <th scope="col">Pour</th>
-                <th scope="col">Temps</th>
+                <th scope="col">Temps(minute)</th>
                 <th scope="col">Chef</th>
                 <th scope="col">Actions</th>
 

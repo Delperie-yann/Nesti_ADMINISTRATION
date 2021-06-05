@@ -176,7 +176,7 @@ class Orders
      * getLastOrder
      *
      * @param  mixed $idUsers
-     * @return string
+     *
      */
     public function getLastOrder($idUsers)
     {

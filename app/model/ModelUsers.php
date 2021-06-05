@@ -134,7 +134,7 @@ class ModelUsers
     /**
      * deleteUser
      *
-     * @param  mixed $user
+     * 
      * @return object
      */
     public function deleteUser(Users &$user)
@@ -169,7 +169,7 @@ class ModelUsers
     /**
      * updateUsers
      *
-     * @param  mixed $user
+     * 
      * @return object
      */
     public function updateUsers(Users &$user)
@@ -203,7 +203,7 @@ class ModelUsers
     /**
      * updatePassword
      *
-     * @param  mixed $user
+     * 
      * @return object
      */
     public function updatePassword(Users &$user)

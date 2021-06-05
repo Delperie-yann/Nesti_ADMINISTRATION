@@ -6,7 +6,7 @@ class Session
     /**
      * isConnectUser
      *
-     * @return void
+     * @return bool
      */
     public function isConnectUser()
     {

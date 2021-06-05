@@ -136,8 +136,10 @@ class Recipes
      * Get the value of preparationTime
      */
     public function getPreparationTime()
-    {
-        return $this->preparationTime;
+
+    {    $info =date_parse($this->preparationTime);
+    
+        return ($info["hour"]*100)+$info["minute"];;
     }
 
     /**
@@ -146,7 +148,9 @@ class Recipes
      * @return self
      */
     public function setPreparationTime($preparationTime): self
-    {
+    {   if($preparationTime>6000){
+        $preparationTime=(10000 +$preparationTime)-6000;
+    }
         $this->preparationTime = $preparationTime;
 
         return $this;

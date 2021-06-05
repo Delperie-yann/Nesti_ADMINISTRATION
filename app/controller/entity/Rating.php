@@ -13,7 +13,7 @@ class Rating
     
     public function setRatingFromArray($rating)
     {
-        // var_dump($recipe);
+     
         foreach ($rating as $key => $value) {
 
             $this->$key = $value;

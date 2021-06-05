@@ -1,9 +1,6 @@
 <?php
-
-
-
 class ArticlesController extends BaseController
-{    
+{
     /**
      * initialize
      *
@@ -17,7 +14,6 @@ class ArticlesController extends BaseController
         if ($action == '') {
             $model = new ModelArticles();
             $this->data['arrayArticles'] = $model->readAll();
-      
         }
         if ($action == "editing") {
             $this->editArticle($id);
@@ -30,7 +26,7 @@ class ArticlesController extends BaseController
             $this->data['arrayOrders'] = $model->readAll();
         }
     }
-    
+
     /**
      * editArticle
      *
@@ -54,7 +50,7 @@ class ArticlesController extends BaseController
             }
         }
     }
-    
+
     /**
      * deleteArticle
      *

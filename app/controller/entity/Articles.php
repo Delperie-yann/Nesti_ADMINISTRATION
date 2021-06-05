@@ -245,7 +245,7 @@ class Articles
 
                 return $lastImport;
         }
-        
+
         /**
          * getStock
          *
@@ -257,7 +257,7 @@ class Articles
                 $name4 = $name->readOneBy("idArticle", $this->idArticle);
                 return  $name4->getQuantity();
         }
-        
+
         /**
          * getUnitName
          *
@@ -270,7 +270,7 @@ class Articles
                 $unity = $unit1->getName();
                 return  $unity;
         }
-        
+
         /**
          * getType
          *
@@ -289,7 +289,7 @@ class Articles
 
                 return $type;
         }
-        
+
         /**
          * isIngredient
          *
@@ -300,7 +300,7 @@ class Articles
 
                 return $this->getType() != null;
         }
-                
+
         /**
          * getLots
          *
@@ -314,7 +314,7 @@ class Articles
                 return $lot;
         }
 
-        
+
         /**
          * getFactoryName
          *
@@ -328,17 +328,17 @@ class Articles
 
                 return  $factoryName;
         }
-        
+
         /**
          * getArticleQuantIn
          *
-         * @return string
+         * @return object
          */
         public function getArticleQuantIn()
         {
                 return $this->getLots();
         }
-        
+
         /**
          * getNbBought
          *
@@ -352,7 +352,7 @@ class Articles
                 }
                 return $totalQuantity;
         }
-        
+
         /**
          * getArticlePrices
          *
@@ -365,12 +365,12 @@ class Articles
                 $articlePrices = $model->readAllBy("idArticle", $this->getIdArticle());
                 return $articlePrices;
         }
-        
+
         /**
          * getLastPriceAt
          *
-         * @param  mixed $dateMax
-         * @return String
+         * @param  string $dateMax
+         * @return string
          */
         public function getLastPriceAt(String $dateMax): String
         {

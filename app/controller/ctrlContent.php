@@ -15,7 +15,7 @@ switch ($loc) {
       case 'editing':
         include(PATH_CONTENT . "/content_recipes_editing.php");
         break;
-      case 'creation':
+      case 'create':
         include(PATH_CONTENT . "/content_recipes_creation.php");
         break;
       default:

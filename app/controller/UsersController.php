@@ -1,6 +1,6 @@
 <?php
 class UsersController extends BaseController
-{    
+{
     /**
      * initialize
      *
@@ -46,7 +46,7 @@ class UsersController extends BaseController
             $this->readOrder();
         }
     }
-        
+
     /**
      * endorse
      *
@@ -57,15 +57,12 @@ class UsersController extends BaseController
     public function endorse($idUser, $idRecipe)
     {
         $idModerat = $_SESSION['idUser'];
-
         $model   = new ModelComment();
         $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
         $newComm->setFlag("a");
         $newComm->setIdModerator($idModerat);
         $model->updateComment($newComm);
-    
-
-    }    
+    }
     /**
      * block
      *
@@ -76,19 +73,15 @@ class UsersController extends BaseController
     public function block($idUser, $idRecipe)
     {
         $idModerat = $_SESSION['idUser'];
-
         $model   = new ModelComment();
         $newComm = $model->readOneBy2Prameter("idUsers", $idUser, "idRecipe",  $idRecipe);
-      
         $newComm->setFlag("b");
         $newComm->setIdModerator($idModerat);
         $model->updateComment($newComm);
-
-
     }
 
 
-    
+
     /**
      * addUser
      *
@@ -100,82 +93,109 @@ class UsersController extends BaseController
         $model   = new ModelUsers();
 
         if (isset($_POST["userLogin"])) {
-            $newUser->setLastname(filter_input(INPUT_POST, "userLastname"));
-            $newUser->setFirstname(filter_input(INPUT_POST, "userFirstname"));
-            $newUser->setLogin(filter_input(INPUT_POST, "userLogin"));
-            $newUser->setEmail(filter_input(INPUT_POST, "userEmail"));
-            $newUser->setPasswordHash(filter_input(INPUT_POST, "userPwd"));
-            $newUser->setAddress1(filter_input(INPUT_POST, "userAdress1"));
-            $newUser->setAddress2(filter_input(INPUT_POST, "userAdress2"));
-            $newUser->setZipCode(filter_input(INPUT_POST, "userZipCode"));
-      
-            $townInput = (filter_input(INPUT_POST, "userTown"));
-            $modelcity = new ModelCity();
-            $cities = $modelcity->readAll();
-            //Check every city 
-            foreach ($cities as $town) {
-                $townName = $town->getName();
-                //if exist change by BDD idcity and stop
-                if ($townInput == $townName) {
-                    $city = $modelcity->readOneBy("name",  $townName);
-                    $Uservaluecity = $newUser->setIdCity($city->getIdCity());
-                    break;
-                } else {
-                    //if not exist add and give id insered and stop
-                    if ($townInput != "" && $townInput != NULL) {
-                        $newTown = $modelcity->insertCity($townInput);
-                        $Uservaluecity =   $newUser->setIdCity($newTown->getIdCity());
-                        break;
-                    }
-                }
-            }
-           
-
-            if ($_POST["State"] == "actif") {
-                $newUser->setFlag("a");
-            }
-            if ($_POST["State"] == "wait") {
-                $newUser->setFlag("w");
-            }
-            if ($_POST["State"] == "block") {
-                $newUser->setFlag("b");
-            }
-            $userExistEmmail = $model->readOneBy("email", $newUser->getEmail());
-            $userExist = $model->readOneBy("login", $newUser->getLogin());
-           
+            $userLastname = filter_input(INPUT_POST, "userLastname");
+            $userFirstname = filter_input(INPUT_POST, "userFirstname");
+            $userLogin = filter_input(INPUT_POST, "userLogin");
+            $userEmail = filter_input(INPUT_POST, "userEmail");
+            $userPwd = filter_input(INPUT_POST, "userPwd");
+            $userAdress1 = filter_input(INPUT_POST, "userAdress1");
+            $userAdress2 = filter_input(INPUT_POST, "userAdress2");
+            $userZipCode = filter_input(INPUT_POST, "userZipCode");
+            $userTown = filter_input(INPUT_POST, "userTown");
 
             $error     = 0;
-            if (($userExistEmmail->getIdUser()) != NUll) {
-                $this->data['emailError'] = true;
+            if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL) && (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', $userEmail))) {
+                $data['email'] = true;
                 $error = 1;
             }
-            if (($userExist->getIdUser()) != NUll) {
-                $this->data['loginError'] = true;
+            if (!preg_match("/^[a-zA-Z-' ]*$/", $userLogin)) {
+                $data['login'] = true;
                 $error = 1;
+            }
+            if (!preg_match("/^\d{5}$/", $userZipCode)) {
+                $error        = 1;
+                $data['zipcode'] = true;
             }
 
+            $newUser->setLastname($userLastname);
+            $newUser->setFirstname($userFirstname);
+            $newUser->setLogin($userLogin);
+            $newUser->setEmail($userEmail);
+            $newUser->setPasswordHash($userPwd);
+            $newUser->setAddress1($userAdress1);
+            $newUser->setAddress2($userAdress2);
+            $newUser->setZipCode($userZipCode);
+            $townInput = ($userTown);
 
             if ($error == 0) {
-                $insertedUser = $model->insertUser($newUser);
-                if (isset($_POST["roleAdmin"])) {
-                    $insertedUser->makeAdmin();
+
+                $modelcity = new ModelCity();
+                $cities = $modelcity->readAll();
+                //Check every city 
+                foreach ($cities as $town) {
+                    $townName = $town->getName();
+                    //if exist change by BDD idcity and stop
+                    if ($townInput == $townName) {
+                        $city = $modelcity->readOneBy("name",  $townName);
+                        $Uservaluecity = $newUser->setIdCity($city->getIdCity());
+                        break;
+                    } else {
+                        //if not exist add and give id insered and stop
+                        if ($townInput != "" && $townInput != NULL) {
+                            $newTown = $modelcity->insertCity($townInput);
+                            $Uservaluecity =   $newUser->setIdCity($newTown->getIdCity());
+                            break;
+                        }
+                    }
                 }
-                if (isset($_POST["roleChef"])) {
-                    $insertedUser->makeChef();
+
+
+                if ($_POST["State"] == "actif") {
+                    $newUser->setFlag("a");
                 }
-                if (isset($_POST["roleModerator"])) {
-                    $insertedUser->makeModerator();
+                if ($_POST["State"] == "wait") {
+                    $newUser->setFlag("w");
                 }
-              
-               
-                header('Location:' . BASE_URL . "users");
-            } else {
-                isset($this->data['emailError'])+isset($this->data['loginError']);
+                if ($_POST["State"] == "block") {
+                    $newUser->setFlag("b");
+                }
+                $userExistEmmail = $model->readOneBy("email", $newUser->getEmail());
+                $userExist = $model->readOneBy("login", $newUser->getLogin());
+
+
+
+                if (($userExistEmmail->getIdUser()) != NUll) {
+                    $this->data['emailError'] = true;
+                    $error = 1;
+                }
+                if (($userExist->getIdUser()) != NUll) {
+                    $this->data['loginError'] = true;
+                    $error = 1;
+                }
+
+
+                if ($error == 0) {
+                    $insertedUser = $model->insertUser($newUser);
+                    if (isset($_POST["roleAdmin"])) {
+                        $insertedUser->makeAdmin();
+                    }
+                    if (isset($_POST["roleChef"])) {
+                        $insertedUser->makeChef();
+                    }
+                    if (isset($_POST["roleModerator"])) {
+                        $insertedUser->makeModerator();
+                    }
+
+
+                    header('Location:' . BASE_URL . "users");
+                } else {
+                    isset($this->data['emailError']) + isset($this->data['loginError']);
+                }
             }
         }
     }
 
-    
+
     /**
      * user
      *
@@ -192,7 +212,7 @@ class UsersController extends BaseController
 
         $com = new ModelComment();
         $this->data['arrayCom'] = $com->readAll();
-    }    
+    }
     /**
      * delete
      *
@@ -206,7 +226,7 @@ class UsersController extends BaseController
         $deletedUsers = $model->deleteUser($user);
         header('Location:' . BASE_URL . "users");
     }
-    
+
     /**
      * editUser
      *
@@ -224,82 +244,100 @@ class UsersController extends BaseController
         $this->data['arrayOrder'] = $orders;
 
         if (isset($_POST["userLastname"])) {
-            $user->setLastName(filter_input(INPUT_POST, "userLastname"));
-            $user->setFirstname(filter_input(INPUT_POST, "userFirstname"));
-            $user->setAddress1(filter_input(INPUT_POST, "userAdress1"));
-            $user->setAddress2(filter_input(INPUT_POST, "userAdress2"));
-            $user->setZipCode(filter_input(INPUT_POST, "userZipCode"));
+            $userLastname = filter_input(INPUT_POST, "userLastname");
+            $userFirstname = filter_input(INPUT_POST, "userFirstname");
 
-            $townInput = (filter_input(INPUT_POST, "userTown"));
-            $modelcity = new ModelCity();
-            $cities = $modelcity->readAll();
-            //Check every city 
-            foreach ($cities as $town) {
-                $townName = $town->getName();
-                //if exist change by BDD idcity and stop
-                if ($townInput == $townName) {
-                    $city = $modelcity->readOneBy("name",  $townName);
-                    $valuecity = $user->setIdCity($city->getIdCity());
-                    break;
-                } else {
-                    //if not exist add and give id insered and stop
-                    if ($townInput != "" && $townInput != NULL) {
-                        $newTown = $modelcity->insertCity($townInput);
-                        $valuecity =   $user->setIdCity($newTown->getIdCity());
+            $userAdress1 = filter_input(INPUT_POST, "userAdress1");
+            $userAdress2 = filter_input(INPUT_POST, "userAdress2");
+            $userZipCode = filter_input(INPUT_POST, "userZipCode");
+            $userTown = filter_input(INPUT_POST, "userTown");
+            $error     = 0;
+
+
+            if (!preg_match("/^\d{5}$/", $userZipCode)) {
+                $error        = 1;
+                $data['zipcode'] = true;
+            }
+
+            $user->setLastName($userLastname);
+            $user->setFirstname($userFirstname);
+            $user->setAddress1($userAdress1);
+            $user->setAddress2($userAdress2);
+            $user->setZipCode($userZipCode);
+
+            if ($error == 0) {
+
+                $modelcity = new ModelCity();
+                $cities = $modelcity->readAll();
+                //Check every city 
+                foreach ($cities as $town) {
+                    $townName = $town->getName();
+                    //if exist change by BDD idcity and stop
+                    if ($userTown == $townName) {
+                        $city = $modelcity->readOneBy("name",  $townName);
+                        $valuecity = $user->setIdCity($city->getIdCity());
                         break;
+                    } else {
+                        //if not exist add and give id insered and stop
+                        if ($userTown != "" && $userTown != NULL) {
+                            $newTown = $modelcity->insertCity($userTown);
+                            $valuecity =   $user->setIdCity($newTown->getIdCity());
+                            break;
+                        }
                     }
                 }
-            }
-            if ($_POST["State"] == "actif") {
-                $user->setFlag("a");
-            }
-            if ($_POST["State"] == "wait") {
-                $user->setFlag("w");
-            }
-            if ($_POST["State"] == "block") {
-                $user->setFlag("b");
-            }
-            $model = new ModelUsers();
-            $insertedUser = $model->updateUsers($user);
-
-
-
-            $error     = 0;
-            if (isset($_POST["roleAdmin"]) == NUll) {
-                $this->data['roleAdmin'] = true;
-                $error = 1;
-            }
-            if (isset($_POST["roleChef"]) == NUll) {
-                $this->data['roleChef'] = true;
-                $error = 1;
-            }
-            if (isset($_POST["roleModerator"]) == NUll) {
-                $this->data['roleModerator'] = true;
-                $error = 1;
-            }
-
-
-            if (isset($_POST["roleAdmin"])) {
-                $insertedUser->makeAdmin();
-            }
-            if (isset($_POST["roleChef"])) {
-                $insertedUser->makeChef();
-            }
-            if (isset($_POST["roleModerator"])) {
-                $insertedUser->makeModerator();
-            }
-            if ($error != 0) {
-
-                // header('Location:' . BASE_URL . "users/editing/" . $idUsers);
-
-                isset($this->data['roleAdmin'])+isset($this->data['roleChef'])+isset($this->data['roleModerator']);
-                $this->data["error"] = "error";
+                if ($_POST["State"] == "actif") {
+                    $user->setFlag("a");
+                }
+                if ($_POST["State"] == "wait") {
+                    $user->setFlag("w");
+                }
+                if ($_POST["State"] == "block") {
+                    $user->setFlag("b");
+                }
+               
+                $insertedUser = $model->updateUsers($user);
+                $error2 = 0;
+                $this->errorRole( $error2 ,$user);
+              
+                if (isset($_POST["roleAdmin"])) {
+                    $insertedUser->makeAdmin();
+                }
+                if (isset($_POST["roleChef"])) {
+                    $insertedUser->makeChef();
+                }
+                if (isset($_POST["roleModerator"])) {
+                    $insertedUser->makeModerator();
+                }
+                if ($error2 != 0) {
+                    isset($this->data['roleAdmin']) + isset($this->data['roleChef']) + isset($this->data['roleModerator']);
+                    $this->data["error"] = "error";
+                }
+               
             }
             if (isset($insertedUser)) {
                 $this->data["success"] = "success";
             }
         }
-    }    
+    }
+public function errorRole( $error2 ,$user){
+   
+    if (isset($_POST["roleAdmin"]) == NUll && $user->isAdmin()!=false) {
+        $this->data['roleAdmin'] = true;
+        $error2 = 1;
+    }
+    if (isset($_POST["roleChef"]) == NUll && $user->isChef()!=false) {
+        $this->data['roleChef'] = true;
+        $error2 = 1;
+    }
+    if (isset($_POST["roleModerator"]) == NUll && $user->isModerateur()!=false) {
+        $this->data['roleModerator'] = true;
+        $error2 = 1;
+
+    }
+    return $error2;
+}
+    
     /**
      * passwordChange
      *
@@ -319,7 +357,7 @@ class UsersController extends BaseController
         $this->data['pass'] =  $Value;
     }
 
-    
+
     /**
      * readOrder
      *
@@ -340,15 +378,13 @@ class UsersController extends BaseController
         }
         echo json_encode($data);
 
-        //$value->getUnitQuantity() $value->getUnitName(), $value->getName(); 
-
 
         die();
-    }    
+    }
     /**
      * randomPassword
      *
-     * @return void
+     * @return string
      */
     function randomPassword()
     {

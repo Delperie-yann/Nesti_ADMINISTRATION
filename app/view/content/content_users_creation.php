@@ -2,7 +2,7 @@
 
 $session = $_SESSION['Roles'];
 
-//var_dump(strpos($session,'Administateur')." ".strpos($session,'Moderateur'));
+
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
     ?>
 <a href="<?= BASE_URL ?>users" class="mb-2 mt-4 ml-5">Utilisateurs </a>><a class="mb-2 mt-4"> Création</a>

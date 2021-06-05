@@ -120,13 +120,24 @@ class Users
       $this->passwordHash = $passwordHash;
       return $this;
    }
-
-   public function getLogin(): string
+   
+   /**
+    * getLogin
+    *
+    * @return string
+    */
+   public function getLogin()
    {
       return $this->login;
    }
-
-   public function setLogin(string $login)
+   
+   /**
+    * setLogin
+    *
+    * @param  mixed $login
+    * @return self
+    */
+   public function setLogin($login)
    {
       $this->login = $login;
 
@@ -277,7 +288,7 @@ class Users
    /**
     * Get the value of email
     */
-   public function getEmail(): string
+   public function getEmail()
    {
       return $this->email;
    }
@@ -287,7 +298,7 @@ class Users
     *
     * @return self
     */
-   public function setEmail($email): self
+   public function setEmail($email)
    {
       $this->email = $email;
       return $this;
@@ -374,7 +385,7 @@ class Users
     *
     * @return self
     */
-   public function setIdUser($idUser): self
+   public function setIdUser($idUser)
    {
       $this->idUser = $idUser;
       return $this;
