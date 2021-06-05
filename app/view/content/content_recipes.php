@@ -32,7 +32,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                 <th scope="col">Nom</th>
                 <th scope="col">Difficulté</th>
                 <th scope="col">Pour</th>
-                <th scope="col">Temps(minute)</th>
+                <th scope="col">Temps</th>
                 <th scope="col">Chef</th>
                 <th scope="col">Actions</th>
 

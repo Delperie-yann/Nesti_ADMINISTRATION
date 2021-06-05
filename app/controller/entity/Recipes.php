@@ -136,10 +136,9 @@ class Recipes
      * Get the value of preparationTime
      */
     public function getPreparationTime()
-
-    {    $info =date_parse($this->preparationTime);
-    
-        return ($info["hour"]*100)+$info["minute"];;
+    {
+        $timeFormat= DateTime::createFromFormat('H:i:s',$this->preparationTime)->format('H:i:s');
+        return $timeFormat;
     }
 
     /**
@@ -148,9 +147,7 @@ class Recipes
      * @return self
      */
     public function setPreparationTime($preparationTime): self
-    {   if($preparationTime>6000){
-        $preparationTime=(10000 +$preparationTime)-6000;
-    }
+    {   
         $this->preparationTime = $preparationTime;
 
         return $this;
@@ -216,40 +213,6 @@ class Recipes
         return $this;
     }
 
-    /*---------------------------------------------------------------*/
-    /*
-    Titre : Convertie de secondes en heures, minutes et secondes                                                          
-                                                                                                                          
-    URL   : https://phpsources.net/code_s.php?id=939
-    Date édition     : 15 Fév 2019                                                                                        
-    Date mise à jour : 19 Aout 2019                                                                                      
-    Rapport de la maj:                                                                                                    
-    - fonctionnement du code vérifié                                                                                    
-*/
-    /*---------------------------------------------------------------*/
-
-    function ConvertisseurTime($Time)
-    {
-        if ($Time < 3600) {
-            $heures = 0;
-
-            if ($Time < 60) {
-                $minutes = 0;
-            } else {
-                $minutes = round($Time / 60);
-            }
-
-            $secondes = floor($Time % 60);
-        } else {
-            $heures = round($Time / 3600);
-            $secondes = round($Time % 3600);
-            $minutes = floor($secondes / 60);
-        }
-        $secondes2 = round($secondes % 60);
-
-        $TimeFinal = "$heures h $minutes min $secondes2 s";
-        return $TimeFinal;
-    }
     
     /**
      * getIdColor

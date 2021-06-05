@@ -5,14 +5,14 @@ $(document).ready(function () {
     // var base_url = "https://delperie.needemand.com/realisations/PHP_Nesti_Site/"; 
     $('#ingAdd').click(function (e) {
         e.preventDefault();
-      
+
         // Controle value of input product
         let name = $("#ingName").val();
         let error = 0;
         if (name == "" || !name.match(/^[a-zA-Z]+$/)) {
             error = 1;
-           
-            alert('Erreur de la saisi :  Produit ' );
+
+            alert('Erreur de la saisi :  Produit ');
         }
         // Controle value of input qunantity
         let quant = $("#ingQty").val();

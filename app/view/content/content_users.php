@@ -1,10 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 
 /** @var array<object> $arrayUsers */
 
 
 $session = $_SESSION['Roles'];
+
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Moderateur'))))) {
 ?>
     <h1 class="mb-2 mt-4 ml-5">Utilisateurs</h1>
@@ -26,15 +29,15 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
         <table class="table">
 
             <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Rôle</th>
-                <th scope="col">Email</th>
-                <th scope="col">Derniere connexion</th>
-                <th scope="col">Etat</th>
-                <th scope="col">Actions</th>
-</tr>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Rôle</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Derniere connexion</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Actions</th>
+                </tr>
             </thead>
 
             <?php
@@ -51,23 +54,18 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                     <td><?= $value->getFlag(); ?></td>
                     <td>
                         <a href="<?= BASE_URL . "users/editing/" . $value->getIdUser(); ?>">Modifier</a><br>
-                        <!-- href="#mymodal<?= $value->getIdUser(); ?>" -->
                         <a data-toggle="modal" href="#myModal<?= $value->getIdUser(); ?>">Supprimer</a>
                         <div class="container">
                             <div class="row">
-
-
                                 <div id="myModal<?= $value->getIdUser(); ?>" class="modal fade in">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-
                                             <div class="modal-header">
                                                 <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
                                                 <p class="modal-body"> <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>Voulez
                                                     vous vraiment supprimer <?= $value->getLastname(); ?> ?</p>
                                             </div>
                                             <div class="modal-body">
-
                                                 <p>Cette action est définitive</p>
                                             </div>
                                             <div class="modal-footer">
@@ -76,10 +74,8 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                                                         <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Confirmer</button>
                                                     </form>
                                                     <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
-
                                                 </div>
                                             </div>
-
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dalog -->
                                 </div><!-- /.modal -->
