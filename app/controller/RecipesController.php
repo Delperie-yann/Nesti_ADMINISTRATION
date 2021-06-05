@@ -67,10 +67,10 @@ class RecipesController extends BaseController
     $model  = new ModelRecipes();
     $recipe = new Recipes();
     if (isset($_POST["recipeName"])) {
-      $recipeName = filter_input(INPUT_POST, "recipeName");
-      $recipedifficult = filter_input(INPUT_POST, "recipedifficult");
-      $recipePortion = filter_input(INPUT_POST, "recipePortion");
-      $recipeTimePrepare = filter_input(INPUT_POST, "recipeTimePrepare");
+      $recipeName = filter_input(INPUT_POST, "recipeName",FILTER_DEFAULT);
+      $recipedifficult = filter_input(INPUT_POST, "recipedifficult",FILTER_DEFAULT);
+      $recipePortion = filter_input(INPUT_POST, "recipePortion",FILTER_DEFAULT);
+      $recipeTime = filter_input(INPUT_POST, "recipeTimePrepare",FILTER_DEFAULT);
       $error        = 0;
       // accepted :  aze aze aze
       if (!preg_match("/^[a-zA-Z\s\.]*$/", $recipeName)) {
@@ -88,7 +88,7 @@ class RecipesController extends BaseController
         $this->data['recipePortion'] = false;
       }
       // accepted : 1 to 9
-      if (!preg_match("/^([1-9][0-9]{0,2}|10)$/", $recipeTimePrepare)) {
+      if (!preg_match("/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/", $recipeTime)) {
         $error        = 1;
         $this->data['recipeTimePrepare'] = false;
       }
@@ -97,7 +97,9 @@ class RecipesController extends BaseController
         $recipe->setName($recipeName);
         $recipe->setDifficulty($recipedifficult);
         $recipe->setPortions($recipePortion);
-        $recipe->setPreparationTime($recipeTimePrepare*100);
+        var_dump(DateTime::createFromFormat('H:i',$recipeTime));
+        $timeFormat = DateTime::createFromFormat('H:i',$recipeTime)->format('H:i:s');
+        $recipe->setPreparationTime($timeFormat);
         $recipe->setFlag("a");
         $recipe->setIdChef($_SESSION['idUser']);
         $insertedRecipe = $model->insertRecipe($recipe);
@@ -178,7 +180,7 @@ class RecipesController extends BaseController
         $this->data['recipePortion'] = false;
       }
       // accepted : 1 to 9
-      if (!preg_match("/^([1-9][0-9]{0,2}|10)$/", $recipeTimePrepare)) {
+      if (!preg_match("/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/", $recipeTimePrepare)) {
         $error        = 1;
         $this->data['recipeTimePrepare'] = false;
       }
@@ -187,8 +189,9 @@ class RecipesController extends BaseController
         $recipe->setName($recipeName);
         $recipe->setDifficulty($recipedifficult);
         $recipe->setPortions($recipePortion);
-        $recipe->setPreparationTime($recipeTimePrepare*100);
-       
+        $timeFormat= DateTime::createFromFormat('H:i:s',$recipeTimePrepare)->format('H:i:s');
+        $recipe->setPreparationTime($timeFormat);
+     
         $model                          = new ModelRecipes();
         $upadate = $model->updateRecipes($recipe);
        
@@ -200,14 +203,7 @@ class RecipesController extends BaseController
         isset($this->data['recipeName']) + isset($this->data['recipedifficult']) + isset($this->data['recipePortion']) + isset($this->data['recipeTimePrepare']);
       }
     }
-    if (isset($_POST["recipeName"])) {
-      $recipe->setName(filter_input(INPUT_POST, "recipeName"));
-      $recipe->setDifficulty(filter_input(INPUT_POST, "recipedifficult"));
-      $recipe->setPortions(filter_input(INPUT_POST, "recipePortion"));
-      $recipe->setPreparationTime(filter_input(INPUT_POST, "recipeTimePrepare"));
-    
-     
-    }
+   
   }
 
   /**

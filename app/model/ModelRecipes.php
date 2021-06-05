@@ -45,6 +45,7 @@ class ModelRecipes
             $values = [$recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getFlag(), $recipe->getPreparationTime(), $recipe->getIdChef()];
             // Execute the prepared statement
             $stmt->execute($values);
+            var_dump($pdo->prepare($sql));
             $newRecipe = $this->readOneBy("idRecipe", $pdo->lastInsertId());
         
         } catch (PDOException $e) {

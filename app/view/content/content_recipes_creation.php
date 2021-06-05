@@ -34,14 +34,14 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
 
                             <p class="mt-4 mb-2">Nombre de personnes max 10</p>
 
-                            <p class="mt-4 mb-2">Temps de préparation en minutes</p>
+                            <p class="mt-4 mb-2">Temps de préparation</p>
 
                         </div>
                         <div class="col">
                             <div class="col d-flex justify-content-between flex-column p-0">
-                                <div class="d-flex justify-content-end"><input type="number" min="0" max="5" name="recipedifficult" class="w-50 mt-4 mb-2"></div>
-                                <div class="d-flex justify-content-end"><input type="number" min="0" name="recipePortion" class="w-50 mt-4 mb-2"></div>
-                                <div class="d-flex justify-content-end"><input type="text" min="0" name="recipeTimePrepare" class="w-50 mt-4 mb-2"></div>
+                                <div class="d-flex justify-content-end"><input type="number" min="0" max="5" name="recipedifficult" class="w-50 mt-4 mb-2" require></div>
+                                <div class="d-flex justify-content-end"><input type="number" min="0" max="10" name="recipePortion" class="w-50 mt-4 mb-2" require></div>
+                                <div class="d-flex justify-content-end"><input type="time"  name="recipeTimePrepare" class="w-50 mt-4 mb-2" require></div>
                             </div>
                         </div>
                     </div>

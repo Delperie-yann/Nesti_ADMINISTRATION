@@ -56,20 +56,20 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     <div class="col d-flex justify-content-between flex-column">
                         <p class="mt-4 mb-2">Difficulté (note sur 5)</p>
                         <p class="mt-4 mb-2">Nombre de personnes</p>
-                        <p class="mt-4 mb-2">Temps de préparation en minutes</p>
+                        <p class="mt-4 mb-2">Temps de préparation </p>
                     </div>
                     <div class="col">
                         <div class="col d-flex justify-content-between flex-column p-0">
-                            <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" name="recipedifficult">
+                            <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" require name="recipedifficult">
                             </div>
-                            <div class="d-flex justify-content-end"><input type="number" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" name="recipePortion"></div>
-                            <div class="d-flex justify-content-end"><input type="text" min="0" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()   ?>" name="recipeTimePrepare"></div>
+                            <div class="d-flex justify-content-end"><input type="number" min="0" max="10" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" require name="recipePortion"></div>
+                            <div class="d-flex justify-content-end"><input type="time"  class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()   ?>"   name="recipeTimePrepare"></div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center p-2">
                     <button type="submit" class="btn m-5 valid w-25">Valider</button>
-                    <a type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Annuler</a>
+                    <a type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Retour</a>
                 </div>
             </form>
             <div class="col">
@@ -122,7 +122,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         <div class="col-sm-2"></div>
                         <div class="col">
                             <button class="btn w-100" onclick="addTextArea()">
-                                <img src="<?= BASE_URL ?>../../public/images/addinput.png" alt="Ajouter zone de texte">
+                                <img src="<?= BASE_URL ?>public/images/addinput.png" alt="Ajouter zone de texte">
                             </button>
                         </div>
                     </div>
