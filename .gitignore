@@ -7,8 +7,8 @@
 
 
 # my file
-public/img
-public/images
+*.jpg
+*.jpeg
 
 
 # User-specific files
