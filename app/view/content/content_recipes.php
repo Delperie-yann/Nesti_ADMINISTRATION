@@ -39,7 +39,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
             </thead>
 
             <?php
-            //var_dump($arrayRecipes);
+      
             foreach ($arrayRecipes as $value) {
             ?>
 
@@ -52,7 +52,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     <td><?= $value->getChef(); ?></td>
                     <td>
                         <a href="<?= BASE_URL . "recipes/editing/" . $value->getIdRecipe(); ?>">Modifier</a><br>
-                        <!-- href="#mymodal<?= $value->getIdRecipe(); ?>" -->
+                     
 
                         <a data-toggle="modal" href="#myModal<?= $value->getIdRecipe(); ?>">Supprimer</a>
                         <div class="container">

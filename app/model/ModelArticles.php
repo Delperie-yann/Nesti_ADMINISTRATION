@@ -124,4 +124,33 @@ class ModelArticles
         unset($pdo);
         return $article;
     }
+     //=============
+    // insertArticles
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function insertArticles(Articles &$article)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement
+            $sql = "INSERT INTO article (unitQuantity, flag,dateCreation,dateModification,idUnit,idProduct,realName) VALUES (?,?,?,?,?,?,?)";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$article->getUnitQuantity(), $article->getFlag(), $article->getDateCreation(), $article->getDateModification(),  $article->getIdUnit(), $article->getIdProduct(), $article->getRealName()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+          
+            $newRecipe = $this->readOneBy("idArticle", $pdo->lastInsertId());
+           
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newRecipe;
+    }
 }

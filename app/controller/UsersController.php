@@ -351,7 +351,7 @@ public function errorRole( $error2 ,$user){
         $user = $model->readOneBy("idUsers", $idUser);
         $userNewPass = $user->setPasswordHash($Value);
 
-        $newpass = $model->updatePassword($userNewPass);
+         $model->updatePassword($userNewPass);
 
 
         $this->data['pass'] =  $Value;

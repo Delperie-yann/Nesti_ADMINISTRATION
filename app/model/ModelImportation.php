@@ -76,4 +76,33 @@ class ModelImportation
         $data = $result->fetch();
         return $data;
     }
+       //=============
+    // insertImportation
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function insertImportation(Importation &$importation)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement
+            $sql = "INSERT INTO importation (idAdministrator,idArticle, idSupplierOrder) VALUES (?,?,?)";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$importation->getIdAministrator(), $importation->getIdArticle(), $importation->getIdSupplierOrder()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+         
+            $newRecipe = $this->readOneBy("idArticle", $pdo->lastInsertId());
+           
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newRecipe;
+    }
 }

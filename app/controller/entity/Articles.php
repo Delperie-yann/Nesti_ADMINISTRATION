@@ -206,11 +206,13 @@ class Articles
                 $name2 = $name->readAllBy("idArticle", $this->idArticle);
                 // prendre le dernier prix de vente
                 $val = 0;
+              
                 foreach ($name2 as $price) {
                         if ($price->getPrice() != null) {
                                 $val = $price->getPrice();
                         }
                 }
+        
                 return $val;
         }
 
@@ -220,13 +222,15 @@ class Articles
          * @param  mixed $recipe
          * @return void
          */
-        public function setArticleFromArray($recipe)
+        public function setArticleFromArray($article)
         {
+if ($article!=NUll) {
+   
 
-                foreach ($recipe as $key => $value) {
+                foreach ($article as $key => $value) {
 
                         $this->$key = $value;
-                }
+                }}
         }
 
         /**

@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-    var base_url = "http://127.0.0.1/www/PHP_Nesti_Site/";
+    var base_url = "https://127.0.0.1/www/PHP_Nesti_Site/";
     // var base_url = "https://delperie.needemand.com/realisations/PHP_Nesti_Site/"; 
     $('#ingAdd').click(function (e) {
         e.preventDefault();

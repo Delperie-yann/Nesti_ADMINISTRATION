@@ -34,7 +34,8 @@
             </li>
         </ul>
         <form class="form-inline logOut my-2 my-lg-0 justify-content-around">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="<?= BASE_URL ?>users/editing/<?= $_SESSION['idUser'] ?>">
+                
                 <i class="fas fa-user mr-2 text-dark"></i>
                 <?php print_r($_SESSION["firstname"]." ".$_SESSION["lastname"]) ?>
             </a>

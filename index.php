@@ -14,7 +14,7 @@ $supp   = filter_input(INPUT_GET, "supp", FILTER_SANITIZE_STRING);
 if (($loc == null) || (!isset($_SESSION["login"]))) {
   $loc = "connection";
 }
-
+// Controlleur de loc
 switch ($loc) {
   case 'connection':
     $ctrl = new ConnectionController();

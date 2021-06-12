@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 /** @var object $user */
 /** @var array<object> $arrayOrder */
@@ -58,8 +60,8 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
 
                 <p class="mt-5">Rôle (ajout uniquement)</p><br>
                 <?php if (isset($roleAdmin) || isset($roleChef) || isset($roleModerator)) {
-                                                                    echo ' <div class="alert alert-danger text-center" role="alert">Rôles non enlevable</div>';
-                                                                }; ?>
+                    echo ' <div class="alert alert-danger text-center" role="alert">Rôles non enlevable</div>';
+                }; ?>
                 <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>
                 <input type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
                 <input type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>

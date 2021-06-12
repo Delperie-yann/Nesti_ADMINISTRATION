@@ -97,4 +97,33 @@ class ModelLot
         $data   = $result->fetch();
         return $data;
     }
+      //=============
+    // insertImportation
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function insertLot(Lot &$lot)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement
+            $sql = "INSERT INTO lot (idArticle,idSupplierOrder, unitCost,dateReception,quantity) VALUES (?,?,?,?,?)";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$lot->getIdArticle(), $lot->getIdSupplierOrder(), $lot->getUnitCost(),$lot->getDateReception(),$lot->getQuantity()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+         
+            $newRecipe = $this->readOneBy("idArticle", $pdo->lastInsertId());
+           
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newRecipe;
+    }
 }
