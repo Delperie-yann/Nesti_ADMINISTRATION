@@ -68,9 +68,9 @@ class RecipesController extends BaseController
     $recipe = new Recipes();
     if (isset($_POST["recipeName"])) {
       $recipeName = filter_input(INPUT_POST, "recipeName",FILTER_DEFAULT);
-      $recipedifficult = filter_input(INPUT_POST, "recipedifficult",FILTER_DEFAULT);
-      $recipePortion = filter_input(INPUT_POST, "recipePortion",FILTER_DEFAULT);
-      $recipeTime = filter_input(INPUT_POST, "recipeTimePrepare",FILTER_DEFAULT);
+      $recipedifficult = filter_input(INPUT_POST, "recipedifficult",FILTER_SANITIZE_NUMBER_INT);
+      $recipePortion = filter_input(INPUT_POST, "recipePortion",FILTER_SANITIZE_NUMBER_INT);
+      $recipeTime = filter_input(INPUT_POST, "recipeTimePrepare",FILTER_SANITIZE_STRING);
       $error        = 0;
       // accepted :  aze aze aze
       if (!preg_match("/^[a-zA-Z\s\.]*$/", $recipeName)) {

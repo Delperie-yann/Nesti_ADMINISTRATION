@@ -427,12 +427,7 @@ class Users
       return  $send;
    }
 
-   // public function getLastConnection()
-   // {
-   //    $connect = new ModelConnectionLog();
-   //    $co = $connect->readOneBy("idUsers", $this->idUser);
-   //    return $co;
-   // }
+  
       
    /**
     * getCommentNbA

@@ -93,25 +93,28 @@ class UsersController extends BaseController
         $model   = new ModelUsers();
 
         if (isset($_POST["userLogin"])) {
-            $userLastname = filter_input(INPUT_POST, "userLastname");
-            $userFirstname = filter_input(INPUT_POST, "userFirstname");
-            $userLogin = filter_input(INPUT_POST, "userLogin");
-            $userEmail = filter_input(INPUT_POST, "userEmail");
-            $userPwd = filter_input(INPUT_POST, "userPwd");
-            $userAdress1 = filter_input(INPUT_POST, "userAdress1");
-            $userAdress2 = filter_input(INPUT_POST, "userAdress2");
-            $userZipCode = filter_input(INPUT_POST, "userZipCode");
-            $userTown = filter_input(INPUT_POST, "userTown");
-
+            $userLastname = filter_input(INPUT_POST, "userLastname", FILTER_SANITIZE_STRING);
+            $userFirstname = filter_input(INPUT_POST, "userFirstname", FILTER_SANITIZE_STRING);
+            $userLogin = filter_input(INPUT_POST, "userLogin", FILTER_SANITIZE_STRING);
+            $userEmail = filter_input(INPUT_POST, "userEmail", FILTER_SANITIZE_EMAIL);
+            $userPwd = filter_input(INPUT_POST, "userPwd", FILTER_SANITIZE_STRING);
+            $userAdress1 = filter_input(INPUT_POST, "userAdress1", FILTER_SANITIZE_STRING);
+            $userAdress2 = filter_input(INPUT_POST, "userAdress2", FILTER_SANITIZE_STRING);
+            $userZipCode = filter_input(INPUT_POST, "userZipCode", FILTER_SANITIZE_NUMBER_INT);
+            $townInput = filter_input(INPUT_POST, "userTown", FILTER_SANITIZE_STRING);
             $error     = 0;
+
             if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL) && (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', $userEmail))) {
                 $data['email'] = true;
                 $error = 1;
             }
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $userLogin)) {
+             // Chek if login is type min Xxxx or max X+x*30
+            if (!preg_match("/^[A-Z]{1}[a-z]{3,20}/", $userLogin)) {
                 $data['login'] = true;
                 $error = 1;
             }
+            
+
             if (!preg_match("/^\d{5}$/", $userZipCode)) {
                 $error        = 1;
                 $data['zipcode'] = true;
@@ -125,7 +128,7 @@ class UsersController extends BaseController
             $newUser->setAddress1($userAdress1);
             $newUser->setAddress2($userAdress2);
             $newUser->setZipCode($userZipCode);
-            $townInput = ($userTown);
+
 
             if ($error == 0) {
 
@@ -244,14 +247,14 @@ class UsersController extends BaseController
         $this->data['arrayOrder'] = $orders;
 
         if (isset($_POST["userLastname"])) {
-            $userLastname = filter_input(INPUT_POST, "userLastname");
-            $userFirstname = filter_input(INPUT_POST, "userFirstname");
-
-            $userAdress1 = filter_input(INPUT_POST, "userAdress1");
-            $userAdress2 = filter_input(INPUT_POST, "userAdress2");
-            $userZipCode = filter_input(INPUT_POST, "userZipCode");
-            $userTown = filter_input(INPUT_POST, "userTown");
+            $userLastname = filter_input(INPUT_POST, "userLastname", FILTER_SANITIZE_STRING);
+            $userFirstname = filter_input(INPUT_POST, "userFirstname", FILTER_SANITIZE_STRING);
+            $userAdress1 = filter_input(INPUT_POST, "userAdress1", FILTER_SANITIZE_STRING);
+            $userAdress2 = filter_input(INPUT_POST, "userAdress2", FILTER_SANITIZE_STRING);
+            $userZipCode = filter_input(INPUT_POST, "userZipCode", FILTER_SANITIZE_NUMBER_INT);
+            $userTown = filter_input(INPUT_POST, "userTown", FILTER_SANITIZE_STRING);
             $error     = 0;
+
 
 
             if (!preg_match("/^\d{5}$/", $userZipCode)) {
@@ -295,11 +298,11 @@ class UsersController extends BaseController
                 if ($_POST["State"] == "block") {
                     $user->setFlag("b");
                 }
-               
+
                 $insertedUser = $model->updateUsers($user);
                 $error2 = 0;
-                $this->errorRole( $error2 ,$user);
-              
+                $this->errorRole($error2, $user);
+
                 if (isset($_POST["roleAdmin"])) {
                     $insertedUser->makeAdmin();
                 }
@@ -313,31 +316,30 @@ class UsersController extends BaseController
                     isset($this->data['roleAdmin']) + isset($this->data['roleChef']) + isset($this->data['roleModerator']);
                     $this->data["error"] = "error";
                 }
-               
             }
             if (isset($insertedUser)) {
                 $this->data["success"] = "success";
             }
         }
     }
-public function errorRole( $error2 ,$user){
-   
-    if (isset($_POST["roleAdmin"]) == NUll && $user->isAdmin()!=false) {
-        $this->data['roleAdmin'] = true;
-        $error2 = 1;
-    }
-    if (isset($_POST["roleChef"]) == NUll && $user->isChef()!=false) {
-        $this->data['roleChef'] = true;
-        $error2 = 1;
-    }
-    if (isset($_POST["roleModerator"]) == NUll && $user->isModerateur()!=false) {
-        $this->data['roleModerator'] = true;
-        $error2 = 1;
+    public function errorRole($error2, $user)
+    {
 
+        if (isset($_POST["roleAdmin"]) == NUll && $user->isAdmin() != false) {
+            $this->data['roleAdmin'] = true;
+            $error2 = 1;
+        }
+        if (isset($_POST["roleChef"]) == NUll && $user->isChef() != false) {
+            $this->data['roleChef'] = true;
+            $error2 = 1;
+        }
+        if (isset($_POST["roleModerator"]) == NUll && $user->isModerateur() != false) {
+            $this->data['roleModerator'] = true;
+            $error2 = 1;
+        }
+        return $error2;
     }
-    return $error2;
-}
-    
+
     /**
      * passwordChange
      *
@@ -351,7 +353,7 @@ public function errorRole( $error2 ,$user){
         $user = $model->readOneBy("idUsers", $idUser);
         $userNewPass = $user->setPasswordHash($Value);
 
-         $model->updatePassword($userNewPass);
+        $model->updatePassword($userNewPass);
 
 
         $this->data['pass'] =  $Value;

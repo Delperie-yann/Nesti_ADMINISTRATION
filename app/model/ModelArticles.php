@@ -153,4 +153,34 @@ class ModelArticles
         unset($pdo);
         return $newRecipe;
     }
+    //=============
+    // updateArticles
+    //=============
+    /**
+     *
+     *
+     * 
+     *
+     * @param  mixed $article
+     * @return Articles
+     */
+    public function updateArticles(Articles &$article)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            $sql = "UPDATE article SET idImage = ? where idArticle = ?";;
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$article->getIdImage(),  $article->getIdArticle()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+           
+            $article = $this->readOneBy("idArticle", $article->getIdArticle());
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $article;
+    }
 }

@@ -28,6 +28,9 @@ class ArticlesController extends BaseController
         if ($action == "importation") {
             $this->import();
         }
+        if ($action == "addimage") {
+            $this->addimage($id);
+          }
     }
 
     /**
@@ -134,17 +137,17 @@ class ArticlesController extends BaseController
 
                         $modelIngredient = new ModelIngredient();
                         $modelIngredient->insertIngredient($ProductInsert);
-                    
+
                         $ProductInsert =  $ProductInsert->getIdProduct();
                     } else {
                         $ProductInsert = $ProductExist->getIdProduct();
                     }
                     $article->setIdProduct($ProductInsert);
-                  
-                    
-                 
+
+
+
                     $array[] = $ArticleInsert = $modelArticle->insertArticles($article);
-                    
+
 
                     $artPrice = new Articleprice();
                     $artPrice->setPrice($data[14]);
@@ -165,21 +168,99 @@ class ArticlesController extends BaseController
                     $lot->setQuantity($data[18]);
                     $modellot->insertLot($lot);
 
+                    $modelImportation = new ModelImportation();
+                    date_default_timezone_set('Europe/Paris');
+	            	$dateNow= date('y-m-d H:i:s');
                     $importation->setIdArticle($ArticleInsert->getIdArticle());
                     $importation->setIdSupplierOrder($data[16]);
                     $importation->setIdAministrator($data[7]);
-
-                    $modelImportation = new ModelImportation();
+                    $importation->setImportationDate($dateNow);
+                 
                     $modelImportation->insertImportation($importation);
-                    var_dump($importation);
+                  
 
 
-                   
+
                     $row++;
                 }
 
                 $this->data['arrayArticlesImport'] = $array;
                 fclose($handle);
+            }
+        }
+    }
+    /**
+     * addImage
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function addImage($id)
+    {
+        $modelArticle = new ModelArticles();
+        $article = $modelArticle->readOneBy("idArticle", $id);
+
+        $target_dir = "public/img/articles/";
+        $target_file = $target_dir . basename($_FILES["pictures"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+
+        // Check if image file is a actual image or fake image
+        if (isset($_POST["pictures"])) {
+
+            $check = getimagesize($_FILES["pictures"]["tmp_name"]);
+            if ($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                echo "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+
+        // Check file size
+        if ($_FILES["pictures"]["size"] > 500000) {
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+
+        // Allow certain file formats
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif"
+        ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+            // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["pictures"]["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($_FILES["pictures"]["name"])) . " has been uploaded.";
+
+                $model = new ModelImages();
+                $images = new Images();
+
+                $name = explode(".", $_FILES["pictures"]["name"]);
+                $images->setName($name[0]);
+                $images->setFileExtension($name[1]);
+
+                //verif IS valid?
+                $insertedImages = $model->insertImages($images);
+                $article->setIdImage($insertedImages->getIdImage());
+                $modelArticle->updateArticles($article);
+                header('Location:' . BASE_URL . "articles/editing/" . $id);
+            } else {
+                echo "Sorry, there was an error uploading your file.";
             }
         }
     }

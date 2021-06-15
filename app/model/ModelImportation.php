@@ -89,11 +89,11 @@ class ModelImportation
         $pdo = Connection::getPdo();
         try {
             // Create prepared statement
-            $sql = "INSERT INTO importation (idAdministrator,idArticle, idSupplierOrder) VALUES (?,?,?)";
+            $sql = "INSERT INTO importation (idAdministrator,idArticle, idSupplierOrder,importationDate) VALUES (?,?,?,?)";
 
             $stmt = $pdo->prepare($sql);
 
-            $values = [$importation->getIdAministrator(), $importation->getIdArticle(), $importation->getIdSupplierOrder()];
+            $values = [$importation->getIdAministrator(), $importation->getIdArticle(), $importation->getIdSupplierOrder(),$importation->getImportationDate()];
             // Execute the prepared statement
             $stmt->execute($values);
          

@@ -1,6 +1,7 @@
 <?php
 
 define('BASE_URL','http://127.0.0.1/www/PHP_Nesti_Site/'); //
+define('BASE_URL_CLIENT','http://127.0.0.1/www/');
 define('PATH_CTRL','app/controller');
 define('PATH_ERROR','app/controller/error/');
 define('PATH_VIEW','app/view');
