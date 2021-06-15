@@ -43,7 +43,9 @@ class ConnectionController extends BaseController
                     $model->insertDateCo($user);
                     header('Location:' . BASE_URL . 'recipes');
                 } else {
-                    header('Location:' . BASE_URL . 'connection');
+                    $this->data['loginError']=true;
+                 
+               
                 }
             }
         }

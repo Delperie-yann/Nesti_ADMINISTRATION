@@ -96,6 +96,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                             <h2>Préparations</h2>
                         </div>
                     </div>
+                    <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
                     <div id="prepCtn">
                         <div class="row prepItem mb-5" id="baseItem" data-order="1">
                             <div class="col-sm-2">
@@ -111,8 +112,9 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                             </div>
                             <div class="col">
                                 <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
-                                    <textarea class="prepText w-100 h-100"><?= $paragraph->getContent() ?></textarea>
-                                    <!-- <input type="text" id="prepText" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>"> -->
+                                    <!-- <textarea class="prepText w-100 h-100" id= "contentComment"><?= $paragraph->getContent() ?></textarea><?=$paragraph->getParagraphPosition()?> -->
+                                    
+                                    <input type="text" id="contentComment" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>">
                                 <?php }
                                 ?>
                             </div>
@@ -121,12 +123,13 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     <div class="row mt-4 h-50">
                         <div class="col-sm-2"></div>
                         <div class="col">
-                            <button class="btn w-100" onclick="addTextArea()">
+                            <button class="btn w-100" id="AddComm" onclick="addTextArea()">
                                 <img src="<?= BASE_URL ?>public/images/addinput.png" alt="Ajouter zone de texte">
                             </button>
                         </div>
                     </div>
                 </div>
+                </form>
                 <div class="col-sm-4">
                     <h2>Liste des ingrédients</h2>
                     <ul class="ingredientsCtn" id="ingCtn">

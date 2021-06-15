@@ -68,9 +68,9 @@ class RecipesController extends BaseController
     $recipe = new Recipes();
     if (isset($_POST["recipeName"])) {
       $recipeName = filter_input(INPUT_POST, "recipeName",FILTER_DEFAULT);
-      $recipedifficult = filter_input(INPUT_POST, "recipedifficult",FILTER_DEFAULT);
-      $recipePortion = filter_input(INPUT_POST, "recipePortion",FILTER_DEFAULT);
-      $recipeTime = filter_input(INPUT_POST, "recipeTimePrepare",FILTER_DEFAULT);
+      $recipedifficult = filter_input(INPUT_POST, "recipedifficult",FILTER_SANITIZE_NUMBER_INT);
+      $recipePortion = filter_input(INPUT_POST, "recipePortion",FILTER_SANITIZE_NUMBER_INT);
+      $recipeTime = filter_input(INPUT_POST, "recipeTimePrepare",FILTER_SANITIZE_STRING);
       $error        = 0;
       // accepted :  aze aze aze
       if (!preg_match("/^[a-zA-Z\s\.]*$/", $recipeName)) {
@@ -87,7 +87,7 @@ class RecipesController extends BaseController
         $error        = 1;
         $this->data['recipePortion'] = false;
       }
-      // accepted : 1 to 9
+      // accepted : 00:00 to 59:59 or 00:00 to 23:59:59
       if (!preg_match("/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/", $recipeTime)) {
         $error        = 1;
         $this->data['recipeTimePrepare'] = false;
@@ -97,7 +97,7 @@ class RecipesController extends BaseController
         $recipe->setName($recipeName);
         $recipe->setDifficulty($recipedifficult);
         $recipe->setPortions($recipePortion);
-        var_dump(DateTime::createFromFormat('H:i',$recipeTime));
+       
         $timeFormat = DateTime::createFromFormat('H:i',$recipeTime)->format('H:i:s');
         $recipe->setPreparationTime($timeFormat);
         $recipe->setFlag("a");
@@ -179,7 +179,7 @@ class RecipesController extends BaseController
         $error        = 1;
         $this->data['recipePortion'] = false;
       }
-      // accepted : 1 to 9
+      // accepted :00:00 to 59:59 or 00:00 to 23:59:59
       if (!preg_match("/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/", $recipeTimePrepare)) {
         $error        = 1;
         $this->data['recipeTimePrepare'] = false;
@@ -225,7 +225,7 @@ class RecipesController extends BaseController
 
     // Check if image file is a actual image or fake image
     if (isset($_POST["pictures"])) {
-      var_dump($_FILES["pictures"]);
+      
       $check = getimagesize($_FILES["pictures"]["tmp_name"]);
       if ($check !== false) {
         echo "File is an image - " . $check["mime"] . ".";
@@ -343,9 +343,7 @@ class RecipesController extends BaseController
       header('Content-Type: application/json');
       echo json_encode(array('success' => false));
     }
-
-
-
     die;
   }
+  
 }

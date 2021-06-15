@@ -14,6 +14,11 @@
                 session_destroy();
             }
             ?>
+            <?php if (isset($loginError)){?>
+                <div class="alert alert-warning text-center" role="alert">
+                         Erreur authentification
+                     </div>
+        <?php    } ?>
          <div id="login-row" class="row justify-content-center align-items-center">
              <div id="login-column" class="col-md-6">
                  <div id="login-box" class="col-md-12">

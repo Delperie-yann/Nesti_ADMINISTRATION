@@ -100,4 +100,33 @@ class ModelArticleprice
 
         return $array;
     }
+      //=============
+    // insertArticlesPrice
+    //=============
+    /**
+     *
+     *
+     *
+     */
+    public function insertArticlesPrice(Articleprice &$articleprice)
+    {
+        $pdo = Connection::getPdo();
+        try {
+            // Create prepared statement
+            $sql = "INSERT INTO articleprice (dateStart, price, idArticle) VALUES (?,?,?)";
+
+            $stmt = $pdo->prepare($sql);
+
+            $values = [$articleprice->getDateStart(), $articleprice->getPrice(), $articleprice->getIdArticle()];
+            // Execute the prepared statement
+            $stmt->execute($values);
+         
+            $newRecipe = $this->readOneBy("idArticlePrice", $pdo->lastInsertId());
+           
+        } catch (PDOException $e) {
+            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+        }
+        unset($pdo);
+        return $newRecipe;
+    }
 }

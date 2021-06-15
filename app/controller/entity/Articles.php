@@ -187,10 +187,10 @@ class Articles
         public function getName()
         {
                 $name = new ModelProduct();
-                // var_dump($this->idProduct);
+               
                 $name1 = $name->readOneBy("idProduct", $this->idProduct);
 
-                // var_dump($name1);
+              
                 return  $name1->getName();
         }
 
@@ -206,11 +206,13 @@ class Articles
                 $name2 = $name->readAllBy("idArticle", $this->idArticle);
                 // prendre le dernier prix de vente
                 $val = 0;
+
                 foreach ($name2 as $price) {
                         if ($price->getPrice() != null) {
                                 $val = $price->getPrice();
                         }
                 }
+
                 return $val;
         }
 
@@ -220,12 +222,15 @@ class Articles
          * @param  mixed $recipe
          * @return void
          */
-        public function setArticleFromArray($recipe)
+        public function setArticleFromArray($article)
         {
+                if ($article != NUll) {
 
-                foreach ($recipe as $key => $value) {
 
-                        $this->$key = $value;
+                        foreach ($article as $key => $value) {
+
+                                $this->$key = $value;
+                        }
                 }
         }
 
@@ -387,5 +392,28 @@ class Articles
                         }
                 }
                 return $price;
+        }
+        /**
+         * getImages
+         *
+         * @return object
+         */
+        public function getImages()
+        {
+                $model = new ModelImages();
+                $images = $model->readOneBy("idImage", $this->getIdImage());
+                return $images;
+        }
+        /**
+         * displayImages
+         *
+         * @return string
+         */
+        public function displayImagesArticles()
+        {
+                $imageName = $this->getImages()->getName();
+                $imageExtension = $this->getImages()->getFileExtension();
+               
+                return BASE_URL . "public/img/articles/$imageName.$imageExtension";
         }
 }

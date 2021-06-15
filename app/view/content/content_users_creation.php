@@ -62,13 +62,15 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             </div>
 
             <div class="col mt-5">
-                <p class="mt-5">Login</p><br>
-                <input type="text" class="w-75" name="userLogin" required> <?php if(isset($loginError)){
+                <p class="mt-5">Login <i class="badge">(commencer par une majuscule)</i></p><br>
+                <input type="text" class="w-75" name="userLogin" required>
+                 <?php if(isset($loginError)){
                     echo' <div class="alert alert-danger text-center" role="alert">Login existant</div>';
                 }; ?>
               
                 <p class="mt-5">Email</p><br>
-                <input type="text" class="w-75" name="userEmail" required>  <?php if(isset($emailError)){
+                <input type="text" class="w-75" name="userEmail" required>  
+                <?php if(isset($emailError)){
                     echo' <div class="alert alert-danger text-center" role="alert">Email existant</div>';
                 }; ?>
                 

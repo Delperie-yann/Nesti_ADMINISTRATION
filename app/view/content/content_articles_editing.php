@@ -73,19 +73,20 @@ if ((is_int(strpos($session, 'Administateur')) )) {
     </div>
     <div class="row mt-3 mr-5 ml-5">
     <div class="col">
-        <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/" method="post">
+        <form enctype="multipart/form-data" action="<?= BASE_URL ?>articles/addimage/<?= $article->getIdArticle(); ?>" method="post">
             <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn"
                 style="background-color: lightgray;">
-                <img src="" alt="" id="img">
+                <img src="<?= $article->displayImagesArticles(); ?>" alt="image articles" id="img" width="550px" height="375px">
             </div>
             <div class="row">
                 <div class="mb-3">
                     <label for="formFile" class="form-label"></label>
                     <input class="form-control ml-3" type="file" id="formFile" name="pictures">
                 </div>
-                <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100">Ok</button></div>
+                <div class="col-sm-2 ml-3 mt-2"><button type="submit" class="btn valid w-100" name="imageDdl" id="idImageDdl">Ok</button></div>
             </div>
         </form>
+      
     </div>
 </div>
 <?php

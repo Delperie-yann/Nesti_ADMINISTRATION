@@ -23,7 +23,7 @@ class Articleprice
     /**
      * Set the value of idArticlePrice
      */
-    public function setIdArticlePrice($idArticlePrice) : self
+    public function setIdArticlePrice($idArticlePrice): self
     {
         $this->idArticlePrice = $idArticlePrice;
 
@@ -41,7 +41,7 @@ class Articleprice
     /**
      * Set the value of dateStart
      */
-    public function setDateStart($dateStart) : self
+    public function setDateStart($dateStart): self
     {
         $this->dateStart = $dateStart;
 
@@ -59,7 +59,7 @@ class Articleprice
     /**
      * Set the value of price
      */
-    public function setPrice($price) : self
+    public function setPrice($price): self
     {
         $this->price = $price;
 
@@ -77,24 +77,25 @@ class Articleprice
     /**
      * Set the value of idArticle
      */
-    public function setIdArticle($idArticle) : self
+    public function setIdArticle($idArticle): self
     {
         $this->idArticle = $idArticle;
 
         return $this;
-    }    
+    }
     /**
      * setArticlepriceFromArray
      *
      * @param  mixed $recipe
      * @return void
      */
-    public function setArticlepriceFromArray($recipe)
-        {
-    
-            foreach ($recipe as $key => $value) {
-    
+    public function setArticlepriceFromArray($articlePrice)
+    {
+        if ($articlePrice != Null) {
+            foreach ($articlePrice as $key => $value) {
+
                 $this->$key = $value;
             }
         }
+    }
 }

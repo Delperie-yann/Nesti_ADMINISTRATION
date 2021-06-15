@@ -160,7 +160,7 @@ class Comment
         } else if ($entity->getFlag() == "b") {
             $state = "Bloqué";
         } else {
-            $state = "Annulé";
+            $state = "En attente";
         }
         return $state;
     }    
