@@ -241,6 +241,8 @@ class UsersController extends BaseController
         $model = new ModelUsers();
         $user = $model->readOneBy("idUsers", $idUsers);
         $this->data['user'] = $user;
+        $loggedUser = $model->readOneBy("idUsers", $_SESSION["idUser"]);
+        $this->data['userlogged']=$loggedUser;
         $model2 = new ModelOrders();
         $orders = $model2->readAllBy("idUsers", $idUsers);
 

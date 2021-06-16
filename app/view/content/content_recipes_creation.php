@@ -39,23 +39,25 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         </div>
                         <div class="col">
                             <div class="col d-flex justify-content-between flex-column p-0">
-                                <div class="d-flex justify-content-end"><input type="number" min="0" max="5" name="recipedifficult" class="w-50 mt-4 mb-2" require></div>
-                                <div class="d-flex justify-content-end"><input type="number" min="0" max="10" name="recipePortion" class="w-50 mt-4 mb-2" require></div>
-                                <div class="d-flex justify-content-end"><input type="time"  name="recipeTimePrepare" class="w-50 mt-4 mb-2" require></div>
+                                <div class="d-flex justify-content-end"><input type="number" min="0" max="5" name="recipedifficult" class="w-50 mt-4 mb-2" ></div>
+                                <div class="d-flex justify-content-end"><input type="number" min="0" max="10" name="recipePortion" class="w-50 mt-4 mb-2" ></div>
+                                <div class="d-flex justify-content-end"><input type="time"  name="recipeTimePrepare" class="w-50 mt-4 mb-2" ></div>
                             </div>
                         </div>
                     </div>
+                    <?php if (is_int(strpos($session, 'Chef'))){ ?> 
                     <div class="d-flex justify-content-center p-2">
                         <button type="submit" class="btn m-5 valid w-25">Valider</button>
-                        <button type="submit" class="btn m-5 cancel w-25">Annuler</button>
+                       
                     </div>
+                    <?php }; ?>
                 </div>
             </form>
-
+<!-- 
             <div class="col">
                 <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addImage" method="post">
-                    <div class="mt-2 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
-                        <img src="" alt="" id="img" width="550px" height="375px">
+                    <div class="mt-2 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" >
+                        <img src="" alt="" id="img" class="maxpict" >
                     </div>
                     <div class="row">
                         <div class="mb-5">
@@ -65,9 +67,9 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         <div class="col-sm-2 ml-5 mt-2"><button type="submit" class="btn valid w-100" onclick="dlImg()">Ok</button></div>
                     </div>
                 </form>
-            </div>
+            </div> -->
         </div>
-
+        </div>
         <!-- 
     <div class="recipeCtn h-100">
         <div class="row">

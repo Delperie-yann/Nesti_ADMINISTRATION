@@ -18,21 +18,21 @@ if ((is_int(strpos($session, 'Administateur')) )) {
       <nav class="navbar navbar-white bg-white pl-0">
         <form class="form-inline">
           <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-          <img id="searchRecipe" src="<?= BASE_URL?>public/images/search.png" alt="" width="20px" height="25px">
+          <img id="searchRecipe" src="<?= BASE_URL?>public/images/search.png" alt="image search" class="minipict">
         </form>
       </nav>
       <div>
         <a href="<?= BASE_URL ?>articles/orders" class="btn mb-1 border align-self-end bg-warning"><i class="far fa-eye mr-3"></i> Commandes</a>
       </div>
       <div>
-        <a href="<?= BASE_URL ?>articles/importation" class="btn mb-1 border align-self-end"><img id="ajouter" src="<?= BASE_URL ?>public/images/add.png" alt="" width="20px" height="20px"> Importer</a>
+        <a href="<?= BASE_URL ?>articles/importation" class="btn mb-1 border align-self-end"><img id="ajouter" class="minipict" src="<?= BASE_URL ?>public/images/add.png" alt="image import" > Importer</a>
       </div>
     </div>
 
     <table class="table">
 
       <thead>
-
+      <tr>
         <th scope="col">ID</th>
         <th scope="col">Nom</th>
         <th scope="col">Prix de vente</th>
@@ -40,16 +40,14 @@ if ((is_int(strpos($session, 'Administateur')) )) {
         <th scope="col">Dernière importation</th>
         <th scope="col">stock</th>
         <th scope="col">Actions</th>
-
+</tr>
       </thead>
 
       <?php
       foreach ($arrayArticles as $value) {
 
 
-        // if($value==NULL){
-        //   $value="";
-        // }
+     
       ?>
 
         <tr>
