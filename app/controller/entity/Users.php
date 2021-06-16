@@ -330,7 +330,9 @@ class Users
       if ($this->isChef()) {
          $result .= "Chef" . $format;
       }
+    
       if ($this->isModerateur()) {
+         
          $result .= "Moderateur" . $format;
       }
       if ($this->isAdmin()) {

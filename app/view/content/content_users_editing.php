@@ -62,9 +62,9 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <?php if (isset($roleAdmin) || isset($roleChef) || isset($roleModerator)) {
                     echo ' <div class="alert alert-danger text-center" role="alert">Rôles non enlevable</div>';
                 }; ?>
-                <input type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label for="Chef">Chef</label>
-                <input type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="Moderator">Moderateur</label>
-                <input type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="Admin">Administateur</label>
+                <input id="roleChef" type="checkbox" class="w-75" name="roleChef" <?= $user->isChef() == "chef" ? 'checked' : '' ?>><label for="roleChef">Chef</label>
+                <input id="roleModerator" type="checkbox" class="w-75" name="roleModerator" <?= $user->isModerateur() == "moderator" ? 'checked' : '' ?>><label for="roleModerator">Moderateur</label>
+                <input id="roleAdmin" type="checkbox" class="w-75" name="roleAdmin" <?= $user->isAdmin() == "Administateur" ? 'checked' : '' ?>><label for="roleAdmin">Administateur</label>
 
                 <p class="mt-5">Etat</p><br>
 
@@ -85,6 +85,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
 
                 <div class="row">
                     <div class="d-flex justify-content-center p-2">
+
                         <button type="submit" class="btn m-10 ml-2 valid w-50">Valider</button>
                         <button type="reset" class="btn btn-danger m-10 ml-2 w-50">Supprimer</button>
                     </div>
@@ -155,12 +156,12 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <h1 class="mb-2 mt-4 ml-5">Ses commandes</h1>
                 <p>Consultation des commandes</p>
 
-                <div class="container bg-grey d-flex flex-column align-items-left" id="recipes">
+                <div class="container bg-grey d-flex flex-column align-items-left" id="recipes2">
                     <div class="d-flex flex-row justify-content-between">
                         <nav class="navbar navbar-white  pl-0">
                             <form class="form-inline">
                                 <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-                                <img id="searchRecipe" src="<?= BASE_URL ?>../../public/images/search.png" alt="" width="20px" height="25px">
+                                <img id="searchRecipe" src="<?= BASE_URL ?>/public/images/search.png" alt="image search" class="minipict">
                             </form>
                         </nav>
 
@@ -228,7 +229,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                     <table class="table">
 
                         <thead>
-
+                        <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Titre</th>
                             <th scope="col">Recette</th>
@@ -236,6 +237,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                             <th scope="col">Date</th>
                             <th scope="col">Etat</th>
                             <th scope="col">Actions</th>
+                    </tr>
                         </thead>
                         <?php
                         //var_dump($arrayRecipes);
@@ -251,10 +253,13 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                                 <td><?= $com->getState($com); ?></td>
 
                                 <td>
+                                    <?php if ($userlogged->isModerateur()) { ?>
+                                        <a href="<?= BASE_URL . "users/editing/" . $com->getIdUsers() . "/" . $com->getIdRecipe() . "/1"; ?>">Approuver</a><br>
 
-                                    <a href="<?= BASE_URL . "users/editing/" . $com->getIdUsers() . "/" . $com->getIdRecipe() . "/1"; ?>">Approuver</a><br>
-
-                                    <a href="<?= BASE_URL . "users/editing/" . $com->getIdUsers() . "/" . $com->getIdRecipe() . "/0"; ?>">Bloquer</a>
+                                        <a href="<?= BASE_URL . "users/editing/" . $com->getIdUsers() . "/" . $com->getIdRecipe() . "/0"; ?>">Bloquer</a>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                         <?php
@@ -266,7 +271,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
             </div>
         </div>
     </div>
-
+    </div>
 
 
 

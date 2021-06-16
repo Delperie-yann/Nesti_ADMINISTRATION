@@ -60,22 +60,22 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     </div>
                     <div class="col">
                         <div class="col d-flex justify-content-between flex-column p-0">
-                            <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" require name="recipedifficult">
+                            <div class="d-flex justify-content-end"><input type="number" min="0" max="5" class="w-50 mt-4 mb-2" value="<?= $recipe->getDifficulty()  ?>" name="recipedifficult">
                             </div>
-                            <div class="d-flex justify-content-end"><input type="number" min="0" max="10" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" require name="recipePortion"></div>
-                            <div class="d-flex justify-content-end"><input type="time"  class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()   ?>"   name="recipeTimePrepare"></div>
+                            <div class="d-flex justify-content-end"><input type="number" min="0" max="10" class="w-50 mt-4 mb-2" value="<?= $recipe->getPortions()  ?>" name="recipePortion"></div>
+                            <div class="d-flex justify-content-end"><input type="time" class="w-50 mt-4 mb-2" value="<?= $recipe->getPreparationTime()   ?>" name="recipeTimePrepare"></div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center p-2">
                     <button type="submit" class="btn m-5 valid w-25">Valider</button>
-                    <a type="reset" href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Retour</a>
+                    <a href="<?= BASE_URL ?>recipes " class="btn m-5 cancel w-25">Retour</a>
                 </div>
             </form>
             <div class="col">
                 <form enctype="multipart/form-data" action="<?= BASE_URL ?>recipes/addimage/<?= $recipe->getIdRecipe(); ?>" method="POST">
-                    <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" ;>
-                        <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" width="550px" height="375px">
+                    <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn">
+                        <img src="<?= $recipe->displayImages(); ?>" alt="" id="img" class="maxpict">
                     </div>
                     <div class="row">
                         <div class="mb-5">
@@ -97,39 +97,40 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         </div>
                     </div>
                     <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
-                    <div id="prepCtn">
-                        <div class="row prepItem mb-5" id="baseItem" data-order="1">
-                            <div class="col-sm-2">
-                                <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
-                                    <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
-                                </button>
-                                <button class="downText btn mt-2 mb-2 d-flex justify-content-center" onclick="downBtn(this)">
-                                    <img src="<?= BASE_URL ?>public/images/down-arrow.png" alt="">
-                                </button>
-                                <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center" onclick="deleteBtn(this)">
-                                    <img src="<?= BASE_URL ?>public/images/delete.png" alt="">
-                                </button>
+                        <div id="prepCtn">
+                            <div class="row prepItem mb-5" id="baseItem" data-order="1">
+                                <div class="col-sm-2">
+                                    <button class="upText btn mt-2 mb-2 d-flex justify-content-center" onclick="upBtn(this)">
+                                        <img src="<?= BASE_URL ?>public/images/up-arrow.png" alt="">
+                                    </button>
+                                    <button class="downText btn mt-2 mb-2 d-flex justify-content-center" onclick="downBtn(this)">
+                                        <img src="<?= BASE_URL ?>public/images/down-arrow.png" alt="">
+                                    </button>
+                                    <button class="deleteText btn mt-2 mb-2 d-flex justify-content-center" onclick="deleteBtn(this)">
+                                        <img src="<?= BASE_URL ?>public/images/delete.png" alt="">
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
+                                        <!-- <textarea class="prepText w-100 h-100" id= "contentComment"><?= $paragraph->getContent() ?></textarea><?= $paragraph->getParagraphPosition() ?> -->
+
+                                        <input type="text" id="contentComment" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>">
+                                    <?php }
+                                    ?>
+                                </div>
                             </div>
+                        </div>
+                        <div class="row mt-4 h-50">
+                            <div class="col-sm-2"></div>
                             <div class="col">
-                                <?php foreach ($recipe->getParagraphs() as $paragraph) { ?>
-                                    <!-- <textarea class="prepText w-100 h-100" id= "contentComment"><?= $paragraph->getContent() ?></textarea><?=$paragraph->getParagraphPosition()?> -->
-                                    
-                                    <input type="text" id="contentComment" class="prepText w-100 h-100" value="<?= $paragraph->getContent() ?>">
-                                <?php }
-                                ?>
+                                <button class="btn w-100" id="AddComm" onclick="addTextArea()">
+                                    <img src="<?= BASE_URL ?>public/images/addinput.png" alt="Ajouter zone de texte">
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-4 h-50">
-                        <div class="col-sm-2"></div>
-                        <div class="col">
-                            <button class="btn w-100" id="AddComm" onclick="addTextArea()">
-                                <img src="<?= BASE_URL ?>public/images/addinput.png" alt="Ajouter zone de texte">
-                            </button>
-                        </div>
-                    </div>
+
+                    </form>
                 </div>
-                </form>
                 <div class="col-sm-4">
                     <h2>Liste des ingrédients</h2>
                     <ul class="ingredientsCtn" id="ingCtn">
@@ -147,15 +148,15 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                     </ul>
                     <form action="<?= BASE_URL ?>recipes/editing/<?= $recipe->getIdRecipe() ?>" class="col" method="POST">
                         <p class="mt-2 mb-2">Ajouter un ingrédient</p>
-                        <label for="ingreidentName">Nom de l'ingredient</label>
+                        <label for="ingName">Nom de l'ingredient</label>
                         <input type="text" id="ingName" name="ingredientName" class="mb-2 w-50">
                         <div class="row">
                             <div class="col-md-5">
-                                <label for="quantity">Quantité</label>
+                                <label for="ingQty">Quantité</label>
                                 <input type="text" name="ingredientQuant" onkeypress="" id="ingQty" class="w-100 h-50">
                             </div>
                             <div class="col-md-5">
-                                <label for="unit">Unité </label>
+                                <label for="ingUnit">Unité </label>
                                 <input type="text" name="ingredientUnit" id="ingUnit" class="w-100 h-50">
                             </div>
                             <div class="col d-flex justify-content-end">

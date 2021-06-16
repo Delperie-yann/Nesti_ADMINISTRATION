@@ -102,6 +102,7 @@ class RecipesController extends BaseController
         $recipe->setPreparationTime($timeFormat);
         $recipe->setFlag("a");
         $recipe->setIdChef($_SESSION['idUser']);
+        
         $insertedRecipe = $model->insertRecipe($recipe);
         header('Location:' . BASE_URL . "recipes/editing/" . $insertedRecipe->getIdRecipe());
       } else {

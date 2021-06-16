@@ -14,6 +14,14 @@ background-color: gainsboro;
 
 }
 .imagelogo{
-    width:20px; 
-    height:20px;
+    width:20px !important;
+    height:20px!important;
+}
+.minipict{
+    width:20px !important;
+    height:20px !important;
+}
+.maxpict{
+    width:550px !important;
+    height:375px !important;
 }

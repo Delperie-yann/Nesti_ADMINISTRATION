@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 
 
@@ -20,7 +22,7 @@ if ((is_int(strpos($session, 'Administateur')))) {
             <nav class="navbar navbar-white bg-white pl-0">
               <form class="form-inline">
                 <input class="form-control mr-sm-2" id="customSearch" type="search" placeholder="" aria-label="Search">
-                <img id="searchRecipe" src="<?= BASE_URL ?>public/images/search.png" alt="" width="20px" height="25px">
+                <img id="searchRecipe" src="<?= BASE_URL ?>public/images/search.png" alt="image search" class="minipict">
               </form>
             </nav>
 
@@ -29,14 +31,14 @@ if ((is_int(strpos($session, 'Administateur')))) {
           <table class="table">
 
             <thead>
-
-              <th scope="col">ID</th>
-              <th scope="col">Utilisateurs</th>
-              <th scope="col">Montant</th>
-              <th scope="col">Nb d'articles</th>
-              <th scope="col">Date</th>
-              <th scope="col">Etat</th>
-
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Utilisateurs</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Nb d'articles</th>
+                <th scope="col">Date</th>
+                <th scope="col">Etat</th>
+              </tr>
             </thead>
 
             <?php
@@ -71,6 +73,6 @@ if ((is_int(strpos($session, 'Administateur')))) {
       </div>
     </div>
 
-    </tbody>
+  
 
   </div>
