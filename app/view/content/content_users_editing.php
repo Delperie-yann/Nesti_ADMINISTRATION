@@ -53,6 +53,9 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                 <input type="text" class="w-75" name="userAdress2" value="<?= $user->getAddress2() ?>">
 
                 <p class="mt-5">Code postal</p><br>
+                <?php  if (isset($zipcodeError)) {
+                        echo ' <div class="alert alert-danger text-center" role="alert">Erreur de code postal</div>';
+                    }; ?>
                 <input type="text" class="w-75" name="userZipCode" value="<?= $user->getZipCode() ?>">
 
                 <p class="mt-5">Ville</p><br>

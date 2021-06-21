@@ -281,7 +281,7 @@ class UsersController extends BaseController
 
             if (!preg_match("/^\d{5}$/", $userZipCode)) {
                 $error        = 1;
-                $data['zipcode'] = true;
+                $this->data['zipcodeError'] = true;
             }
 
             $user->setLastName($userLastname);
@@ -338,10 +338,12 @@ class UsersController extends BaseController
                     isset($this->data['roleAdmin']) + isset($this->data['roleChef']) + isset($this->data['roleModerator']);
                     $this->data["error"] = "error";
                 }
-            }
+            }else{
+                isset($this->data['zipcodeError']);
+             
             if (isset($insertedUser)) {
                 $this->data["success"] = "success";
-            }
+            }}
         }
     }
     public function errorRole($error2, $user)
