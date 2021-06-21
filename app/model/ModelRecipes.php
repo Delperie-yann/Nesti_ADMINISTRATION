@@ -4,11 +4,11 @@ class ModelRecipes
 {
     //=============
     // readAll
-    //=============
+    //=============  
     /**
+     * readAll
      *
-     *
-     *
+     * @return array
      */
     public static function readAll()
     {
@@ -136,24 +136,22 @@ class ModelRecipes
     }
     //=============
     // updateRecipes
-    //=============
+    //=============  
     /**
+     * updateRecipes
      *
-     *
-     *
+     * @param  object $recipe
+     * @return object
      */
     public function updateRecipes(Recipes &$recipe)
     {
         $pdo = Connection::getPdo();
         try {
             $sql = "UPDATE recipe SET idImage = ?, name = ?, difficulty = ? , portions = ?,preparationTime=?, flag = ?, idChef = ? where idRecipe = ?";
-
             $stmt = $pdo->prepare($sql);
-
             $values = [$recipe->getIdImage(), $recipe->getName(), $recipe->getDifficulty(), $recipe->getPortions(), $recipe->getPreparationTime(), $recipe->getFlag(), $recipe->getIdChef(), $recipe->getIdRecipe()];
             // Execute the prepared statement
             $stmt->execute($values);
-            // var_dump(  $stmt->execute($values));
             $recipe = $this->readOneBy("idRecipe", $recipe->getIdRecipe());
         } catch (PDOException $e) {
             die("ERROR: Could not able to execute $sql. " . $e->getMessage());

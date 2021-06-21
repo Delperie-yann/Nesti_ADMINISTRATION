@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 
 /** @var array<object> $arrayVars */
@@ -167,18 +169,18 @@ if (is_int(strpos($session, 'Administateur'))) {
                             </tr>
                         </thead>
 
-                      
-                                        <?php
-                                        // var_dump($arrayVars['TopTenUsers']);
-                                        foreach ($arrayVars['NbCount'] as  $article) { ?>
-                                            <tr>
-                                                <td> <?= $article->getUnitQuantity() . " " . $article->getUnitName() . " " . $article->getName() ?>
-                                                <td></td>
-                                                <td></td>
-                                                <td> <a href="">voir</a></td>
-                                            </tr>
-                                        <?php } ?>
-                        
+
+                        <?php
+                        // var_dump($arrayVars['TopTenUsers']);
+                        foreach ($arrayVars['NbCount'] as  $article) { ?>
+                            <tr>
+                                <td> <?= $article->getUnitQuantity() . " " . $article->getUnitName() . " " . $article->getName() ?>
+                                <td></td>
+                                <td></td>
+                                <td> <a href="">voir</a></td>
+                            </tr>
+                        <?php } ?>
+
                     </table>
                 </div>
 

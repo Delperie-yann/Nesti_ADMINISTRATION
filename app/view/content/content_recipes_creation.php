@@ -32,7 +32,7 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef
                         <div class="col d-flex justify-content-between flex-column">
                             <p class="mt-4 mb-2">Difficulté (note sur 5)</p>
 
-                            <p class="mt-4 mb-2">Nombre de personnes max 10</p>
+                            <p class="mt-4 mb-2">Nombre de personnes max 9</p>
 
                             <p class="mt-4 mb-2">Temps de préparation</p>
 
