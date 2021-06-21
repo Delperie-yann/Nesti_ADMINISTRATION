@@ -10,7 +10,6 @@ $session = $_SESSION['Roles'];
 
 if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Chef'))))) {
 ?>
-
     <div class="container bg-white d-flex flex-column align-items-left" id="recettes">
         <?php if (isset($success)) { ?>
 

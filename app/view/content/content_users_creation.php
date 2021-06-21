@@ -28,7 +28,9 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
 
                     <p class="mt-5">Code postal</p><br>
                     <input type="text" class="w-75" name="userZipCode" required>
-
+                    <?php if (isset($zipcodeError)) {
+                        echo ' <div class="alert alert-danger text-center" role="alert">Erreur de code postal</div>';
+                    }; ?>
                     <p class="mt-5">Ville</p><br>
                     <input type="text" class="w-75" name="userTown" required>
 
@@ -65,12 +67,19 @@ if ((is_int(strpos($session, 'Administateur')) || (is_int(strpos($session, 'Mode
                     <p class="mt-5">Login <i class="badge">(commencer par une majuscule)</i></p><br>
                     <input type="text" class="w-75" name="userLogin" required>
                     <?php if (isset($loginError)) {
-                        echo ' <div class="alert alert-danger text-center" role="alert">Login existant</div>';
+                        echo ' <div class="alert alert-danger text-center" role="alert">Login sans majuscule</div>';
+                    }; ?>
+
+                    <?php if (isset($loginErrorExist)) {
+                        echo ' <div class="alert alert-danger text-center" role="alert">Deja existant</div>';
                     }; ?>
 
                     <p class="mt-5">Email</p><br>
                     <input type="text" class="w-75" name="userEmail" required>
                     <?php if (isset($emailError)) {
+                        echo ' <div class="alert alert-danger text-center" role="alert">Erreur dans la structure de email</div>';
+                    }; ?>
+                    <?php if (isset($emailErrorExist)) {
                         echo ' <div class="alert alert-danger text-center" role="alert">Email existant</div>';
                     }; ?>
 

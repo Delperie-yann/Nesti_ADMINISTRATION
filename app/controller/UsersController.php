@@ -93,6 +93,7 @@ class UsersController extends BaseController
         $model   = new ModelUsers();
 
         if (isset($_POST["userLogin"])) {
+
             $userLastname = filter_input(INPUT_POST, "userLastname", FILTER_SANITIZE_STRING);
             $userFirstname = filter_input(INPUT_POST, "userFirstname", FILTER_SANITIZE_STRING);
             $userLogin = filter_input(INPUT_POST, "userLogin", FILTER_SANITIZE_STRING);
@@ -105,32 +106,36 @@ class UsersController extends BaseController
             $error     = 0;
 
             if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL) && (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', $userEmail))) {
-                $data['email'] = true;
+                $this->data["emailError"] = true;
+            
                 $error = 1;
             }
-             // Chek if login is type min Xxxx or max X+x*30
+            // Chek if login is type min Xxxx or max X+x*30
             if (!preg_match("/^[A-Z]{1}[a-z]{3,20}/", $userLogin)) {
-                $data['login'] = true;
+                $this->data["loginError"] = true;
+              
                 $error = 1;
             }
             
 
+
             if (!preg_match("/^\d{5}$/", $userZipCode)) {
                 $error        = 1;
-                $data['zipcode'] = true;
+            
+                $this->data["zipcodeError"] = true;
             }
-
-            $newUser->setLastname($userLastname);
-            $newUser->setFirstname($userFirstname);
-            $newUser->setLogin($userLogin);
-            $newUser->setEmail($userEmail);
-            $newUser->setPasswordHash($userPwd);
-            $newUser->setAddress1($userAdress1);
-            $newUser->setAddress2($userAdress2);
-            $newUser->setZipCode($userZipCode);
 
 
             if ($error == 0) {
+                $newUser->setLastname($userLastname);
+                $newUser->setFirstname($userFirstname);
+                $newUser->setLogin($userLogin);
+                $newUser->setEmail($userEmail);
+                $newUser->setPasswordHash($userPwd);
+                $newUser->setAddress1($userAdress1);
+                $newUser->setAddress2($userAdress2);
+                $newUser->setZipCode($userZipCode);
+
 
                 $modelcity = new ModelCity();
                 $cities = $modelcity->readAll();
@@ -168,11 +173,11 @@ class UsersController extends BaseController
 
 
                 if (($userExistEmmail->getIdUser()) != NUll) {
-                    $this->data['emailError'] = true;
+                    $this->data['emailErrorExist'] = true;
                     $error = 1;
                 }
                 if (($userExist->getIdUser()) != NUll) {
-                    $this->data['loginError'] = true;
+                    $this->data['loginErrorExist'] = true;
                     $error = 1;
                 }
 
@@ -192,8 +197,23 @@ class UsersController extends BaseController
 
                     header('Location:' . BASE_URL . "users");
                 } else {
-                    isset($this->data['emailError']) + isset($this->data['loginError']);
+
+                    isset($this->data["emailError"]);
+                    isset($this->data["loginError"]);
+                    isset($this->data["zipcodeError"]);
+                    isset($this->data["loginErrorExist"]);
+                    isset($this->data["emailErrorExist"]);
                 }
+            } else {
+
+
+
+                isset($this->data["loginError"]);
+                isset($this->data["zipcodeError"]);
+
+                isset($this->data["emailError"]);
+                isset($this->data["loginError"]);
+                isset($this->data["zipcodeError"]);
             }
         }
     }
@@ -242,7 +262,7 @@ class UsersController extends BaseController
         $user = $model->readOneBy("idUsers", $idUsers);
         $this->data['user'] = $user;
         $loggedUser = $model->readOneBy("idUsers", $_SESSION["idUser"]);
-        $this->data['userlogged']=$loggedUser;
+        $this->data['userlogged'] = $loggedUser;
         $model2 = new ModelOrders();
         $orders = $model2->readAllBy("idUsers", $idUsers);
 

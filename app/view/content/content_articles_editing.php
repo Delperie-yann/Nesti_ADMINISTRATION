@@ -70,7 +70,7 @@ if ((is_int(strpos($session, 'Administateur')))) {
             <div class="col">
                 <form enctype="multipart/form-data" action="<?= BASE_URL ?>articles/addimage/<?= $article->getIdArticle(); ?>" method="post">
                     <div class="mt-4 h-75 w-100 d-flex justify-content-center align-items-center" id="imgCtn" style="background-color: lightgray;">
-                        <img src="<?= $article->displayImagesArticles(); ?>" alt="image articles" id="img" class="minipict">
+                        <img src="<?= $article->displayImagesArticles(); ?>" alt="image articles" id="img" class="maxpict">
                     </div>
                     <div class="row">
                         <div class="mb-3">

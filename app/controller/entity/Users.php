@@ -16,61 +16,12 @@ class Users
    private $idCity;
 
 
-   public function __construct()
-   {
-      if ($this->getDateCreation() == null) {
-         $d = new DateTime('NOW');
-         $this->setDateCreation($d->format('Y-m-d H:i:s'));
-      }
-   }
-   public function getConnectionLogs()
-   {
-      $model = new ModelConnectionLog();
-      $logs = $model->readAllBy("idUsers", $this->getIdUser());
-      return $logs;
-   }
-
-   public function getLastConnectionLog()
-   {
-      $lateCoDate = "-";
-      if ($this->getConnectionLogs()) {
-         $lateCoDate = $this->getConnectionLogs()[0]->getDateConnection();
-      }
-
-      return $lateCoDate;
-   }
-
-   public function getChef()
-   {
-      $model = new ModelUsers();
-      $chef  = $model->findChild("chef", $this->getIdUser());
-      return $chef;
-   }
-   public function getHimAsChef()
-   {
-
-      $chef = new Chef();
-      $chef->setChefFromArray($this->getChef());
-      return $chef;
-   }
-
-   public function isChef(): bool
-   {
-      return $this->getChef() != null;
-   }
-
-   public function getModerator()
-   {
-      $model     = new ModelUsers();
-      $moderator = $model->findChild("moderator", $this->getIdUser());
-      return $moderator;
-   }
-
-   public function isModerateur(): bool
-   {
-      return $this->getModerator() != null;
-   }
-
+   
+   /**
+    * getAdmin
+    *
+    * @return object
+    */
    public function getAdmin()
    {
       $model = new ModelUsers();
@@ -78,7 +29,12 @@ class Users
 
       return $admin;
    }
-
+   
+   /**
+    * isAdmin
+    *
+    * @return bool
+    */
    public function isAdmin(): bool
    {
       return $this->getAdmin() != null;
@@ -93,22 +49,44 @@ class Users
          }
       }
    }
-
+   
+   /**
+    * isPassword
+    *
+    * @param  mixed $plaintextPassword
+    * @return string
+    */
    public function isPassword($plaintextPassword)
    {
       return password_verify($plaintextPassword, $this->getPasswordHash());
    }
-
+   
+   /**
+    * getLastname
+    *
+    * @return string
+    */
    public function getLastname()
    {
       return $this->lastname;
    }
-
+   
+   /**
+    * setLastname
+    *
+    * @param  mixed $lastname
+    * @return void
+    */
    public function setLastname(string $lastname)
    {
       $this->lastname = $lastname;
    }
-
+   
+   /**
+    * getPasswordHash
+    *
+    * @return string
+    */
    public function getPasswordHash()
    {
       return $this->passwordHash;
@@ -510,9 +488,62 @@ class Users
          $newTown = $model->insertCity($cityName);
          $townName = $newTown->getIdCity();
       }
-
-
-
       return $townName;
    }
+
+   public function __construct()
+   {
+      if ($this->getDateCreation() == null) {
+         $d = new DateTime('NOW');
+         $this->setDateCreation($d->format('Y-m-d H:i:s'));
+      }
+   }
+   public function getConnectionLogs()
+   {
+      $model = new ModelConnectionLog();
+      $logs = $model->readAllBy("idUsers", $this->getIdUser());
+      return $logs;
+   }
+
+   public function getLastConnectionLog()
+   {
+      $lateCoDate = "-";
+      if ($this->getConnectionLogs()) {
+         $lateCoDate = $this->getConnectionLogs()[0]->getDateConnection();
+      }
+
+      return $lateCoDate;
+   }
+
+   public function getChef()
+   {
+      $model = new ModelUsers();
+      $chef  = $model->findChild("chef", $this->getIdUser());
+      return $chef;
+   }
+   public function getHimAsChef()
+   {
+
+      $chef = new Chef();
+      $chef->setChefFromArray($this->getChef());
+      return $chef;
+   }
+
+   public function isChef(): bool
+   {
+      return $this->getChef() != null;
+   }
+
+   public function getModerator()
+   {
+      $model     = new ModelUsers();
+      $moderator = $model->findChild("moderator", $this->getIdUser());
+      return $moderator;
+   }
+
+   public function isModerateur(): bool
+   {
+      return $this->getModerator() != null;
+   }
+   
 }
